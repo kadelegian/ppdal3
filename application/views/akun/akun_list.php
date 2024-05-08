@@ -59,10 +59,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo $d_akun->nomor_rekening ?></td>
                             <td><?php echo $d_akun->keterangan  ?></td>
                             <td style="text-align:center">
-
-                                <a class="btn-primary" href='<?= base_url('akun/update/' . $d_akun->id) ?>'><i class="fas fa-search"></i>Lihat</a>
-                                <a class="btn-danger" href='<?= base_url('akun/delete/' . $d_akun->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
-
+                                <div class="btn-group" role="group">
+                                    <?php if ($d_akun->aktif) { ?>
+                                        <a class="btn btn-primary" href='<?= base_url('akun/update/' . $d_akun->id) ?>'><i class="fas fa-search"></i>Lihat</a>
+                                        <a class="btn btn-danger" href='<?= base_url('akun/nonaktifkan/' . $d_akun->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Me-non aktifkan Akun??')">Disable</a>
+                                    <?php } ?>
+                                </div>
                             </td>
                         </tr>
                     <?php

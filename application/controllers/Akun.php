@@ -89,14 +89,17 @@ class Akun extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
-
+            $is_bank = $this->input->post('is_bank');
+            if ($is_bank == null) {
+                $is_bank = 0;
+            }
             $data = array(
-                'nama_akun' => $this->input->post('nama_akun', TRUE),
-                'alias' => $this->input->post('alias', TRUE),
+                'nama_akun' => strtoupper($this->input->post('nama_akun', TRUE)),
+                'alias' => strtoupper($this->input->post('alias', TRUE)),
                 'keterangan' => $this->input->post('keterangan', TRUE),
                 'nomor_rekening' => $this->input->post('nomor_rekening', TRUE),
                 'creator' => $this->session->userdata('id_user'),
-                'bank' => $this->input->post('is_bank'),
+                'bank' => $is_bank,
             );
 
             $this->Akun_model->insert($data);
@@ -138,13 +141,17 @@ class Akun extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id', TRUE));
         } else {
+            $is_bank = $this->input->post('is_bank');
+            if ($is_bank == null) {
+                $is_bank = 0;
+            }
             $data = array(
-                'nama_akun' => $this->input->post('nama_akun', TRUE),
-                'alias' => $this->input->post('alias', TRUE),
+                'nama_akun' => strtoupper($this->input->post('nama_akun', TRUE)),
+                'alias' => strtoupper($this->input->post('alias', TRUE)),
                 'keterangan' => $this->input->post('keterangan', TRUE),
                 'nomor_rekening' => $this->input->post('nomor_rekening', TRUE),
                 'creator' => $this->session->userdata('id_user'),
-                'bank' => $this->input->post('is_bank'),
+                'bank' => $is_bank,
             );
 
             $this->Akun_model->update($this->input->post('id', TRUE), $data);
@@ -152,25 +159,32 @@ class Akun extends CI_Controller
             redirect(site_url('akun'));
         }
     }
+    public function nonaktifkan($id)
+    {
+        if ($this->Akun_model->non_aktifkan($id)) {
+            $this->session->set_flashdata('message', 'Akun Di-Non Aktifkan');
+            redirect(site_url('akun'));
+        } else {
+            $this->session->set_flashdata('message', 'Akun Gagal Di-Non Aktifkan');
+            redirect(site_url('akun'));
+        }
+    }
 
     public function delete($id)
     {
-        $this->load->model('Users_model');
-        $data_user = $this->Users_model->get_by_id($this->Users_model->id);
-        if ($data_user->role > 0) {
-            $this->session->set_flashdata('message', 'tidak boleh dihapus');
-            redirect(site_url('akun'));
-        } else {
-            $row = $this->Akun_model->get_by_id($id);
-
-            if ($row) {
-                $this->Jenis_dagangan_model->delete($id);
-                $this->session->set_flashdata('message', 'Delete Record Success');
-                redirect(site_url('jenis_dagangan'));
+        $this->load->model('Akun_model');
+        if (is_numeric($id)) {
+            $data_akun = $this->Akun_model->get_by_id($id);
+            if ($data_akun) {
+                $this->session->set_flashdata('message', 'Invalid Request');
+                redirect(site_url());
             } else {
-                $this->session->set_flashdata('message', 'Record Not Found');
-                redirect(site_url('jenis_dagangan'));
+                $this->Akun_model->update($id, array('aktif', 0));
+                $this->session->set_flashdata('message', 'Success');
+                redirect(site_url('akun'));
             }
+        } else {
+            redirect(site_url());
         }
     }
 

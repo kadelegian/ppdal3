@@ -7,31 +7,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">Data Tipe Kartu</h1>
+            <h1 class="h3 mb-0 text-gray-800">Transaksi Iuran Asongan</h1>
 
         </div>
-
         <div class="card-body">
-            <div class="row" style="margin-bottom: 10px">
-                <div class="col-md-4">
-                    <?php echo anchor(site_url('tipe_kartu/create'), 'Create', 'class="btn btn-primary"'); ?>
-                </div>
-                <div class="col-md-4 text-center">
-                    <div style="margin-top: 8px" id="message">
-                        <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
+            <?php if (isset($_SESSION['message'])) { ?>
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-danger">
+                            <?php echo $_SESSION['message']; ?>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-1 text-right">
-                </div>
+            <?php } ?>
+            <div class="row">
                 <div class="col-md-3 text-right">
-                    <form action="<?php echo site_url('tipe_kartu/index'); ?>" class="form-inline" method="get">
+                    <form action="<?php echo site_url('transaksi_iuran/index'); ?>" class="form-inline" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
                             <span class="input-group-btn">
                                 <?php
                                 if ($q <> '') {
                                     ?>
-                                    <a href="<?php echo site_url('tipe_kartu'); ?>" class="btn btn-default">Reset</a>
+                                    <a href="<?php echo site_url('transaksi_iuran'); ?>" class="btn btn-default">Reset</a>
                                 <?php
                                 }
                                 ?>
@@ -43,22 +41,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <table class="table table-bordered" style="margin-bottom: 10px">
                 <tr>
-                    <th>No</th>
-                    <th>Tipe Kartu</th>
-                    <th>Extra Charge</th>
-                    <th>Diskon</th>
-                    <th>Action</th>
+                    <th>Nomor Trx.</th>
+                    <th>Tanggal Trx.</th>
+                    <th>Nama Pedagang</th>
+                    <th>Nominal</th>
+                    <th>Petugas</th>
+
                 </tr><?php
-                        foreach ($tipe_kartu_data as $tipe_kartu) {
+                        foreach ($data_transaksi as $dt) {
                             ?>
                     <tr>
-                        <td width="80px"><?php echo ++$start ?></td>
-                        <td><?php echo $tipe_kartu->tipe_kartu ?></td>
-                        <td><?php echo $tipe_kartu->keterangan_charge . '(' . number_format($tipe_kartu->extra_charge, 0, ",", ".") . ')' ?></td>
-                        <td><?php echo $tipe_kartu->keterangan_diskon . '(' . number_format($tipe_kartu->nominal_diskon, 0, ",", ".") . ')' ?></td>
+
+                        <td><?= str_pad($dt->nomor_transaksi, 4, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo date_format(date_create($dt->tanggal_transaksi), 'd-M-Y') ?></td>
+                        <td><?php echo $dt->nama_pedagang ?></td>
+                        <td><?php echo number_format($dt->nominal, 0, ',', '.') ?></td>
+                        <td><?php echo $dt->nama_user ?></td>
                         <td style="text-align:center">
-                            <a class="btn btn-primary" href='<?= base_url('tipe_kartu/update/' . $tipe_kartu->id) ?>'>Lihat</a>
-                            <a class="btn btn-danger" href='<?= base_url('tipe_kartu/delete/' . $tipe_kartu->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-success" href='<?= base_url('transaksi_iuran_pedagang/read/' . $dt->id_transaksi) ?>'><i class="fas fa-money-check-alt"></i></a>
+
+                                <a class="btn btn-danger" href='<?= base_url('transaksi_iuran_pedagang/delete/' . $dt->id_transaksi) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+
+                            </div>
 
                         </td>
                     </tr>

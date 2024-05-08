@@ -87,7 +87,7 @@ class Users extends CI_Controller
 			'password' => set_value('password'),
 			'email' => set_value('email'),
 			'created_on' => set_value('created_on'),
-			'active' => set_value('active'),
+			'active' => 1,
 			'full_name' => set_value('full_name'),
 			'role' => set_value('role'),
 		);

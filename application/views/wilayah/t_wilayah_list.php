@@ -57,9 +57,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td><?php echo $wilayah->prefix_wilayah ?></td>
                         <td style="text-align:center; width:fit-content;">
 
-                            <a class="btn-primary" href='<?= base_url('wilayah/update/' . $wilayah->id) ?>'>Lihat</a>
-                            <a class="btn-danger" href='<?= base_url('wilayah/delete/' . $wilayah->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" href='<?= base_url('wilayah/update/' . $wilayah->id) ?>'>Lihat</a>
+                                <a class="btn btn-danger" href='<?= base_url('wilayah/delete/' . $wilayah->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
 
+
+                            </div>
                         </td>
                     </tr>
                 <?php

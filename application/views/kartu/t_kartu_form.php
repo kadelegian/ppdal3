@@ -8,39 +8,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Data Kartu</h6>
-            <?= validation_errors() ?>
+
         </div>
         <div class="card-body">
             <?php echo form_open($action) ?>
-            <div class="form-group">
-                <?php if ($button == 'Create') {
-                    $id_pedagang = 0;
-                } ?>
-                <input type="hidden" class="form-control" name="id_pedagang" id="id_pedagang" placeholder="Id Pedagang" value="<?php echo $id_pedagang; ?>" />
-            </div>
+
             <div class="form-group">
                 <label for="varchar">Nama Pemilik Kartu <?php echo form_error('nama_pemilik') ?></label>
                 <input type="text" class="form-control" name="nama_pemilik" id="nama_pemilik" placeholder="Nama Pemilik" value="<?php echo $nama_pemilik; ?>" />
             </div>
             <div class="form-group">
                 <label for="varchar">Nomor Kartu <?php echo form_error('nomor_kartu') ?></label>
-                <input type="text" class="form-control" name="nomor_kartu" id="nomor_kartu" placeholder="Nomor Kartu" value="<?php echo $nomor_kartu; ?>" />
+                <input type="text" readonly class="form-control" name="nomor_kartu" id="nomor_kartu" placeholder="Nomor Kartu" value="<?php echo $nomor_kartu; ?>" />
             </div>
             <div class="form-group">
                 <label for="varchar">Alamat<?php echo form_error('alamat_kartu') ?></label>
-                <input type="text" class="form-control" name="alamat_kartu" id="alamat_kartu" placeholder="Alamat Kartu" value="<?php echo $alamat_kartu; ?>" />
+                <input type="text" class="form-control" name="alamat_kartu" id="alamat_kartu" placeholder="Alamat" value="<?php echo $alamat_kartu; ?>" />
             </div>
             <div class="form-group">
                 <label for="varchar">Nomor Telp <?php echo form_error('nomor_telp') ?></label>
                 <input type="text" class="form-control" name="nomor_telp" id="nomor_telp" placeholder="Nomor Telp" value="<?php echo $nomor_telp; ?>" />
             </div>
             <div class="form-group">
-                <label for="id_tipe_kartu">Tipe Kartu <?php echo form_error('id_tipe_kartu') ?></label>
-                <select class="form-control" id="id_tipe_kartu" name="id_tipe_kartu">
-                    <?php foreach ($tipe_kartu as $tipe) : ?>
-                        <option value="<?= $tipe->id ?>" <?= $tipe->id == $id_tipe_kartu ? 'selected' : '' ?>><?= $tipe->tipe_kartu ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <label for="id_blok">Nomor Blok <?php echo form_error('id_blok') ?></label>
+                <input type="text" class="form-control" name="id_blok" id="id_blok" placeholder="Nomor Blok" value="<?php echo $id_blok; ?>" />
+
             </div>
 
 
@@ -66,10 +58,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </select>
 
             </div>
-            <div class="form-group">
-                <label for="varchar">Hash <?php echo form_error('hash') ?></label>
-                <input type="text" class="form-control" name="hash" id="hash" placeholder="Hash" value="<?php echo $hash; ?>" />
-            </div>
+
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
             <a href="<?php echo site_url('kartu') ?>" class="btn btn-grey">Kembali</a>

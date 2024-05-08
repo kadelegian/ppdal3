@@ -7,11 +7,14 @@ class Kartu extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        if (isset($_SESSION['id_user'])) {
-            $this->load->model('Kartu_model');
-            $this->load->library('form_validation');
-        } else {
-            redirect(base_url('auth'));
+        $dest = $this->uri->segment(2);
+        $this->load->model('Kartu_model');
+        $this->load->library('form_validation');
+        if (!isset($_SESSION['id_user'])) {
+            if ($dest !== 'read') {
+
+                redirect(base_url('auth'));
+            }
         }
     }
 
@@ -49,32 +52,7 @@ class Kartu extends CI_Controller
         $this->load->view('kartu/t_kartu_list', $data);
         $this->load->view('page_template/footer');
     }
-    public function ajax_get()
-    {
-        $id_pedagang = $this->input->get('id_pedagang');
-        if (is_numeric($this->input->get('nomor', true))) {
-            $q = $this->input->get('nomor');
-            $row = $this->Kartu_model->get_by_nomor($q);
-            if ($row != null) {
-                if ($row->id_pedagang == 0) {
 
-                    $data = array(
-                        'id_pedagang' => $id_pedagang,
-                    );
-                    $this->Kartu_model->update($row->id, $data);
-                    //$this->load->model('Pedagang_model');
-                    //$d['kartu_data'] = $this->Pedagang_model->get_kartu($id_pedagang);
-                    //header('Content-Type: text/html');
-                    //return $this->load->view('pedagang/tabel_kartu', $d);
-                    return;
-                } else {
-                    http_response_code(500);
-                    echo $row->id_pedagang;
-                    return;
-                }
-            }
-        }
-    }
     public function read($id = 0)
     {
         $cek = $this->uri->segment(3, 0);
@@ -126,25 +104,16 @@ class Kartu extends CI_Controller
 
                     $data = array(
                         'id' => $row->id,
-                        'id_pedagang' => $row->id_pedagang,
-                        'nama_pedagang' => $row->nama_pedagang,
                         'nama_pemilik' => $row->nama_pemilik,
                         'nomor_kartu' => $this->Kartu_model->nomor_kartu,
                         'alamat_kartu' => $row->alamat_kartu,
                         'nomor_telp' => $row->nomor_telp,
-                        'tipe_kartu' => $row->tipe_kartu,
                         'join_date' => $row->join_date,
                         'wilayah' => $row->wilayah,
                         'jenis_dagangan' => $row->nama_dagangan,
-                        'hash' => $row->hash,
                         'tanggal_jatuh_tempo' => $tgl_jatuh_tempo,
                         'histori_payment' => $payment_history->result(),
-                        'iuran' => $row->iuran,
-                        'extra_charge' => $row->extra_charge,
                         'min_month' => $selisih_bulan,
-                        'diskon' => $row->nominal_diskon,
-                        'charge_pedagang' => $row->charge_pedagang,
-                        'diskon_pedagang' => $row->diskon_pedagang,
                         'user_role' => $user_role,
 
                     );
@@ -159,46 +128,37 @@ class Kartu extends CI_Controller
                     $this->load->view('page_template/footer', $js);
                 } else {
                     $this->session->set_flashdata('message', 'Record Not Found');
-                    redirect(site_url('kartu'));
+                    redirect(site_url());
                 }
             } else {
                 $this->session->set_flashdata('message', 'Record Not Found');
-                redirect(site_url('kartu'));
+                redirect(site_url());
             }
         }
     }
 
     public function create()
     {
-        $this->load->model('Diskon_model');
-        $diskon = $this->Diskon_model->get_all();
-        $this->load->model('Extra_charge_model');
-        $extra_charge = $this->Extra_charge_model->get_all();
         $this->load->model('Wilayah_model');
         $wilayah = $this->Wilayah_model->get_all();
         $this->load->model('Jenis_dagangan_model');
         $jenis_dagangan = $this->Jenis_dagangan_model->get_all();
-        $this->load->model('Tipe_kartu_model');
-        $tipe_kartu = $this->Tipe_kartu_model->get_all();
+        $grup = $this->Kartu_model->get_grup();
         $data = array(
             'button' => 'Create',
             'action' => site_url('kartu/create_action'),
             'id' => set_value('id'),
-            'id_pedagang' => 0,
+            'id_blok' => 0,
             'nama_pemilik' => set_value('nama_pemilik'),
             'nomor_kartu' => set_value('nomor_kartu'),
             'alamat_kartu' => set_value('alamat_kartu'),
             'nomor_telp' => set_value('nomor_telp'),
-            'id_tipe_kartu' => set_value('id_tipe_kartu'),
             'join_date' => set_value('join_date'),
             'id_wilayah' => set_value('id_wilayah'),
             'id_jenis_dagangan' => set_value('id_jenis_dagangan'),
-            'hash' => set_value('hash'),
-            'diskon' => $diskon,
-            'extra_charge' => $extra_charge,
             'wilayah' => $wilayah,
             'jenis_dagangan' => $jenis_dagangan,
-            'tipe_kartu' => $tipe_kartu,
+            'blok' => $grup,
         );
         $js['js_script'] = array('jquery.datetimepicker.full.min.js', 'dtpicker_format.js');
         $css['external_css'] = array('jquery.datetimepicker.min.css');
@@ -220,16 +180,16 @@ class Kartu extends CI_Controller
             $formatted_date = date('Y-m-d', $tanggal);
 
             $data = array(
-                'id_pedagang' => $this->input->post('id_pedagang', TRUE),
+
                 'nama_pemilik' => $this->input->post('nama_pemilik', TRUE),
                 'nomor_kartu' => '',
                 'alamat_kartu' => $this->input->post('alamat_kartu', TRUE),
                 'nomor_telp' => $this->input->post('nomor_telp', TRUE),
-                'id_tipe_kartu' => $this->input->post('id_tipe_kartu', TRUE),
                 'join_date' => $formatted_date,
+                'id_blok' => $this->input->post('id_blok', true),
                 'id_wilayah' => $this->input->post('id_wilayah', TRUE),
                 'id_jenis_dagangan' => $this->input->post('id_jenis_dagangan', TRUE),
-                'hash' => $this->input->post('hash', TRUE),
+
             );
 
             $this->Kartu_model->insert($data);
@@ -243,35 +203,27 @@ class Kartu extends CI_Controller
         $row = $this->Kartu_model->get_by_id($id);
 
         if ($row) {
-            $this->load->model('Diskon_model');
-            $diskon = $this->Diskon_model->get_all();
-            $this->load->model('Extra_charge_model');
-            $extra_charge = $this->Extra_charge_model->get_all();
+
             $this->load->model('Wilayah_model');
             $wilayah = $this->Wilayah_model->get_all();
             $this->load->model('Jenis_dagangan_model');
             $jenis_dagangan = $this->Jenis_dagangan_model->get_all();
-            $this->load->model('Tipe_kartu_model');
-            $tipe_kartu = $this->Tipe_kartu_model->get_all();
+
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('kartu/update_action'),
                 'id' => set_value('id', $row->id),
-                'id_pedagang' => set_value('id_pedagang', $row->id_pedagang),
+                'id_blok' => set_value('id_blok', $row->id_blok),
                 'nama_pemilik' => set_value('nama_pemilik', $row->nama_pemilik),
                 'nomor_kartu' => set_value('nomor_kartu', $row->nomor_kartu),
                 'alamat_kartu' => set_value('alamat_kartu', $row->alamat_kartu),
                 'nomor_telp' => set_value('nomor_telp', $row->nomor_telp),
-                'id_tipe_kartu' => set_value('id_tipe_kartu', $row->id_tipe_kartu),
                 'join_date' => set_value('join_date', $row->join_date),
                 'id_wilayah' => set_value('id_wilayah', $row->id_wilayah),
                 'id_jenis_dagangan' => set_value('id_jenis_dagangan', $row->id_jenis_dagangan),
-                'hash' => set_value('hash', $row->hash),
-                'diskon' => $diskon,
-                'extra_charge' => $extra_charge,
                 'wilayah' => $wilayah,
                 'jenis_dagangan' => $jenis_dagangan,
-                'tipe_kartu' => $tipe_kartu,
+
             );
             $js['js_script'] = array('jquery.datetimepicker.full.min.js', 'dtpicker_format.js');
             $css['external_css'] = array('jquery.datetimepicker.min.css');
@@ -297,16 +249,16 @@ class Kartu extends CI_Controller
             $tanggal = $this->int_tanggal($this->input->post('join_date', true));
             $formatted_date = date('Y-m-d', $tanggal);
             $data = array(
-                'id_pedagang' => $this->input->post('id_pedagang', TRUE),
+
                 'nama_pemilik' => $this->input->post('nama_pemilik', TRUE),
                 'nomor_kartu' => $this->input->post('nomor_kartu', TRUE),
                 'alamat_kartu' => $this->input->post('alamat_kartu', TRUE),
                 'nomor_telp' => $this->input->post('nomor_telp', TRUE),
-                'id_tipe_kartu' => $this->input->post('id_tipe_kartu', TRUE),
+                'id_blok' => $this->input->post('id_blok', true),
                 'join_date' => $formatted_date,
                 'id_wilayah' => $this->input->post('id_wilayah', TRUE),
                 'id_jenis_dagangan' => $this->input->post('id_jenis_dagangan', TRUE),
-                'hash' => $this->input->post('hash', TRUE),
+
             );
 
             $this->Kartu_model->update($this->input->post('id', TRUE), $data);
@@ -338,10 +290,10 @@ class Kartu extends CI_Controller
     {
 
         $this->form_validation->set_rules('nama_pemilik', 'nama pemilik', 'trim|required');
-        $this->form_validation->set_rules('id_tipe_kartu', 'id tipe kartu', 'trim|required');
+        $this->form_validation->set_rules('alamat_kartu', 'Alamat', 'trim|required');
         $this->form_validation->set_rules('join_date', 'join date', 'trim|required');
-        $this->form_validation->set_rules('id_wilayah', 'id wilayah', 'trim|required');
-        $this->form_validation->set_rules('id_jenis_dagangan', 'id jenis dagangan', 'trim|required');
+        $this->form_validation->set_rules('id_wilayah', 'Wilayah', 'trim|required');
+        $this->form_validation->set_rules('id_jenis_dagangan', 'jenis dagangan', 'trim|required');
 
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }

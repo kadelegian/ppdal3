@@ -5,11 +5,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col">
+
             <div class="card shadow mb-4">
-                <div class="card-header py-3 justify-content-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Kartu</h6>
-                </div>
+
+                <img class="card-img-top d-block d-md-none d-lg-none" src="<?= base_url('assets/img/logo.jpg') ?>" alt="Card image">
                 <div class="card-body">
+                    <h6 class="font-weight-bold text-primary d-lg-block d-sm-none d-md-none">Data Pedagang Pantai</h6>
 
                     <table>
                         <tr>
@@ -17,21 +18,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td>:</td>
                             <td><?= $nomor_kartu ?></td>
                         </tr>
-
                         <tr>
                             <td>Nama Pedagang</td>
                             <td>:</td>
-                            <td><?= $nama_pedagang ?></td>
-                        </tr>
-                        <tr>
-                            <td>Pemilik Kartu</td>
-                            <td>:</td>
                             <td><?= $nama_pemilik ?></td>
-                        </tr>
-                        <tr>
-                            <td>Tipe Kartu</td>
-                            <td>:</td>
-                            <td><?= $tipe_kartu ?></td>
                         </tr>
                         <tr>
                             <td>Dagangan</td>
@@ -60,32 +50,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-auto">
+                    <?php if ($user_role > 1) : ?>
+                        <div class="row">
+                            <div class="col-auto">
 
-                            <label for="tgl_awal">Terima Pembayaran:</label>
-                            <span class="text-danger"><?= $this->session->flashdata('error') != null ? $this->session->flashdata('error') : '' ?></span>
+                                <label for="tgl_awal">Terima Pembayaran:</label>
+                                <span class="text-danger"><?= $this->session->flashdata('error') != null ? $this->session->flashdata('error') : '' ?></span>
+                            </div>
+
                         </div>
+                        <div class="row">
 
-                    </div>
-                    <div class="row">
-
-                        <div class="col-lg">
-                            <?php if ($user_role == 1) : ?>
+                            <div class="col-lg">
                                 <?php echo form_open('transaksi_iuran/create', array('class' => 'form form-inline')) ?>
 
                                 <div class="form-group">
-                                    <input type="hidden" name="id_pedagang" value="<?= $id_pedagang ?>">
+
                                     <input type="hidden" name="id_kartu" value="<?= $id ?>">
-                                    <input type="hidden" name="nama_pedagang" value="<?= $nama_pedagang ?>">
-                                    <input type="hidden" name="iuran" value="<?= $iuran ?>">
-                                    <input type="hidden" name="charge" value="<?= $extra_charge ?>">
-                                    <input type="hidden" name="diskon" value="<?= $diskon ?>">
+                                    <input type="hidden" name="nama_pemilik" value="<?= $nama_pemilik ?>">
                                     <input type="hidden" name="wilayah" value="<?= $wilayah ?>">
                                     <input type="hidden" name="nomor_kartu" value="<?= $nomor_kartu ?>">
                                     <input type="hidden" name="jenis_dagangan" value="<?= $jenis_dagangan ?>">
-                                    <input type="hidden" name="diskon_pedagang" id="diskon_pedagang">
-                                    <input type="hidden" name="charge_pedagang" id="charge_pedagang">
+
                                     <input type="text" readonly class="form-control" value="<?= $tanggal_jatuh_tempo != null ? date_format(date_create_from_format('Y-m-d', $tanggal_jatuh_tempo), 'M, Y') : '' ?>">
                                     <input type="hidden" id="min-month" value="<?= $min_month ?>">
                                     <input type="hidden" name="awal_periode" value="<?= date_format(date_create_from_format('Y-m-d', $tanggal_jatuh_tempo), 'Y-m-d') ?>">
@@ -105,10 +91,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
 
                                 <?php echo form_close() ?>
-                            <?php endif; ?>
-                        </div>
+                            </div>
 
-                    </div>
+                        </div>
+                    <?php endif; ?>
                     <table class="table table-hover">
                         <tr>
                             <th>No.</th>

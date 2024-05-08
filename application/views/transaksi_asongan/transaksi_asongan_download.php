@@ -175,6 +175,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td><?= $kali_nominal . 'x ' . number_format($nominal_iuran, 0, ',', '.') ?></td>
                         <td style="text-align: right;"><?= number_format($total_iuran, 0, ',', '.')  ?></td>
                     </tr>
+
+                    <?php if ($total_extra_charge > 0) { ?>
+                        <tr style="border-top: 1px;">
+                            <td><?= $keterangan_extra_charge ?></td>
+                            <td><?= $kali_nominal . 'x ' . number_format($nominal_extra_charge, 0, ',', '.') ?></td>
+                            <td style="text-align: right;"><?= number_format($total_extra_charge, 0, ',', '.') ?></td>
+                        </tr>
+                    <?php } ?>
+
                     <?php if ($total_diskon > 0) { ?>
                         <tr style="border-top: 1px;">
                             <td><?= $keterangan_diskon ?></td>
@@ -250,6 +259,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     window.addEventListener("afterprint", goback);
 
     function goback() {
-        location.replace("<?= base_url('kartu/read/' . $id_kartu) ?>");
+        location.replace("<?= base_url('pedagang/read/' . $id_kartu) ?>");
     }
 </script>

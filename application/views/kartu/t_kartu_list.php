@@ -7,16 +7,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">Data Kartu</h1>
+            <h1 class="h3 mb-0 text-gray-800">Data Pedagang Pantai</h1>
 
         </div>
         <div class="card-body">
             <div class="row" style="margin-bottom: 10px">
-                <div class="col-auto mr-auto">
+                <div class="col-md-4 mr-auto">
                     <?php echo anchor(site_url('kartu/create'), 'Create', 'class="btn btn-primary"'); ?>
-                    <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
-                </div>
 
+                </div>
+                <div class="col-md-4 text-center">
+                    <?php if ($this->session->userdata('message') <> '') { ?>
+                        <div style="margin-top: 8px" class="alert alert-info" id="message">
+                            <?php echo $this->session->userdata('message'); ?>
+                        </div>
+                    <?php } ?>
+                </div>
                 <div class="col-auto">
                     <form action="<?php echo site_url('kartu/index'); ?>" class="form-inline" method="get">
                         <div class="input-group">
@@ -40,28 +46,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <table class="table table-bordered" style="margin-bottom: 10px">
                     <tr>
 
-                        <th>Nama Pedagang</th>
                         <th>Nama Pemilik</th>
                         <th>Nomor Kartu</th>
-                        <th>Tipe Kartu</th>
                         <th>Dagangan</th>
                         <th>Wilayah</th>
                         <th>Join Date</th>
-
                         <th>Action</th>
                     </tr><?php
                             foreach ($kartu_data as $kartu) {
                                 ?>
                         <tr>
 
-                            <td>
-                                <a href="<?= base_url('pedagang/update/' . $kartu->id_pedagang)  ?>">
-                                    <?php echo $kartu->nama_pedagang ?>
-                                </a>
-                            </td>
+
                             <td><?php echo $kartu->nama_pemilik ?></td>
                             <td><?php echo $kartu->nomor_kartu ?></td>
-                            <td><?php echo $kartu->tipe_kartu ?></td>
                             <td><?php echo $kartu->nama_dagangan ?></td>
                             <td><?php echo $kartu->wilayah ?></td>
                             <td><?php echo date_format(date_create_from_format('Y-m-d', $kartu->join_date), 'd/m/Y') ?></td>

@@ -9,16 +9,69 @@ class Jenis_dagangan_model extends CI_Model
     public $table = 't_jenis_dagangan';
     public $id = 'id';
     public $order = 'DESC';
-
+    public $tipe = 0;
     function __construct()
     {
         parent::__construct();
     }
 
+    function delete_setting_iuran($periode)
+    {
+        $this->db->where('periode', $periode);
+        $this->db->delete('setting_iuran');
+    }
+    function get_list_periode()
+    {
+        $this->db->select('distinct(periode)');
+        return $this->db->get('setting_iuran')->result();
+    }
+    function get_all_setting()
+    {
+        $this->db->select('setting_iuran.*, t_jenis_dagangan.nama_dagangan');
+        $this->db->from('setting_iuran');
+        $this->db->join('t_jenis_dagangan', 'setting_iuran.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
+        return $this->db->get()->result();
+    }
+    function get_periode_setting($periode)
+    {
+        $part = explode('-', $periode);
+
+        $query = 'SELECT t_jenis_dagangan.id as id_jenis_dagangan,COALESCE(setting_iuran.id,0) as id, t_jenis_dagangan.nama_dagangan, COALESCE(setting_iuran.iuran,0) as iuran 
+        FROM t_jenis_dagangan 
+        LEFT JOIN setting_iuran 
+        ON setting_iuran.id_jenis_dagangan=t_jenis_dagangan.id 
+        and month(setting_iuran.periode)=' . $part[1] . ' AND year(setting_iuran.periode)=' . $part[0];
+        return $this->db->query($query)->result();
+    }
+    function update_iuran($data)
+    {
+
+        $this->db->update_batch('setting_iuran', $data, 'id');
+    }
+    function save_iuran($data)
+    {
+        $this->db->insert_batch('setting_iuran', $data);
+    }
     // get all
+    function get_latest_setting()
+    {
+        $this->db->select('max(periode) as periode');
+        $periode_terbaru = $this->db->get('setting_iuran')->row();
+        if ($periode_terbaru) {
+            $this->db->where('periode', $periode_terbaru->periode);
+        }
+        return $this->db->get('setting_iuran')->result();
+    }
+    function get_setting($periode)
+    {
+        $this->db->where('periode', $periode);
+
+        return $this->db->get('setting_iuran')->result();
+    }
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
+
+        // $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
 
@@ -28,25 +81,33 @@ class Jenis_dagangan_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-    
+
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL)
+    {
+        $this->db->where('tipe', $this->tipe);
+        $this->db->group_start();
         $this->db->like('id', $q);
-	$this->db->or_like('nama_dagangan', $q);
-	$this->db->or_like('prefix_dagangan', $q);
-	$this->db->or_like('iuran', $q);
-	$this->db->from($this->table);
+        $this->db->or_like('nama_dagangan', $q);
+        $this->db->or_like('prefix_dagangan', $q);
+        $this->db->or_like('iuran', $q);
+        $this->db->group_end();
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
         $this->db->order_by($this->id, $this->order);
+        $this->db->where('tipe', $this->tipe);
+        $this->db->group_start();
         $this->db->like('id', $q);
-	$this->db->or_like('nama_dagangan', $q);
-	$this->db->or_like('prefix_dagangan', $q);
-	$this->db->or_like('iuran', $q);
-	$this->db->limit($limit, $start);
+        $this->db->or_like('nama_dagangan', $q);
+        $this->db->or_like('prefix_dagangan', $q);
+        $this->db->or_like('iuran', $q);
+        $this->db->group_end();
+        $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 
@@ -69,7 +130,6 @@ class Jenis_dagangan_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
-
 }
 
 /* End of file Jenis_dagangan_model.php */

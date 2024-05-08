@@ -67,4 +67,19 @@ class Jurnal_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
+    function get_summary($data_akun)
+    {
+        $query = '';
+        $jumlah_akun = sizeof($data_akun);
+        foreach ($data_akun as $akun) {
+            $query = $query . "select ifnull((sum(debet)-sum(kredit)),0) as saldo,'" . $akun->nama_akun . "' as nama_akun 
+from " . $this->table . " where id_akun=" . $akun->id;
+
+            $jumlah_akun = $jumlah_akun - 1;
+            if ($jumlah_akun > 0) {
+                $query = $query . ' union ';
+            }
+        }
+        return $this->db->query($query)->result();
+    }
 }

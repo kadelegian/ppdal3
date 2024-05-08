@@ -3,11 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Transaksi_iuran_model extends CI_Model
+class Transaksi_iuran_pedagang_model extends CI_Model
 {
 
     public $table = 'transaksi_iuran';
-    public $table_pedagang = 't_kartu';
+    public $table_pedagang = 't_pedagang';
     public $id = 'id_transaksi';
     public $order = 'DESC';
     public $prefix_nomor = 'BKM-PPDAL';
@@ -16,8 +16,7 @@ class Transaksi_iuran_model extends CI_Model
     {
         parent::__construct();
     }
-    function get_list_iuran($periode_awal, $periode_akhir, $id_jenis)
-    { }
+
     function get_last_payment($id_kartu)
     {
 
@@ -48,16 +47,16 @@ class Transaksi_iuran_model extends CI_Model
     function get_by_id($id)
     {
         $strselect = 'transaksi_iuran.*,
-        t_kartu.nama_pemilik_kartu,
-        t_kartu.nomor_kartu,
+        t_pedagang.nama_pedagang,
+        t_pedagang.nomor_kartu,
         t_jenis_dagangan.nama_dagangan, 
         t_wilayah.wilayah,
         users.full_name';
         $this->db->select($strselect);
         $this->db->from('transaksi_iuran');
-        $this->db->join('t_kartu', 't_kartu.id=transaksi_iuran.id_kartu');
-        $this->db->join('t_jenis_dagangan', 't_kartu.id_jenis_dagangan=t_jenis_dagangan.id');
-        $this->db->join('t_wilayah', 't_kartu.id_wilayah=t_wilayah.id');
+        $this->db->join('t_pedagang', 't_pedagang.id=transaksi_iuran.id_kartu');
+        $this->db->join('t_jenis_dagangan', 't_pedagang.id_jenis_dagangan=t_jenis_dagangan.id');
+        $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id');
         $this->db->join('users', 'transaksi_iuran.id_user=users.id');
         $this->db->where($this->id, $id);
         return $this->db->get()->row();
@@ -67,20 +66,20 @@ class Transaksi_iuran_model extends CI_Model
         $q = 'SELECT detail_transaksi_iuran.id as id_detail,detail_transaksi_iuran.periode, 
         transaksi_iuran.tanggal_transaksi, 
         transaksi_iuran.id_kartu,
-        t_kartu.nomor_kartu,
-        t_kartu.nama_pemilik,
+        t_pedagang.*,       
         t_wilayah.wilayah,t_jenis_dagangan.nama_dagangan, 
         users.full_name,
         detail_transaksi_iuran.iuran,
-        detail_transaksi_iuran.diskon 
+        detail_transaksi_iuran.diskon, 
+        detail_transaksi_iuran.charge
         FROM detail_transaksi_iuran 
         JOIN transaksi_iuran 
         ON detail_transaksi_iuran.id_transaksi=transaksi_iuran.id_transaksi 
-        JOIN t_kartu
-         ON transaksi_iuran.id_kartu=t_kartu.id 
+        JOIN t_pedagang
+         ON transaksi_iuran.id_kartu=t_pedagang.id 
         JOIN t_jenis_dagangan 
-        ON t_kartu.id_jenis_dagangan=t_jenis_dagangan.id 
-        JOIN t_wilayah on t_kartu.id_wilayah=t_wilayah.id 
+        ON t_pedagang.id_jenis_dagangan=t_jenis_dagangan.id 
+        JOIN t_wilayah on t_pedagang.id_wilayah=t_wilayah.id 
         JOIN users on transaksi_iuran.id_user = users.id 
         WHERE detail_transaksi_iuran.id_transaksi=' . $id;
         $result = $this->db->query($q);
@@ -91,7 +90,7 @@ class Transaksi_iuran_model extends CI_Model
     function total_rows($q = NULL)
     {
 
-        $this->db->or_like('t_kartu.nomor_kartu', $q);
+        $this->db->or_like('t_pedagang.nomor_kartu', $q);
         $this->db->or_like('transaksi_iuran.tanggal_transaksi', $q);
         $this->db->or_like('users.full_name', $q);
         $this->db->from($this->table);
@@ -102,8 +101,8 @@ class Transaksi_iuran_model extends CI_Model
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
         $query = 'transaksi_iuran.*,
-        t_kartu.nomor_kartu,
-        t_kartu.nama_pemilik_kartu,
+        t_pedagang.nomor_kartu,
+        t_pedagang.nama_pemilik_kartu,
         t_wilayah.wilayah,
         t_jenis_dagangan.nama_dagangan,
         users.full_name as nama_user,
@@ -111,9 +110,9 @@ class Transaksi_iuran_model extends CI_Model
 
         $this->db->select($query);
         $this->db->from('transaksi_iuran');
-        $this->db->join('t_kartu', 'transaksi_iuran.id_kartu=t_kartu.id');
-        $this->db->join('t_wilayah', 't_kartu.id_wilayah=t_wilayah.id');
-        $this->db->join('t_jenis_dagangan', 't_jenis_dagangan.id=t_kartu.id_jenis_dagangan');
+        $this->db->join('t_pedagang', 'transaksi_iuran.id_kartu=t_pedagang.id');
+        $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id');
+        $this->db->join('t_jenis_dagangan', 't_jenis_dagangan.id=t_pedagang.id_jenis_dagangan');
         $this->db->join('detail_transaksi_iuran', 'detail_transaksi_iuran.id_transaksi=transaksi_iuran.id_transaksi');
         $this->db->join('users', 'users.id=transaksi_iuran.id_user');
         $this->db->group_by('transaksi_iuran.id_transaksi');
@@ -181,16 +180,21 @@ class Transaksi_iuran_model extends CI_Model
     function read_transaksi($id)
     {
         $data = $this->get_detail_trans($id);
+
         if ($data->num_rows() > 0) {
             $data_row = $data->first_row();
-            $tgl = date_create($data_row->tanggal_transaksi);
-            $id_kartu = $data_row->id_kartu;
-            $this->load->model('Kartu_model');
-            $data_kartu = $this->Kartu_model->get_by_id($id_kartu);
-            $nomor_kartu = $data_kartu->nomor_kartu;
-            $nomor_transaksi = str_pad($id, 4, '0', STR_PAD_LEFT);
             $data_last_row = $data->last_row();
+
+            $tgl = date_create($data_row->tanggal_transaksi);
+
+            $id_pedagang = $data_row->id_kartu;
+
+            $this->load->model('Pedagang_model');
+            $data_kartu = $this->Pedagang_model->get_by_id($id_pedagang);
+            $nomor_kartu = $data_kartu->nomor;
+            $nomor_transaksi = str_pad($id, 4, '0', STR_PAD_LEFT);
             $jumlah_periode = $data->num_rows();
+
             if ($jumlah_periode == 1) {
                 $ket_periode = 'Iuran Periode ' . date_format(date_create($data_row->periode), 'M, Y');
             } else {
@@ -199,34 +203,45 @@ class Transaksi_iuran_model extends CI_Model
             }
 
             $nominal_iuran = $data_row->iuran;
-            $total_iuran = $jumlah_periode * $nominal_iuran;
-
+            $extra_charge = $data_row->charge;
             $nominal_diskon = $data_row->diskon;
+
+            $total_iuran = $jumlah_periode * $nominal_iuran;
+            $total_extra_charge = $jumlah_periode * $extra_charge;
             $total_diskon = $jumlah_periode * $nominal_diskon;
 
-            $total_bayar = $total_iuran - $total_diskon;
+            $total_bayar = $total_iuran + $total_extra_charge;
+
+
+            if ($total_diskon > 0) {
+                $total_bayar = $total_iuran - $total_diskon;
+            }
+
 
             $info_lembaga = $this->db->query('select * from info_lembaga')->row();
 
             $data_trx = array(
                 'id_transaksi' => $id,
                 'nomor_transaksi' => $nomor_transaksi,
-                'id_kartu' => $id_kartu,
+                'id_kartu' => $id_pedagang,
                 'nomor_kartu' => $nomor_kartu,
-                'nama_pemilik' => $data_row->nama_pemilik,
+                'nama_pemilik' => $data_row->nama_pedagang,
                 'jenis_dagangan' => $data_row->nama_dagangan,
                 'wilayah' => $data_row->wilayah,
                 'tanggal_transaksi' => date_format($tgl, 'd/m/Y h:i:s A'),
                 'nama_user' => $data_row->full_name,
                 'keterangan_iuran' => $ket_periode,
                 'keterangan_diskon' => 'Diskon',
+                'keterangan_extra_charge' => 'Penjamin',
                 'kali_nominal' => $jumlah_periode,
                 'nominal_iuran' => $nominal_iuran,
                 'total_iuran' => $total_iuran,
+                'nominal_extra_charge' => $extra_charge,
+                'total_extra_charge' => $total_extra_charge,
                 'nominal_diskon' => $nominal_diskon,
                 'total_diskon' => $total_diskon,
                 'total_bayar' => $total_bayar,
-                'terbilang' => $this->Transaksi_iuran_model->terbilang($total_bayar),
+                'terbilang' => $this->Transaksi_iuran_pedagang_model->terbilang($total_bayar),
                 'info_lembaga' => $info_lembaga,
 
             );

@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <!-- Custom scripts for all pages-->
 <script src=<?= base_url("assets/js/sb-admin-2.min.js") ?>></script>
-
+<script src=<?= base_url('assets/js/dismiss_msg.js') ?>></script>
 <?php if (isset($js_script)) : ?>
     <?php foreach ($js_script as $script) : ?>
         <script src="<?= base_url('assets/js/' . $script) ?>"></script>

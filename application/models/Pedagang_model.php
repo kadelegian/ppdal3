@@ -10,34 +10,72 @@ class Pedagang_model extends CI_Model
     public $id = 'id';
     public $order = 'DESC';
 
+
     function __construct()
     {
         parent::__construct();
+    }
+    function _nomor_kartu($id, $prefix_wilayah, $prefix_dagangan)
+    {
+        $card = str_pad($id, 4, '0', STR_PAD_LEFT) . '/'  . $prefix_wilayah . '/' . $prefix_dagangan . '/' . date_format(date_create(), 'Y');
+        $this->nomor_kartu = $card;
+        return $card;
     }
 
     // get all
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
-        return $this->db->get($this->table)->result();
-    }
+        $this->db->select('t_pedagang.*,t_extra_charge.keterangan_charge,t_extra_charge.extra_charge,t_wilayah.wilayah,t_jenis_dagangan.nama_dagangan');
+        $this->db->from($this->table);
+        $this->db->join('t_extra_charge', 't_pedagang.id_extra_charge=t_extra_charge.id', 'left');
+        $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id', 'left');
+        $this->db->join('t_jenis_dagangan', 't_pedagang.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
+        $this->db->order_by('t_pedagang.id_wilayah', 'asc');
+        $this->db->order_by('t_pedagang.id', 'asc');
 
+        return $this->db->get()->result();
+    }
+    function get_iuran()
+    {
+        $this->db->select('iuran');
+        $this->db->from('setting_iuran_asongan');
+        $this->db->order_by('id', 'desc');
+        $this->db->limit(1);
+        return $this->db->get()->row();
+    }
+    function simpan_iuran($data)
+    {
+        $this->db->insert('setting_iuran_asongan', $data);
+    }
     // get data by id
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
-        return $this->db->get($this->table)->row();
+        $this->db->select('t_pedagang.*,
+        t_jenis_dagangan.nama_dagangan,t_jenis_dagangan.prefix_dagangan,t_jenis_dagangan.iuran,
+        t_wilayah.prefix_wilayah,t_wilayah.wilayah,
+        t_extra_charge.*');
+        $this->db->from('t_pedagang');
+        $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id', 'left');
+        $this->db->join('t_jenis_dagangan', 't_pedagang.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
+        $this->db->join('t_extra_charge', 't_pedagang.id_extra_charge=t_extra_charge.id', 'left');
+        $this->db->where('t_pedagang.id', $id);
+        $r = $this->db->get()->row();
+        $this->_nomor_kartu($r->id, $r->prefix_wilayah, $r->prefix_dagangan);
+        return $r;
     }
 
     // get total rows
     function total_rows($q = NULL)
     {
-        $this->db->like('id', $q);
-        $this->db->or_like('nama_pedagang', $q);
-        $this->db->or_like('alamat_pedagang', $q);
-        $this->db->or_like('no_hp', $q);
-        $this->db->or_like('join_date', $q);
+        $this->db->select('t_pedagang.id');
         $this->db->from($this->table);
+        $this->db->join('t_extra_charge', 't_pedagang.id_extra_charge=t_extra_charge.id', 'left');
+        $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id', 'left');
+        $this->db->join('t_jenis_dagangan', 't_pedagang.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
+        $this->db->or_like('t_pedagang.nama_pedagang', $q);
+        $this->db->or_like('t_extra_charge.keterangan_charge', $q);
+        $this->db->or_like('t_pedagang.nomor', $q);
+        $this->db->or_like('t_jenis_dagangan.nama_dagangan', $q);
         return $this->db->count_all_results();
     }
 
@@ -45,35 +83,49 @@ class Pedagang_model extends CI_Model
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
 
-        $this->db->order_by($this->id, $this->order);
-        $this->db->like('id', $q);
-        $this->db->or_like('nama_pedagang', $q);
-        $this->db->or_like('alamat_pedagang', $q);
-        $this->db->or_like('no_hp', $q);
-        $this->db->or_like('join_date', $q);
+        $this->db->select('t_pedagang.*,t_extra_charge.keterangan_charge,t_extra_charge.extra_charge,t_wilayah.wilayah,t_jenis_dagangan.nama_dagangan');
+        $this->db->from($this->table);
+        $this->db->join('t_extra_charge', 't_pedagang.id_extra_charge=t_extra_charge.id', 'left');
+        $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id', 'left');
+        $this->db->join('t_jenis_dagangan', 't_pedagang.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
+        $this->db->order_by('t_pedagang.id_wilayah', 'asc');
+        $this->db->order_by('t_pedagang.id', 'asc');
+
+        $this->db->like('t_pedagang.nama_pedagang', $q);
+        $this->db->or_like('t_extra_charge.keterangan_charge', $q);
+        $this->db->or_like('t_pedagang.nomor', $q);
+        $this->db->or_like('t_jenis_dagangan.nama_dagangan', $q);
         $this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
-    }
-    function get_kartu($idPedagang)
-    {
-        $select = 't_kartu.id, t_kartu.nomor_kartu,t_tipe_kartu.tipe_kartu, t_wilayah.wilayah,t_jenis_dagangan.nama_dagangan';
-        $this->db->select($select);
-        $this->db->from('t_kartu');
-        $this->db->join('t_tipe_kartu', 't_kartu.id_tipe_kartu=t_tipe_kartu.id', 'left');
-        $this->db->join('t_wilayah', 't_kartu.id_wilayah=t_wilayah.id', 'left');
-        $this->db->join('t_jenis_dagangan', 't_kartu.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
-        $this->db->where('id_pedagang', $idPedagang);
         return $this->db->get()->result();
     }
     // insert data
     function insert($data)
     {
         $this->db->insert($this->table, $data);
+        $id_baru = $this->db->insert_id();
+        $this->load->model('Wilayah_model');
+        $this->load->model('Jenis_dagangan_model');
+        $jenis = $this->Jenis_dagangan_model->get_by_id($data['id_jenis_dagangan']);
+
+        $r = $this->Wilayah_model->get_by_id($data['id_wilayah']);
+
+        $this->_nomor_kartu($id_baru, $r->prefix_wilayah, $jenis->prefix_dagangan);
+        $this->db->where($this->id, $id_baru);
+        $this->db->update($this->table, array('nomor' => $this->nomor_kartu));
     }
 
     // update data
     function update($id, $data)
     {
+        $this->load->model('Wilayah_model');
+        $this->load->model('Jenis_dagangan_model');
+        $jenis = $this->Jenis_dagangan_model->get_by_id($data['id_jenis_dagangan']);
+
+        $r = $this->Wilayah_model->get_by_id($data['id_wilayah']);
+
+        $this->_nomor_kartu($id, $r->prefix_wilayah, $jenis->prefix_dagangan);
+
+        $data['nomor'] = $this->nomor_kartu;
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
     }

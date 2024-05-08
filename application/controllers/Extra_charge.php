@@ -90,9 +90,16 @@ class Extra_charge extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
-            $nominal = preg_replace('/\D/', '', $this->input->post('extra_charge', true));
+            $xcharge = $this->input->post('extra_charge', true);
+            $isNegative = substr($xcharge, 0, 1) === '-';
+            $nominal = preg_replace('/\D/', '', $xcharge);
+            if ($isNegative) {
+
+                $nominal *= -1;
+            }
+
             $data = array(
-                'keterangan_charge' => $this->input->post('keterangan_charge', TRUE),
+                'keterangan_charge' => strtoupper($this->input->post('keterangan_charge', TRUE)),
                 'extra_charge' => $nominal,
             );
 
@@ -133,9 +140,15 @@ class Extra_charge extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id', TRUE));
         } else {
-            $nominal = preg_replace('/\D/', '', $this->input->post('extra_charge', true));
+            $xcharge = $this->input->post('extra_charge', true);
+            $isNegative = substr($xcharge, 0, 1) === '-';
+            $nominal = preg_replace('/\D/', '', $xcharge);
+            if ($isNegative) {
+
+                $nominal *= -1;
+            }
             $data = array(
-                'keterangan_charge' => $this->input->post('keterangan_charge', TRUE),
+                'keterangan_charge' => strtoupper($this->input->post('keterangan_charge', TRUE)),
                 'extra_charge' => $nominal,
             );
 

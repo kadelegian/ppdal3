@@ -57,9 +57,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo number_format($extra_charge->extra_charge, 0, ",", ".") ?></td>
 
                             <td style="text-align:center">
-
-                                <a class="btn btn-primary" href='<?= base_url('extra_charge/update/' . $extra_charge->id) ?>'>Lihat</a>
-                                <a class="btn btn-danger" href='<?= base_url('extra_charge/delete/' . $extra_charge->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-primary" href='<?= base_url('extra_charge/update/' . $extra_charge->id) ?>'>Lihat</a>
+                                    <a class="btn btn-danger" href='<?= base_url('extra_charge/delete/' . $extra_charge->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                                </div>
 
                             </td>
                         </tr>

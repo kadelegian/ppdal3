@@ -10,28 +10,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <h6 class="m-0 font-weight-bold text-primary">Pembayaran Iuran</h6>
         </div>
         <div class="card-body">
-            <form id="form_pembayaran" action="<?= $action ?>" method="post">
+            <form id="form_pembayaran" action="<?= base_url('/transaksi_iuran_pedagang/create_action') ?>" method="post">
 
                 <div class="form-group d-print-none">
                     <label for="nomor_kartu">Nomor Kartu </label>
                     <input type="text" class="form-control" name="nomor_kartu" id="nomor_kartu" placeholder="Nomor Kartu" value="<?php echo $nomor_kartu; ?>" readonly />
                 </div>
-                <input type="hidden" name="id_transaksi" value="<?php echo $id_transaksi; ?>" />
-                <input type="hidden" name="id_kartu" value="<?php echo $id_kartu; ?>" />
+                <input type="hidden" name="id_pedagang" value="<?php echo $id_pedagang; ?>" />
                 <input type="hidden" name="jenis_dagangan" value="<?php echo $jenis_dagangan; ?>" />
                 <input type="hidden" name="wilayah" value="<?php echo $wilayah; ?>" />
-                <input type="hidden" name="keterangan_iuran" value="<?= $keterangan_iuran ?>">
                 <input type="hidden" name="id_user" value="<?php echo $id_user; ?>" />
                 <input type="hidden" name="iuran" value="<?= $iuran ?>">
-
+                <input type="hidden" name="extra_charge" value="<?= $extra_charge ?>">
                 <input type="hidden" name="diskon" value="<?= $diskon ?>">
                 <input type="hidden" name="total_pembayaran" value="<?= $total_pembayaran ?>">
+                <input type="hidden" name="keterangan_iuran" value="<?= $keterangan_iuran ?>">
                 <?php foreach ($detail_iuran as $detail) : ?>
                     <input type="hidden" name="periode[]" value="<?= $detail['periode'] ?>">
                 <?php endforeach; ?>
                 <div class="form-group">
                     <label for="nama_pedagang">Nama Pedagang </label>
-                    <input type="text" name="nama_pemilik" class="form-control" value="<?= $nama_pemilik ?>" readonly />
+                    <input type="text" name="nama_pemilik" class="form-control" value="<?= $nama_pedagang ?>" readonly />
                 </div>
                 <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
@@ -75,7 +74,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="d-print-none">
 
                     <button id="btn_action" class="btn btn-primary"><?= $button ?></button>
-                    <a href="<?php echo site_url('kartu/read/' . $id_kartu) ?>" class="btn btn-default">Cancel</a>
+                    <a href="<?php echo site_url('pedagang/read/' . $id_pedagang) ?>" class="btn btn-default">Cancel</a>
                 </div>
             </form>
         </div>

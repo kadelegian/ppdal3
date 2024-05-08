@@ -18,39 +18,13 @@ class Laporan extends CI_Controller
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
-
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'pedagang/?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'pedagang/?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'pedagang/';
-            $config['first_url'] = base_url() . 'pedagang/';
-        }
-
-
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Pedagang_model->total_rows($q);
-        $pedagang = $this->Pedagang_model->get_limit_data($config['per_page'], $start, $q);
-
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-
-        $data = array(
-            'pedagang_data' => $pedagang,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-        );
         $this->load->view('page_template/header');
         $this->load->view('page_template/side_bar');
         $this->load->view('page_template/top_bar');
-        $this->load->view('pedagang/pedagang_list', $data);
         $this->load->view('page_template/footer');
     }
+    public function umum()
+    { }
 
     public function update($id)
     {

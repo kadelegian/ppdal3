@@ -17,9 +17,15 @@ class Akun_model extends CI_Model
     function get_bank_acc()
     {
         $this->db->where('bank', 1);
+        $this->db->where('aktif', 1);
         return $this->db->get($this->table)->result();
     }
     // get all
+    function get_active_acc()
+    {
+        $this->db->where('aktif', 1);
+        return $this->db->get($this->table)->result();
+    }
     function get_all()
     {
         $this->db->order_by($this->id, $this->order);
@@ -64,7 +70,17 @@ class Akun_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
     }
-
+    function non_aktifkan($id)
+    {
+        $query = 'select id from jurnal where month(tanggal)=month(current_date) and year(tanggal)=year(current_date)';
+        $data = $this->db->query($query);
+        if ($data->row()) {
+            return false;
+        } else {
+            $this->update($id, array('aktif' => 0));
+            return true;
+        }
+    }
     // delete data
     function delete($id)
     {
