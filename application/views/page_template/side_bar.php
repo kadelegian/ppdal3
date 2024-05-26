@@ -44,32 +44,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="<?= base_url('kartu') ?>">Pedagang Pantai</a>
+                            <a class="collapse-item" href="<?= base_url('kartu') ?>"><i class="fa fa-umbrella" aria-hidden="true"></i> Pedagang Pantai</a>
                             <a class="collapse-item" href="<?= base_url('transaksi_iuran') ?>">Daftar Transaksi Pedagang</a>
                             <hr>
-                            <a class="collapse-item" href="<?= base_url('pedagang') ?>">Pedagang Asongan</a>
+                            <a class="collapse-item" href="<?= base_url('pedagang') ?>"><i class="fa fa-street-view" aria-hidden="true"></i> Pedagang Asongan</a>
                             <a class="collapse-item" href="<?= base_url('transaksi_iuran_pedagang') ?>">Daftar Transaksi Asongan</a>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
+                        <i class="fa fa-fw fa-folder"></i>
                         <span>Transaksi</span>
                     </a>
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
 
-                            <a class="collapse-item" href="<?= base_url('transaksi_pemasukan') ?>">Transaksi Pemasukan</a>
-                            <a class="collapse-item" href="<?= base_url('transaksi_pengeluaran') ?>">Transaksi Pengeluaran</a>
-                            <a class="collapse-item" href="<?= base_url('transaksi_transfer') ?>">Transfer Kas</a>
+                            <a class="collapse-item" href="<?= base_url('transaksi_pemasukan') ?>"> <i class="fa fa-fw fa-arrow-down"></i> Transaksi Pemasukan</a>
+                            <a class="collapse-item" href="<?= base_url('transaksi_pengeluaran') ?>"><i class="fa fa-fw fa-arrow-up"></i> Transaksi Pengeluaran</a>
+                            <a class="collapse-item" href="<?= base_url('transaksi_transfer') ?>"><i class="fa fa-fw fa-reply"></i>Transfer Kas</a>
 
                         </div>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTree" aria-expanded="true" aria-controls="collapseTree">
-                        <i class="fas fa-fw fa-folder"></i>
+                        <i class="fas fa-fw fa-cogs"></i>
                         <span>Pengaturan</span>
                     </a>
                     <div id="collapseTree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -83,9 +83,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <a class="collapse-item" href="<?= base_url('akun') ?>">Data Rekening</a>
                             <a class="collapse-item" href="<?= base_url('jenis_pemasukan') ?>">Jenis Pemasukan</a>
                             <a class="collapse-item" href="<?= base_url('jenis_pengeluaran') ?>">Jenis Pengeluaran</a>
+                            <hr>
+                            <a class="collapse-item" href="<?= base_url('info_lembaga') ?>">Pengaturan Lembaga</a>
+
                         </div>
                     </div>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= base_url('laporan') ?>">
+                        <i class="fas fa-fw fa-list"></i>
+                        <span>Laporan</span>
+
+                    </a>
+                </li>
+
 
                 <!-- Nav Item - Utilities Collapse Menu -->
 

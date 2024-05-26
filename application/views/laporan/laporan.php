@@ -1,6 +1,9 @@
 <!-- Begin Page Content -->
 <div class="container-fluid text-center">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
+    <a href='<?= base_url('laporan/download') ?>' onclick="javascript:return confirm('Dengan Mendownload Laporan, akan memulai pencatatan kas dengan periode yang baru. Lanjut?')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Download Laporan</a>
+  </div>
 
   <!-- Page Heading -->
   <div class="card shadow mb-4">
