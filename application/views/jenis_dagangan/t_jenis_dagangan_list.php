@@ -11,12 +11,12 @@ if ($tipe == 1) {
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">Jenis Dagangan <?= ($tipe > 0 ? 'Asongan' : 'Pantai') ?></h1>
+            <h1 class="h3 mb-0 text-gray-800">Jenis Dagangan </h1>
 
         </div>
         <div class="card-body">
             <div class="row" style="margin-bottom: 10px">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?php echo anchor(site_url($btn_create), 'Create', 'class="btn btn-primary"'); ?>
                 </div>
                 <div class="col-md-4 text-center">
@@ -31,15 +31,16 @@ if ($tipe == 1) {
                 </div>
                 <div class="col-md-1 text-right">
                 </div>
-                <div class="col-md-3 text-right">
-                    <form action="<?php echo site_url('jenis_dagangan' . $str_tipe . '/index'); ?>" class="form-inline" method="get">
-                        <div class="input-group">
+                <div class="col-md-4 d-flex justify-content-end">
+                    <form action="<?php echo site_url('jenis_dagangan/index'); ?>" class="form-inline" method="get">
+
+                        <div class="form-group">
                             <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
                             <span class="input-group-btn">
                                 <?php
                                 if ($q <> '') {
                                     ?>
-                                    <a href="<?php echo site_url('jenis_dagangan' . $str_tipe); ?>" class="btn btn-default">Reset</a>
+                                    <a href="<?php echo site_url('jenis_dagangan'); ?>" class="btn btn-default">Reset</a>
                                 <?php
                                 }
                                 ?>
@@ -55,9 +56,7 @@ if ($tipe == 1) {
                         <th>No</th>
                         <th>Nama Dagangan</th>
                         <th>Prefix Dagangan</th>
-                        <?php if ($tipe < 1) { ?>
-                            <th>Iuran</th>
-                        <?php } ?>
+                        <th>Tipe</th>
                         <th>Action</th>
                     </tr><?php
                             $str_tipe = '';
@@ -70,9 +69,8 @@ if ($tipe == 1) {
                             <td width="80px"><?php echo ++$start ?></td>
                             <td><?php echo $jenis_dagangan->nama_dagangan ?></td>
                             <td><?php echo $jenis_dagangan->prefix_dagangan ?></td>
-                            <?php if ($tipe < 1) { ?>
-                                <td><?php echo number_format($jenis_dagangan->iuran, 0, ",", ".")  ?></td>
-                            <?php } ?>
+                            <td><?php echo $jenis_dagangan->tipe == 0 ? 'Pdg. PANTAI' : 'ASONGAN' ?></td>
+
                             <td style="text-align:center">
                                 <div class="btn-group" role="group">
 

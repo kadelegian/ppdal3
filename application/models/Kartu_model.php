@@ -46,6 +46,50 @@ class Kartu_model extends CI_Model
         }
         return $roman;
     }
+    function info_kartu($id_pedagang)
+    {
+        $url = base_url('kartu/read/' . $id_pedagang);
+        $query = 'select t_kartu.*, t_wilayah.wilayah,t_jenis_dagangan.nama_dagangan,ifnull(detail_transaksi_iuran.periode,t_kartu.join_date) as last_payment
+        from t_kartu left join t_wilayah
+        on t_kartu.id_wilayah=t_wilayah.id
+        left join t_jenis_dagangan
+        on t_kartu.id_jenis_dagangan=t_jenis_dagangan.id
+        left join transaksi_iuran
+        on t_kartu.id=transaksi_iuran.id_kartu
+        left join detail_transaksi_iuran
+        on detail_transaksi_iuran.id_transaksi=transaksi_iuran.id_transaksi
+        where t_kartu.id= ? order by detail_transaksi_iuran.periode desc limit 1';
+        $data = $this->db->query($query, [$id_pedagang])->row();
+        $nama = $data->nama_pemilik;
+        $alamat = $data->alamat_kartu;
+        $nomor = $data->nomor_kartu;
+        $penjamin = '';
+        $wilayah = $data->wilayah;
+        $jenis_dagangan = $data->nama_dagangan;
+        $last_payment = $data->last_payment;
+        $tahun = explode('-', $last_payment);
+
+        $this->db->select('iuran');
+        $this->db->from('setting_iuran');
+        $this->db->where('id_jenis_dagangan', $data->id_jenis_dagangan);
+        $this->db->where('periode<=', $data->last_payment);
+        $this->db->order_by('periode', 'desc');
+        $this->db->limit(1);
+        $info_iuran = $this->db->get()->row();
+
+        return array(
+            'nama' => $nama,
+            'alamat' => $alamat,
+            'nomor' => $nomor,
+            'penjamin' => $penjamin,
+            'wilayah' => $wilayah,
+            'jenis_dagangan' => $jenis_dagangan,
+            'tahun' => $tahun[0],
+            'iuran' => number_format($info_iuran->iuran, 0, ',', '.'),
+            'url' => $url
+
+        );
+    }
     // get data by id
     function get_by_id($id)
     {

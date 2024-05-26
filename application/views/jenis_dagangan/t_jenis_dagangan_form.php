@@ -3,11 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
-    <?PHP
-    $str_tipe = '';
-    if ($tipe == 1) {
-        $str_tipe = '_asongan';
-    } ?>
+
     <!-- Content Row -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -23,10 +19,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <label for="varchar">Prefix Dagangan <?php echo form_error('prefix_dagangan') ?></label>
                     <input type="text" class="form-control" name="prefix_dagangan" id="prefix_dagangan" placeholder="Prefix Dagangan" value="<?php echo $prefix_dagangan; ?>" />
                 </div>
+                <div class="form-group">
+                    <select name="tipe" class="form-control" id="tipe">
+                        <option value="0" <?= $tipe == 0 ? 'selected' : '' ?>>Pdg.Pantai</option>
+                        <option value="1" <?= $tipe == 1 ? 'selected' : '' ?>>Asongan</option>
+                    </select>
+
+                </div>
                 <input type="hidden" name="id" value="<?php echo $id; ?>" />
-                <input type="hidden" name="tipe" value="<?= $tipe ?>">
                 <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-                <a href="<?php echo site_url('jenis_dagangan' . $str_tipe) ?>" class="btn btn-warning">Kembali</a>
+                <a href="<?php echo site_url('jenis_dagangan') ?>" class="btn btn-warning">Kembali</a>
         </div>
     </div>
 

@@ -171,15 +171,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?= $keterangan_iuran ?></td>
-                        <td><?= $kali_nominal . 'x ' . number_format($nominal_iuran, 0, ',', '.') ?></td>
+                        <td><?= $keterangan_iuran . '(' . $kali_nominal . 'x)' ?></td>
+                        <td></td>
                         <td style="text-align: right;"><?= number_format($total_iuran, 0, ',', '.')  ?></td>
                     </tr>
 
                     <?php if ($total_extra_charge > 0) { ?>
                         <tr style="border-top: 1px;">
-                            <td><?= $keterangan_extra_charge ?></td>
-                            <td><?= $kali_nominal . 'x ' . number_format($nominal_extra_charge, 0, ',', '.') ?></td>
+                            <td><?= $keterangan_extra_charge . '(' . $kali_nominal . 'x)' ?></td>
+                            <td></td>
                             <td style="text-align: right;"><?= number_format($total_extra_charge, 0, ',', '.') ?></td>
                         </tr>
                     <?php } ?>

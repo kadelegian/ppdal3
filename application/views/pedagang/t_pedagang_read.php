@@ -68,11 +68,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                     <input type="hidden" name="id_pedagang" value="<?= $id ?>">
                                     <input type="hidden" name="nama_pedagang" value="<?= $nama_pedagang ?>">
-                                    <input type="hidden" name="iuran" value="<?= $iuran ?>">
                                     <input type="hidden" name="extra_charge" value="<?= $extra_charge ?>">
                                     <input type="hidden" name="wilayah" value="<?= $wilayah ?>">
                                     <input type="hidden" name="nomor_kartu" value="<?= $nomor_kartu ?>">
-                                    <input type="hidden" name="jenis_dagangan" value="<?= $jenis_dagangan ?>">
+                                    <input type="hidden" name="id_jenis_dagangan" value="<?= $id_jenis_dagangan ?>">
 
                                     <input type="text" readonly class="form-control" value="<?= $tanggal_jatuh_tempo != null ? date_format(date_create_from_format('Y-m-d', $tanggal_jatuh_tempo), 'M, Y') : '' ?>">
                                     <input type="hidden" id="min-month" value="<?= $min_month ?>">
@@ -93,6 +92,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
 
                                 <?php echo form_close() ?>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col my-2">
+
+                                <button class="btn btn-primary" id="btnPrint">Print Detail</button>
                             </div>
 
                         </div>
@@ -102,7 +109,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>No.</th>
                             <th>Periode</th>
                             <th>Status</th>
-
+                            <th>Pilih</th>
                         </tr>
 
                         <?php
@@ -112,14 +119,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         $counter = 1;
                         $index_periode = 0;
                         ?>
-                        <?php foreach ($histori_payment as $payment) : ?>
-                            <tr>
-                                <td><?= $counter++ ?></td>
-                                <td><?= date('M, Y', strtotime($payment->periode)) ?></td>
-                                <td>Lunas</td>
-                            </tr>
-                        <?php endforeach; ?>
-
+                        <form id="formDetailKartu" action="<?= base_url('pedagang/detail_kartu') ?>" method="post">
+                            <?php foreach ($histori_payment as $payment) : ?>
+                                <tr>
+                                    <td><?= $counter++ ?></td>
+                                    <td><?= date('M, Y', strtotime($payment->periode)) ?></td>
+                                    <td>Lunas</td>
+                                    <td>
+                                        <input type="checkbox" id="checkbox<?= $counter ?>" name="periode[]" value="<?= $payment->id ?>">
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <input type="hidden" name="id_kartu" value="<?= $id ?>">
+                            <button type="submit" style="display: none;"></button>
+                        </form>
                     </table>
 
                 </div>
@@ -131,3 +144,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- /.container-fluid -->
 
 </div>
+<script>
+    var form = document.getElementById("formDetailKartu");
+    async function handleSubmit(event) {
+        event.preventDefault();
+        var data = new FormData(event.target);
+        fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+
+                form.reset()
+            }
+        }).catch(error => {
+
+        });
+    }
+    form.addEventListener("submit", handleSubmit);
+    document.getElementById('btnPrint').addEventListener('click', function() {
+        document.getElementById('formDetailKartu').submit();
+    });
+</script>

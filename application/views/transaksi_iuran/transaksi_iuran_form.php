@@ -22,12 +22,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <input type="hidden" name="wilayah" value="<?php echo $wilayah; ?>" />
                 <input type="hidden" name="keterangan_iuran" value="<?= $keterangan_iuran ?>">
                 <input type="hidden" name="id_user" value="<?php echo $id_user; ?>" />
-                <input type="hidden" name="iuran" value="<?= $iuran ?>">
+
 
                 <input type="hidden" name="diskon" value="<?= $diskon ?>">
                 <input type="hidden" name="total_pembayaran" value="<?= $total_pembayaran ?>">
                 <?php foreach ($detail_iuran as $detail) : ?>
                     <input type="hidden" name="periode[]" value="<?= $detail['periode'] ?>">
+                    <input type="hidden" name="iuran[]" value="<?= $detail['iuran'] ?>">
                 <?php endforeach; ?>
                 <div class="form-group">
                     <label for="nama_pedagang">Nama Pedagang </label>
@@ -51,7 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <thead>
                             <tr>
                                 <th scope="col">Keterangan</th>
-                                <th scope="col">Nominal</th>
+
                                 <th scope="col">Jumlah</th>
                             </tr>
                         </thead>
@@ -59,12 +60,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php foreach ($detail_print as $dt) : ?>
                                 <tr>
                                     <td><?= $dt['keterangan'] ?></td>
-                                    <td><?= $dt['nominal'] . ' x' . $dt['kali'] ?></td>
+
                                     <td><?= $dt['jumlah'] ?></td>
                                 </tr>
                             <?php endforeach; ?>
                             <tr>
-                                <td scope="row" colspan="2" align="end">Total</td>
+                                <td scope="row" align="end">Total</td>
                                 <td scope="row"><?= number_format($total_pembayaran, 0, ',', '.') ?></td>
 
                             </tr>

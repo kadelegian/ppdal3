@@ -31,7 +31,7 @@ class Kartu extends CI_Controller
             $config['first_url'] = base_url() . 'kartu/';
         }
 
-        $config['per_page'] = 10;
+        $config['per_page'] = 20;
         $config['page_query_string'] = TRUE;
         $config['total_rows'] = $this->Kartu_model->total_rows($q);
         $kartu = $this->Kartu_model->get_limit_data($config['per_page'], $start, $q);
@@ -110,6 +110,7 @@ class Kartu extends CI_Controller
                         'nomor_telp' => $row->nomor_telp,
                         'join_date' => $row->join_date,
                         'wilayah' => $row->wilayah,
+                        'id_jenis_dagangan' => $row->id_jenis_dagangan,
                         'jenis_dagangan' => $row->nama_dagangan,
                         'tanggal_jatuh_tempo' => $tgl_jatuh_tempo,
                         'histori_payment' => $payment_history->result(),
@@ -302,6 +303,32 @@ class Kartu extends CI_Controller
         $tanggal_join = date_create_from_format('d/m/Y', $this->input->post('join_date', true));
         $tanggal_join = date_format($tanggal_join, 'Y-m-d');
         return strtotime($tanggal_join);
+    }
+    public function detail_kartu()
+    {
+
+        $this->load->model('Transaksi_iuran_model', 'transaksi_iuran_model');
+        $selected_period = $this->input->post('periode', true);
+        if ($selected_period) {
+            if (count($selected_period) > 0) {
+                $data = $this->transaksi_iuran_model->get_printable_detail($selected_period);
+
+                header("Content-Type: application/json");
+                header("Content-Disposition: attachment;filename=detail_kartu.json");
+                echo json_encode($data);
+            }
+        } else {
+            redirect(base_url('kartu'));
+        }
+    }
+    public function info_pedagang($id_pedagang)
+    {
+        if (is_numeric($id_pedagang)) {
+            $data = $this->Kartu_model->info_kartu($id_pedagang);
+            header("Content-Type: application/json");
+            header("Content-Disposition: attachment;filename=info_pedagang.json");
+            echo json_encode($data);
+        }
     }
     public function excel()
     {

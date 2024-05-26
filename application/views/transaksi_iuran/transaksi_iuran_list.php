@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">List Transaksi</h1>
+            <h1 class="h3 mb-0 text-gray-800">List Transaksi Pedagang Pantai</h1>
 
         </div>
         <div class="card-body">
@@ -24,15 +24,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="col-md-3 text-right">
                     <form action="<?php echo site_url('transaksi_iuran/index'); ?>" class="form-inline" method="get">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
+                            <input type="text" class="form-control datepicker" id="date-picker1" value="<?= $awal_periode <> '' ? date_format(date_create_from_format('Y-m-d', $awal_periode), 'd/m/Y') : '' ?>">
+                            <input type="hidden" id="date-picker1-alt" name="awal_periode">
+                            <p>-</p>
+                            <input type="text" class="form-control datepicker" id="date-picker2" value="<?= $sampai_dengan <> '' ? date_format(date_create_from_format('Y-m-d', $sampai_dengan), 'd/m/Y') : '' ?>">
+                            <input type="hidden" id="date-picker2-alt" name="akhir_periode">
                             <span class="input-group-btn">
-                                <?php
-                                if ($q <> '') {
-                                    ?>
-                                    <a href="<?php echo site_url('transaksi_iuran'); ?>" class="btn btn-default">Reset</a>
-                                <?php
-                                }
-                                ?>
+                                <a href="<?php echo site_url('transaksi_iuran'); ?>" class="btn btn-default">Reset</a>
+
                                 <button class="btn btn-primary" type="submit">Search</button>
                             </span>
                         </div>
@@ -45,17 +44,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <th>Tanggal Trx.</th>
                     <th>Nama Pedagang</th>
                     <th>Nominal</th>
+                    <th>Ket.</th>
                     <th>Petugas</th>
 
                 </tr><?php
                         foreach ($data_transaksi as $dt) {
+
+                            $start++;
                             ?>
                     <tr>
 
-                        <td><?= str_pad($dt->nomor_transaksi, 4, '0', STR_PAD_LEFT) ?></td>
+                        <td><?= str_pad($dt->id_transaksi, 4, '0', STR_PAD_LEFT) ?></td>
                         <td><?php echo date_format(date_create($dt->tanggal_transaksi), 'd-M-Y') ?></td>
-                        <td><?php echo $dt->nama_pedagang ?></td>
-                        <td><?php echo number_format($dt->nominal, 0, ',', '.') ?></td>
+                        <td><?php echo $dt->nama_pemilik ?></td>
+                        <td><?php echo number_format($dt->debet, 0, ',', '.')
+                                ?></td>
+                        <td><?= $dt->alias ?></td>
                         <td><?php echo $dt->nama_user ?></td>
                         <td style="text-align:center">
                             <div class="btn-group" role="group">
@@ -73,7 +77,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </table>
             <div class="row">
                 <div class="col-md-6">
-                    <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
+                    <?php if ($total_nominal > 0) { ?>
+                        <a href="#" class="btn btn-primary">Total Nominal : <?php echo number_format($total_nominal, 0, ',', '.') ?></a>
+                    <?php } ?>
                 </div>
                 <div class="col-md-6 text-right">
                     <?php echo $pagination ?>

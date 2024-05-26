@@ -16,28 +16,29 @@ class Pedagang extends CI_Controller
             redirect(base_url('auth'));
         }
     }
-    function setting_iuran()
+
+    public function detail_kartu()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+        $this->load->model('Transaksi_iuran_model', 'transaksi_iuran_model');
+        $selected_period = $this->input->post('periode', true);
+        if (count($selected_period) > 0) {
+            $data = $this->transaksi_iuran_model->get_printable_detail($selected_period);
 
-            $iuran = $this->input->post('iuran', true);
-            $iuran = preg_replace('/\D/', '', $iuran);
-            if (is_numeric($iuran)) {
-
-                $data = array(
-                    'iuran' => $iuran,
-                    'tanggal' => date('Y-m-d'),
-                    'user_id' => $_SESSION['id_user'],
-                );
-                $this->Pedagang_model->simpan_iuran($data);
-            }
+            header("Content-Type: application/json");
+            header("Content-Disposition: attachment;filename=detail_kartu.json");
+            echo json_encode($data);
         }
-        redirect(base_url('pedagang'));
     }
-    //melihat dan mencetak kartu identitas
-    function kartu_identitas()
-    { }
+    public function info_pedagang($id_pedagang)
+    {
+        if (is_numeric($id_pedagang)) {
+            $data = $this->Pedagang_model->info_kartu($id_pedagang);
+            header("Content-Type: application/json");
+            header("Content-Disposition: attachment;filename=info_pedagang.json");
+            echo json_encode($data);
+        }
+    }
     public function index()
     {
         $q = urldecode($this->input->get('q', TRUE));
@@ -52,14 +53,14 @@ class Pedagang extends CI_Controller
         }
 
 
-        $config['per_page'] = 10;
+        $config['per_page'] = 20;
         $config['page_query_string'] = TRUE;
         $config['total_rows'] = $this->Pedagang_model->total_rows($q);
         $pedagang = $this->Pedagang_model->get_limit_data($config['per_page'], $start, $q);
 
         $this->load->library('pagination');
         $this->pagination->initialize($config);
-        $data_iuran = $this->Pedagang_model->get_iuran();
+
 
         $data = array(
             'pedagang_data' => $pedagang,
@@ -124,7 +125,7 @@ class Pedagang extends CI_Controller
                     $user_role = $user_data->role;
                     //hanya admin (2) yang boleh melakukan pembayaran
                 }
-                $info_iuran = $this->Pedagang_model->get_iuran();
+
 
                 if ($row) {
                     $data = array(
@@ -134,10 +135,10 @@ class Pedagang extends CI_Controller
                         'nomor_telp' => $row->no_hp,
                         'join_date' => $row->join_date,
                         'wilayah' => $row->wilayah,
+                        'id_jenis_dagangan' => $row->id_jenis_dagangan,
                         'jenis_dagangan' => $row->nama_dagangan,
                         'tanggal_jatuh_tempo' => $tgl_jatuh_tempo,
                         'histori_payment' => $payment_history->result(),
-                        'iuran' => $info_iuran->iuran,
                         'extra_charge' => $row->extra_charge,
                         'min_month' => $selisih_bulan,
                         'user_role' => $user_role,
@@ -233,7 +234,7 @@ class Pedagang extends CI_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('pedagang/update_action'),
-                'id' => set_value('id', $row->id),
+                'id' => $id,
                 'nama_pedagang' => set_value('nama_pedagang', $row->nama_pedagang),
                 'no_hp' => set_value('no_hp', $row->no_hp),
                 'join_date' =>  set_value('join_date', $tgl_indo),

@@ -36,14 +36,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <hr>
 
                                 <?php echo form_close(); ?>
-                                <?php if (isset($_SESSION['error'])) : ?>
-                                    <div class="alert alert-danger" role="alert">
-                                        <?= $_SESSION['error'] ?>
-                                    </div>
-                                <?php endif; ?>
+
                             </div>
                         </div>
                     </div>
+                    <?php if (isset($_SESSION['error'])) : ?>
+                        <div class="alert alert-danger text-center" role="alert" id="message">
+                            <?= $_SESSION['error'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

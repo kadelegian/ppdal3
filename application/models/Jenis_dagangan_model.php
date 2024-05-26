@@ -85,12 +85,11 @@ class Jenis_dagangan_model extends CI_Model
     // get total rows
     function total_rows($q = NULL)
     {
-        $this->db->where('tipe', $this->tipe);
+
         $this->db->group_start();
         $this->db->like('id', $q);
         $this->db->or_like('nama_dagangan', $q);
         $this->db->or_like('prefix_dagangan', $q);
-        $this->db->or_like('iuran', $q);
         $this->db->group_end();
         $this->db->from($this->table);
         return $this->db->count_all_results();
@@ -99,13 +98,14 @@ class Jenis_dagangan_model extends CI_Model
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->where('tipe', $this->tipe);
+
+        $this->db->order_by('tipe', 'asc');
+
         $this->db->group_start();
         $this->db->like('id', $q);
         $this->db->or_like('nama_dagangan', $q);
         $this->db->or_like('prefix_dagangan', $q);
-        $this->db->or_like('iuran', $q);
+
         $this->db->group_end();
         $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();

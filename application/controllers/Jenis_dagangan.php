@@ -20,6 +20,7 @@ class Jenis_dagangan extends CI_Controller
     public function index()
     {
         $q = urldecode($this->input->get('q', TRUE));
+
         $start = intval($this->input->get('start'));
 
         if ($q <> '') {
@@ -30,7 +31,7 @@ class Jenis_dagangan extends CI_Controller
             $config['first_url'] = base_url() . 'jenis_dagangan/';
         }
 
-        $config['per_page'] = 10;
+        $config['per_page'] = 20;
         $config['page_query_string'] = TRUE;
         $config['total_rows'] = $this->Jenis_dagangan_model->total_rows($q);
         $jenis_dagangan = $this->Jenis_dagangan_model->get_limit_data($config['per_page'], $start, $q);
@@ -69,6 +70,7 @@ class Jenis_dagangan extends CI_Controller
             redirect(site_url('jenis_dagangan'));
         }
     }
+    //-----------------------------------------------------------------------setting iuran-----------------------------------
     public function delete_setting_iuran()
     {
         $periode = $this->input->get('p', true);
@@ -186,14 +188,14 @@ class Jenis_dagangan extends CI_Controller
     //------------------------------------------------------------------------------------------akhir region setting iuran------------------------------------------------
     public function create()
     {
-        $tipe = 0;
+
         $data = array(
             'button' => 'Create',
             'action' => site_url('jenis_dagangan/create_action'),
             'id' => set_value('id'),
             'nama_dagangan' => set_value('nama_dagangan'),
             'prefix_dagangan' => set_value('prefix_dagangan'),
-            'tipe' => $tipe,
+            'tipe' => set_value('tipe'),
         );
         $this->load->view('page_template/header');
         $this->load->view('page_template/side_bar');
@@ -213,6 +215,7 @@ class Jenis_dagangan extends CI_Controller
             $data = array(
                 'nama_dagangan' => strtoupper($this->input->post('nama_dagangan', TRUE)),
                 'prefix_dagangan' => strtoupper($this->input->post('prefix_dagangan', TRUE)),
+                'tipe' => $this->input->post('tipe')
             );
 
             $this->Jenis_dagangan_model->insert($data);
@@ -232,7 +235,7 @@ class Jenis_dagangan extends CI_Controller
                 'id' => set_value('id', $row->id),
                 'nama_dagangan' => set_value('nama_dagangan', $row->nama_dagangan),
                 'prefix_dagangan' => set_value('prefix_dagangan', $row->prefix_dagangan),
-                'tipe' => 0,
+                'tipe' => set_value('tipe', $row->tipe),
             );
             $this->load->view('page_template/header');
             $this->load->view('page_template/side_bar');
@@ -256,7 +259,7 @@ class Jenis_dagangan extends CI_Controller
             $data = array(
                 'nama_dagangan' => strtoupper($this->input->post('nama_dagangan', TRUE)),
                 'prefix_dagangan' => strtoupper($this->input->post('prefix_dagangan', TRUE)),
-
+                'tipe' => $this->input->post('tipe')
             );
 
             $this->Jenis_dagangan_model->update($this->input->post('id', TRUE), $data);
@@ -285,7 +288,6 @@ class Jenis_dagangan extends CI_Controller
         $this->form_validation->set_rules('prefix_dagangan', 'prefix dagangan', 'trim|required');
 
         $this->form_validation->set_rules('id', 'id', 'trim');
-        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 }
 

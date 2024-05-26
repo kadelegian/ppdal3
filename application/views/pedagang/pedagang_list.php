@@ -70,6 +70,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td style="text-align:center" width="auto">
                             <div class="btn-group" role="group">
                                 <a class="btn btn-success" href='<?= base_url('pedagang/read/' . $pedagang->id) ?>'><i class="fas fa-money-check-alt"></i></a>
+                                <a class="btn btn-secondary" href='<?= base_url('pedagang/info_pedagang/' . $pedagang->id) ?>'><i class="fas fa-print"></i></a>
                                 <a class="btn btn-primary" href='<?= base_url('pedagang/update/' . $pedagang->id) ?>'>Lihat</a>
                                 <a class="btn btn-danger" href='<?= base_url('pedagang/delete/' . $pedagang->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
 

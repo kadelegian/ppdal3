@@ -25,4 +25,5 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <link href="<?= base_url('assets/css/' . $extra) ?>" rel="stylesheet" type="text/css">
         <?php endforeach; ?>
     <?php endif; ?>
+
 </head>

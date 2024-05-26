@@ -29,7 +29,7 @@ class Wilayah extends CI_Controller
             $config['first_url'] = base_url() . 'wilayah/';
         }
 
-        $config['per_page'] = 10;
+        $config['per_page'] = 25;
         $config['page_query_string'] = TRUE;
         $config['total_rows'] = $this->Wilayah_model->total_rows($q);
         $this->Wilayah_model->order = 'asc';

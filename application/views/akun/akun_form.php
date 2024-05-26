@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Content Row -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Pengelolaan Akun</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Rekening</h6>
         </div>
         <div class="card-body">
             <form action="<?php echo $action; ?>" method="post">

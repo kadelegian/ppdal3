@@ -50,6 +50,50 @@ class Akun extends CI_Controller
         $this->load->view('akun/akun_list', $data);
         $this->load->view('page_template/footer');
     }
+    public function setting_saldo($id_akun)
+    {
+        $id = urldecode($id_akun);
+        if (is_numeric($id)) {
+            $data_akun = $this->Akun_model->get_by_id($id);
+            if ($data_akun) {
+                $data = array(
+                    'action' => site_url('akun/save_saldo'),
+                    'button' => 'Save',
+                    'id_akun' => $id,
+                    'akun' => $data_akun,
+                );
+                $js['js_script'] = array('jquery-ui.min.js', 'class_tanggal.js');
+                $css['external_css'] = array('jquery-ui.css');
+                $this->load->view('page_template/header', $css);
+                $this->load->view('page_template/side_bar');
+                $this->load->view('page_template/top_bar');
+                $this->load->view('akun/setting_saldo_form', $data);
+                $this->load->view('page_template/footer', $js);
+            }
+        }
+    }
+    public function save_saldo()
+    {
+        $id_akun = $this->input->post('id_akun');
+        $this->form_validation->set_rules('saldo', 'Nominal Saldo', 'required');
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        if (!$this->form_validation->run()) {
+            $this->setting_saldo($id_akun);
+        } else {
+
+            $tanggal = $this->input->post('tanggal', true);
+            $dateObject = DateTime::createFromFormat('d/m/Y', $tanggal);
+            $tanggal = $dateObject->format('Y-m-d');
+            $saldo =  preg_replace('/\D/', '', $this->input->post('saldo'));
+            $data = array(
+                'id_akun' => $id_akun,
+                'periode' => $tanggal,
+                'saldo' => $saldo
+            );
+            $this->Akun_model->set_saldo($data);
+            redirect(site_url());
+        }
+    }
 
     public function read($id)
     {

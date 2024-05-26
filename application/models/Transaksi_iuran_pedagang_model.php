@@ -16,7 +16,39 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     {
         parent::__construct();
     }
+    function get_list_iuran($periode_awal, $periode_akhir, $id_jenis)
+    {
+        $list_iuran = array();
+        $i = 0;
+        while ($periode_awal <= $periode_akhir) {
+            $this->db->where('periode<=', $periode_awal->format('Y-m-d'));
+            $this->db->where('id_jenis_dagangan', $id_jenis);
+            $this->db->order_by('id', 'desc');
+            $this->db->limit(1);
+            $res = $this->db->get('setting_iuran')->row();
+            log_message('info', $periode_awal->format('Y-m-d') . '----' . $periode_akhir->format('Y-m-d'));
+            log_message('info', $this->db->last_query());
+            $list_iuran[$i] = array(
+                'periode' => date_format($periode_awal, 'Y-m-d'),
+                'iuran' => $res->iuran
+            );
+            date_add($periode_awal, date_interval_create_from_date_string('1 month'));
+            $i++;
+        }
+        return $list_iuran;
+    }
+    function get_printable_detail($data)
+    {
+        $this->db->select('detail_transaksi_iuran.*,transaksi_iuran.tanggal_transaksi,users.username');
+        $this->db->from('detail_transaksi_iuran');
+        $this->db->join('transaksi_iuran', 'detail_transaksi_iuran.id_transaksi=transaksi_iuran.id_transaksi', 'left');
+        $this->db->join('users', 'users.id=transaksi_iuran.id_user', 'left');
 
+        foreach ($data as $id) {
+            $this->db->or_where('detail_transaksi_iuran.id', $id);
+        }
+        return $this->db->get()->result();
+    }
     function get_last_payment($id_kartu)
     {
 
@@ -48,7 +80,7 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     {
         $strselect = 'transaksi_iuran.*,
         t_pedagang.nama_pedagang,
-        t_pedagang.nomor_kartu,
+        t_pedagang.nomor,
         t_jenis_dagangan.nama_dagangan, 
         t_wilayah.wilayah,
         users.full_name';
@@ -87,26 +119,46 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL)
+    function total_rows($start_date = null, $end_date = null)
     {
+        $this->db->select('transaksi_iuran.*');
+        $this->db->from('transaksi_iuran');
+        $this->db->join('jurnal', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi');
+        $this->db->join('t_pedagang', 'transaksi_iuran.id_kartu=t_pedagang.id');
+        if ($start_date && $end_date) {
+            $this->db->where('date(transaksi_iuran.tanggal_transaksi) >=', $start_date);
+            $this->db->where('date(transaksi_iuran.tanggal_transaksi) <=', $end_date);
+        }
+        $this->db->order_by($this->id, 'desc');
 
-        $this->db->or_like('t_pedagang.nomor_kartu', $q);
-        $this->db->or_like('transaksi_iuran.tanggal_transaksi', $q);
-        $this->db->or_like('users.full_name', $q);
-        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
-
-    // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL)
+    function get_nominal_transaksi($start_date = null, $end_date = null)
     {
-        $query = 'transaksi_iuran.*,
-        t_pedagang.nomor_kartu,
-        t_pedagang.nama_pemilik_kartu,
+        $this->db->select('sum(jurnal.debet) as debet');
+        $this->db->from('transaksi_iuran');
+        $this->db->join('jurnal', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi');
+        $this->db->join('t_pedagang', 'transaksi_iuran.id_kartu=t_pedagang.id');
+
+        if ($start_date && $end_date) {
+            $this->db->where('date(transaksi_iuran.tanggal_transaksi) >=', $start_date);
+            $this->db->where('date(transaksi_iuran.tanggal_transaksi) <=', $end_date);
+        }
+        return $this->db->get()->row();
+    }
+    // get data with limit and search
+    function get_limit_data($limit, $start_date = null, $end_date = null, $start = 0)
+    {
+        if ($start_date && $end_date) {
+            $this->db->where('date(transaksi_iuran.tanggal_transaksi) >=', $start_date);
+            $this->db->where('date(transaksi_iuran.tanggal_transaksi) <=', $end_date);
+        }
+        $query = 'transaksi_iuran.*,jurnal.debet,akun.alias,
+        t_pedagang.nomor,
+        t_pedagang.nama_pedagang,
         t_wilayah.wilayah,
         t_jenis_dagangan.nama_dagangan,
-        users.full_name as nama_user,
-        sum(detail_transaksi_iuran.iuran+detail_transaksi_iuran.charge-detail_transaksi_iuran.diskon) as nominal';
+        users.full_name as nama_user';
 
         $this->db->select($query);
         $this->db->from('transaksi_iuran');
@@ -115,9 +167,11 @@ class Transaksi_iuran_pedagang_model extends CI_Model
         $this->db->join('t_jenis_dagangan', 't_jenis_dagangan.id=t_pedagang.id_jenis_dagangan');
         $this->db->join('detail_transaksi_iuran', 'detail_transaksi_iuran.id_transaksi=transaksi_iuran.id_transaksi');
         $this->db->join('users', 'users.id=transaksi_iuran.id_user');
+        $this->db->join('jurnal', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi');
+        $this->db->join('akun', 'akun.id=transaksi_iuran.ke_akun', 'left');
+
         $this->db->group_by('transaksi_iuran.id_transaksi');
-        $this->db->order_by($this->id, 'desc');
-        $this->db->like('transaksi_iuran.nomor_transaksi', $q);
+        $this->db->order_by('transaksi_iuran.tanggal_transaksi', 'desc');
 
         $this->db->limit($limit, $start);
         return $this->db->get()->result();
@@ -202,13 +256,17 @@ class Transaksi_iuran_pedagang_model extends CI_Model
                     ' - ' . date_format(date_create($data_last_row->periode), 'M, Y');
             }
 
-            $nominal_iuran = $data_row->iuran;
+            $nominal_iuran = 0;
             $extra_charge = $data_row->charge;
             $nominal_diskon = $data_row->diskon;
-
-            $total_iuran = $jumlah_periode * $nominal_iuran;
-            $total_extra_charge = $jumlah_periode * $extra_charge;
-            $total_diskon = $jumlah_periode * $nominal_diskon;
+            $total_iuran = 0;
+            $total_extra_charge = 0;
+            $total_diskon = 0;
+            foreach ($data->result() as $dt) {
+                $total_iuran = $total_iuran + $dt->iuran;
+                $total_extra_charge = $total_extra_charge + $dt->charge;
+                $total_diskon = $total_diskon + $dt->diskon;
+            }
 
             $total_bayar = $total_iuran + $total_extra_charge;
 
@@ -297,6 +355,9 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     function delete($id)
     {
         $this->db->trans_start();
+        $this->db->where('id_transaksi', $id);
+        $this->db->delete('jurnal');
+
         $this->db->where('id_transaksi', $id);
         $this->db->delete('detail_transaksi_iuran');
 

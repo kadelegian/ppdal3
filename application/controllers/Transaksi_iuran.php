@@ -20,37 +20,46 @@ class Transaksi_iuran extends CI_Controller
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
 
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'transaksi_iuran/?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'transaksi_iuran/?q=' . urlencode($q);
+        $a = trim($this->input->get('awal_periode'));
+        $b = trim($this->input->get('akhir_periode'));
+        $total = 0;
+        $start = intval($this->input->get('start'));
+        if ($a <> '' && $b <> '') {
+
+            $config['base_url'] = base_url() . 'transaksi_iuran/index?awal_periode=' . $a . '&akhir_periode=' . $b;
+            $config['first_url'] = base_url() . 'transaksi_iuran/index?awal_periode=' . $a . '&akhir_periode=' . $b;
+            $total_nominal = $this->Transaksi_iuran_model->get_nominal_transaksi($a, $b);
+            $total = $total_nominal->debet;
         } else {
-            $config['base_url'] = base_url() . 'transaksi_iuran/';
-            $config['first_url'] = base_url() . 'transaksi_iuran/';
+            $config['base_url'] = base_url() . 'transaksi_iuran';
+            $config['first_url'] = base_url() . 'transaksi_iuran';
         }
 
-        $config['per_page'] = 10;
+
+        $config['per_page'] = 30;
         $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Transaksi_iuran_model->total_rows($q);
-        $transaksi_iuran = $this->Transaksi_iuran_model->get_limit_data($config['per_page'], $start, $q);
+        $config['total_rows'] = $this->Transaksi_iuran_model->total_rows($a, $b);
+        $transaksi_iuran = $this->Transaksi_iuran_model->get_limit_data($config['per_page'],  $a, $b, $start);
 
         $this->load->library('pagination');
         $this->pagination->initialize($config);
-
+        $js['js_script'] = array('jquery-ui.min.js', 'dtpicker_format.js');
+        $css['external_css'] = array('jquery-ui.css');
         $data = array(
             'data_transaksi' => $transaksi_iuran,
-            'q' => $q,
             'pagination' => $this->pagination->create_links(),
+            'awal_periode' => $a,
+            'sampai_dengan' => $b,
+            'total_nominal' => $total,
             'total_rows' => $config['total_rows'],
             'start' => $start,
         );
-        $this->load->view('page_template/header');
+        $this->load->view('page_template/header', $css);
         $this->load->view('page_template/side_bar');
         $this->load->view('page_template/top_bar');
         $this->load->view('transaksi_iuran/transaksi_iuran_list', $data);
-        $this->load->view('page_template/footer');
+        $this->load->view('page_template/footer', $js);
     }
 
 
@@ -105,6 +114,7 @@ class Transaksi_iuran extends CI_Controller
             $id_kartu = $this->input->post('id_kartu');
             redirect(base_url('kartu/read/' . $id_kartu));
         } else {
+            $id_jenis = (int) $this->input->post('id_jenis_dagangan');
             $this->load->model('users_model');
             $user_data = $this->users_model->get_by_id($_SESSION['id_user']);
             if ($user_data->role > 1) { //harus admin
@@ -128,39 +138,34 @@ class Transaksi_iuran extends CI_Controller
                 $print_periode = array();
                 $detail_iuran = array();
 
+                $list_iuran = $this->Transaksi_iuran_model->get_list_iuran($awal_periode, $akhir_periode, $id_jenis);
 
-                if ($akhir_periode >= $awal_periode) {
-
-                    do {
-                        $i++;
-
-                        $total_iuran = $total_iuran + $iuran;
-                        $total_diskon = $total_diskon + $diskon;
-                        $detail_iuran[$i] = array('periode' => date_format($periode, 'Y-m-d'));
-                        $periode = date_add($periode, date_interval_create_from_date_string("1 month"));
-                    } while ($akhir_periode >= $periode);
-
-                    $sampai_dengan = '';
-                    if ($i > 1) {
-                        $sampai_dengan = ' - ' . date_format($akhir_periode, 'M, Y');
-                    }
-                    $keterangan_iuran = 'Iuran Periode ' . date_format($dari, 'M, Y') . $sampai_dengan;
-                    $print_periode['iuran'] = array(
-                        'keterangan' => 'Iuran Periode ' . date_format($dari, 'M, Y') . $sampai_dengan,
-                        'kali' => $i,
-                        'nominal' => number_format($iuran, 0, ",", "."),
-                        'jumlah' => number_format($total_iuran, 0, ',', '.')
-                    );
-                    if ($total_diskon > 0) {
-
-                        $print_periode['diskon'] = array(
-                            'keterangan' => 'Diskon',
-                            'kali' => $i,
-                            'nominal' => number_format($diskon, 0, ',', '.'),
-                            'jumlah' => number_format($total_diskon, 0, ',', '.')
-                        );
-                    }
+                foreach ($list_iuran as $data_iuran) {
+                    $total_iuran = $total_iuran + $data_iuran['iuran'];
+                    $detail_iuran[$i] = array('periode' => date_format(date_create_from_format('Y-m-d', $data_iuran['periode']), 'Y-m-d'), 'iuran' => $data_iuran['iuran']);
+                    $i++;
                 }
+
+                $sampai_dengan = '';
+                if ($i > 1) {
+                    $sampai_dengan = ' - ' . date_format($akhir_periode, 'M, Y');
+                }
+
+                $keterangan_iuran = 'Iuran Periode ' . date_format($dari, 'M, Y') . $sampai_dengan;
+                $print_periode['iuran'] = array(
+                    'keterangan' => 'Iuran Periode ' . date_format($dari, 'M, Y') . $sampai_dengan,
+                    'jumlah' => number_format($total_iuran, 0, ',', '.')
+                );
+                if ($total_diskon > 0) {
+
+                    $print_periode['diskon'] = array(
+                        'keterangan' => 'Diskon',
+                        'kali' => $i,
+                        'nominal' => number_format($diskon, 0, ',', '.'),
+                        'jumlah' => number_format($total_diskon, 0, ',', '.')
+                    );
+                }
+
                 $sub_total = $total_iuran - $total_diskon;
                 $this->load->model('Akun_model');
                 $data_akun = $this->Akun_model->get_bank_acc();
@@ -202,6 +207,7 @@ class Transaksi_iuran extends CI_Controller
     {
         $id_user = $_SESSION['id_user'];
         $periode = array();
+        $iuran = array();
         $periode =  $this->input->post('periode', true);
         $iuran = $this->input->post('iuran', true);
         $diskon = $this->input->post('diskon', true);
@@ -218,29 +224,32 @@ class Transaksi_iuran extends CI_Controller
             'id_kartu' => $id_kartu,
             'tanggal_transaksi' => $tanggal_transaksi,
             'id_user' => $id_user,
-            'ke_akun' => $id_akun
+            'ke_akun' => $id_akun,
+            'total_bayar' => $total_pembayaran
         );
         $id = $this->Transaksi_iuran_model->insert($data);
 
         if ($id > 0) {
             $detail = array();
-
+            $counter = 0;
             foreach ($periode as $p) {
                 array_push($detail, array(
                     'periode' => $p,
                     'id_transaksi' => $id,
-                    'iuran' => $iuran,
+                    'iuran' => $iuran[$counter],
                     'diskon' => $diskon
                 ));
+                $counter++;
             }
             //input kas
             $kas = array(
                 'tanggal' => $tanggal_transaksi,
                 'id_akun' => $id_akun,
                 'debet' => $total_pembayaran,
-                'keterangan' => 'Iuran Pedagang Periode ' . $keterangan_iuran . ' '  . $nama_pemilik . ' - ' . $nomor_kartu,
+                'keterangan' => 'Periode ' . $keterangan_iuran . ' '  . $nama_pemilik . ' - ' . $nomor_kartu,
                 'id_user' => $id_user,
                 'id_transaksi' => $id,
+                'kode' => 1
             );
             $this->load->model('Jurnal_model');
 

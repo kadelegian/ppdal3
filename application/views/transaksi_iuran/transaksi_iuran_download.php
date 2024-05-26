@@ -165,14 +165,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <thead>
                     <tr class="judul">
                         <th scope="col">Keterangan</th>
-                        <th style="text-align: left;" scope="col">Nominal</th>
+                        <th style="text-align: left;" scope="col"></th>
                         <th style="text-align:right;" scope="col">Jumlah</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?= $keterangan_iuran ?></td>
-                        <td><?= $kali_nominal . 'x ' . number_format($nominal_iuran, 0, ',', '.') ?></td>
+                        <td><?= $keterangan_iuran . ' (' . $kali_nominal . 'x)' ?></td>
+                        <td></td>
                         <td style="text-align: right;"><?= number_format($total_iuran, 0, ',', '.')  ?></td>
                     </tr>
                     <?php if ($total_diskon > 0) { ?>

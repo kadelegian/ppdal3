@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">Daftar Akun</h1>
+            <h1 class="h3 mb-0 text-gray-800">Daftar Rekening</h1>
 
         </div>
         <div class="card-body">
@@ -47,22 +47,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <th>Nama Akun</th>
                         <th>Akun Alias</th>
                         <th>Nomor Rekening</th>
-                        <th>Keterangan</th>
+                        <th>Saldo Awal</th>
                         <th>Action</th>
                     </tr><?php
                             foreach ($data_akun as $d_akun) {
+                                if (is_null($d_akun->saldo)) {
+                                    $saldo = 'n/a';
+                                } else {
+                                    $saldo = number_format($d_akun->saldo, 0, ',', '.');
+                                }
                                 ?>
                         <tr>
                             <td width="80px"><?php echo ++$start ?></td>
                             <td><?php echo $d_akun->nama_akun ?></td>
                             <td><?php echo $d_akun->alias ?></td>
                             <td><?php echo $d_akun->nomor_rekening ?></td>
-                            <td><?php echo $d_akun->keterangan  ?></td>
+                            <td><?php echo $saldo ?></td>
                             <td style="text-align:center">
                                 <div class="btn-group" role="group">
                                     <?php if ($d_akun->aktif) { ?>
+
+                                        <a class="btn btn-secondary" href='<?= base_url('akun/setting_saldo/' . $d_akun->id) ?>'><i class="fa fa-cogs"></i>Set-Saldo</a>
                                         <a class="btn btn-primary" href='<?= base_url('akun/update/' . $d_akun->id) ?>'><i class="fas fa-search"></i>Lihat</a>
-                                        <a class="btn btn-danger" href='<?= base_url('akun/nonaktifkan/' . $d_akun->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Me-non aktifkan Akun??')">Disable</a>
+                                        <?php if (!$d_akun->sistem) { ?>
+                                            <a class="btn btn-danger" href='<?= base_url('akun/nonaktifkan/' . $d_akun->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Me-non aktifkan Akun??')">Disable</a>
+                                        <?php } ?>
                                     <?php } ?>
                                 </div>
                             </td>
