@@ -7,13 +7,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">Daftar Jenis Pengeluaran</h1>
+            <h1 class="h3 mb-0 text-gray-800">Daftar Jenis Akun</h1>
 
         </div>
         <div class="card-body">
             <div class="row" style="margin-bottom: 10px">
                 <div class="col-md-4">
-                    <?php echo anchor(site_url('jenis_pengeluaran/create'), 'Create', 'class="btn btn-primary"'); ?>
+                    <?php echo anchor(site_url('jenis_akun/create'), 'Create', 'class="btn btn-primary"'); ?>
                 </div>
                 <div class="col-md-4 text-center">
                     <div style="margin-top: 8px" id="message">
@@ -23,14 +23,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="col-md-1 text-right">
                 </div>
                 <div class="col-md-3 text-right">
-                    <form action="<?php echo site_url('jenis_pengeluaran/index'); ?>" class="form-inline" method="get">
+                    <form action="<?php echo site_url('jenis_akun/index'); ?>" class="form-inline" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
                             <span class="input-group-btn">
                                 <?php
                                 if ($q <> '') {
                                     ?>
-                                    <a href="<?php echo site_url('jenis_pengeluaran'); ?>" class="btn btn-default">Reset</a>
+                                    <a href="<?php echo site_url('jenis_akun'); ?>" class="btn btn-default">Reset</a>
                                 <?php
                                 }
                                 ?>
@@ -45,6 +45,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tr>
                         <th>No</th>
                         <th>Keterangan</th>
+                        <th>Saldo Normal</th>
+                        <th>Posisi</th>
                         <th>Action</th>
                     </tr><?php
                             foreach ($data_jenis as $dp) {
@@ -52,16 +54,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <tr>
                             <td width="80px"><?php echo ++$start ?></td>
                             <td><?php echo $dp->keterangan ?>
-                                <?php if (!$dp->aktif) { ?>
-                                    <i class="fa fa-ban" aria-hidden="true"></i>
-                                <?php } ?>
+                            <td><?php echo ($dp->sn == 'd' ? 'Debet' : 'Kredit') ?>
+                            <td><?php echo ($dp->pos == 'nr' ? 'Neraca' : 'Laba Rugi') ?>
                             </td>
                             <td style="text-align:center">
                                 <div class="btn-group" role="group">
-                                    <?php if ($dp->aktif && $dp->tipe != 0) { ?>
-                                        <a class="btn btn-primary" href='<?= base_url('jenis_pengeluaran/update/' . $dp->id) ?>'><i class="fas fa-search"></i>Lihat</a>
-                                        <a class="btn btn-danger" href='<?= base_url('jenis_pengeluaran/nonaktifkan/' . $dp->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Me-non aktifkan Akun??')">Disable</a>
-                                    <?php } ?>
+
+                                    <a class="btn btn-primary" href='<?= base_url('jenis_akun/update/' . $dp->id) ?>'><i class="fas fa-search"></i>Lihat</a>
+                                    <a class="btn btn-danger" href='<?= base_url('jenis_akun/nonaktifkan/' . $dp->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Me-non aktifkan Akun??')">Disable</a>
+
                                 </div>
                             </td>
                         </tr>

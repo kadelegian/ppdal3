@@ -1,5 +1,7 @@
 <?php
 
+use function PHPUnit\Framework\returnSelf;
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -45,6 +47,26 @@ class Kartu_model extends CI_Model
             }
         }
         return $roman;
+    }
+    function set_alias_url($id_pedagang, $nama = null)
+    {
+        $data = $this->get_by_id($id_pedagang);
+        if ($data) {
+            $nama = $data->nama_pemilik;
+            if (strlen($data->alias) < 4) {
+                do {
+                    $alias = substr(str_shuffle('0123456789'), 0, 4);
+                    $this->db->where('alias', $alias);
+                    $query = $this->db->get('t_kartu');
+                } while ($query->num_rows() > 0);
+                $this->db->where('id', $id_pedagang);
+                $this->db->update($this->table, array('alias' => $alias));
+            } else {
+                $alias = $data->alias;
+            }
+        }
+        $url = base_url('kartu/read/' . $alias);
+        return $url;
     }
     function info_kartu($id_pedagang)
     {
@@ -106,9 +128,23 @@ class Kartu_model extends CI_Model
 
         return $r;
     }
+    function get_by_alias($alias)
+    {
+        $this->db->select('t_kartu.*,
+        t_wilayah.wilayah,t_wilayah.nomor_wilayah,
+        t_jenis_dagangan.nama_dagangan,t_jenis_dagangan.prefix_dagangan,
+        t_wilayah.prefix_wilayah');
+        $this->db->from('t_kartu');
+        $this->db->join('t_wilayah', 't_kartu.id_wilayah=t_wilayah.id', 'left');
+        $this->db->join('t_jenis_dagangan', 't_kartu.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
+        $this->db->where('t_kartu.alias', $alias);
+        $r = $this->db->get()->row();
+        $this->_nomor_kartu($r->id, $this->romawi($r->nomor_wilayah), $r->id_blok, $r->prefix_dagangan);
+        return $r;
+    }
     function _nomor_kartu($id, $prefix_wilayah, $id_blok, $prefix_dagangan)
     {
-        $this->nomor_kartu = str_pad($id, 4, '0', STR_PAD_LEFT) . '/'  . $prefix_wilayah . '-' . str_pad($id_blok, 2, '0', STR_PAD_LEFT) . '/' . $prefix_dagangan . '/' . date_format(date_create(), 'Y');
+        $this->nomor_kartu = str_pad($id_blok, 3, '0', STR_PAD_LEFT) . '/' . $prefix_wilayah .   '/' . $prefix_dagangan . '/' . date_format(date_create(), 'Y');
     }
     // get total rows
     function total_rows($q = NULL)
@@ -148,7 +184,7 @@ class Kartu_model extends CI_Model
         $this->db->or_like('t_wilayah.wilayah', $q);
         $this->db->or_like('t_jenis_dagangan.nama_dagangan', $q);
 
-        $this->db->order_by('t_kartu.id_blok,t_kartu.id_wilayah,t_kartu.id', 'asc');
+        $this->db->order_by('t_kartu.id_wilayah,t_kartu.id_blok,t_kartu.id', 'asc');
         $this->db->limit($limit, $start);
 
         return $this->db->get()->result();
@@ -160,11 +196,11 @@ class Kartu_model extends CI_Model
         $this->db->trans_start();
         $this->db->insert($this->table, $data);
         $id = (int) $this->db->insert_id();
+        $this->set_alias_url($id);
         $joindate = $data['join_date'];
         $this->get_by_id($id);
 
         $joindate = substr($joindate, 0, 4);
-
         $this->db->where('id', $id);
         $this->db->update($this->table, array('nomor_kartu' => $this->nomor_kartu));
         $this->db->trans_complete();
@@ -184,6 +220,9 @@ class Kartu_model extends CI_Model
         $data['nomor_kartu'] = $this->nomor_kartu;
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
+        if ($data['alias'] == '-') {
+            $this->set_alias_url($id);
+        }
     }
 
     // delete data

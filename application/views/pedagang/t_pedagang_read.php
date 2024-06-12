@@ -7,8 +7,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col">
 
             <div class="card shadow mb-4">
-
-                <img class="card-img-top d-block d-md-none d-lg-none" src="<?= base_url('assets/img/logo.jpg') ?>" alt="Card image">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <img style="width: 50%;display:block;margin-left:auto;margin-right:auto;" class="card-img-top d-block d-md-none d-lg-none img-fluid" src="<?= base_url('assets/img/logo.jpg') ?>" alt="Card image">
+                    </div>
+                </div>
                 <div class="card-body">
                     <h6 class="font-weight-bold text-primary d-lg-block d-sm-none d-md-none">Data Pedagang Asongan</h6>
 
@@ -33,6 +36,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td>:</td>
                             <td><?= $wilayah ?></td>
                         </tr>
+                        <?php if (isset($_SESSION['role'])) { ?>
+                            <tr>
+                                <td>Penjamin</td>
+                                <td>:</td>
+                                <td>
+                                    <form action="<?= base_url('pedagang/set_penjamin') ?>" class="form-inline" method="post">
+                                        <input type="hidden" name="id_pedagang" value="<?= $id ?>">
+                                        <input type="hidden" name="id_wilayah" value="<?= $id_wilayah ?>">
+                                        <input type="hidden" name="id_jenis_dagangan" value="<?= $id_jenis_dagangan ?>">
+                                        <div class="form-group">
+                                            <select class="form-control" name="id_extra_charge" id="extra_charge">
+                                                <?php foreach ($data_extra_charge as $penjamin) : ?>
+                                                    <option value="<?= $penjamin->id ?>" <?= $penjamin->id == $id_extra_charge ? 'selected' : '' ?>><?= $penjamin->keterangan_charge ?>( <?= number_format($penjamin->extra_charge, 0, ',', '.') ?> )</option>
+                                                <?php endforeach; ?>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group mx-2">
+
+                                            <input type="submit" class="btn btn-warning btn-sm" name="tombol" id="tombol" value="Set Penjamin">
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        <?php } ?>
                     </table>
 
                 </div>
@@ -50,12 +79,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="card-body">
-                    <?php if ($user_role > 1) : ?>
+                    <?php if ($user_role < 2) : ?>
                         <div class="row">
                             <div class="col-auto">
 
                                 <label for="tgl_awal">Terima Pembayaran:</label>
-                                <span class="text-danger"><?= $this->session->flashdata('error') != null ? $this->session->flashdata('error') : '' ?></span>
+
                             </div>
 
                         </div>

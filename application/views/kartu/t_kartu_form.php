@@ -60,6 +60,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
 
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
+            <input type="hidden" name="alias" value="<?php echo $alias; ?>" />
             <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
             <a href="<?php echo site_url('kartu') ?>" class="btn btn-grey">Kembali</a>
             <?php echo form_close() ?>

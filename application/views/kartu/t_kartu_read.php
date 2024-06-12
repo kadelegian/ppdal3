@@ -7,8 +7,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col">
 
             <div class="card shadow mb-4">
-
-                <img class="card-img-top d-block d-md-none d-lg-none" src="<?= base_url('assets/img/logo.jpg') ?>" alt="Card image">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <img style="width: 50%;display:block;margin-left:auto;margin-right:auto;" class="card-img-top d-block d-md-none d-lg-none img-fluid" src="<?= base_url('assets/img/logo.jpg') ?>" alt="Card image">
+                    </div>
+                </div>
                 <div class="card-body">
                     <h6 class="font-weight-bold text-primary d-lg-block d-sm-none d-md-none">Data Pedagang Pantai</h6>
 
@@ -50,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="card-body">
-                    <?php if ($user_role > 1) : ?>
+                    <?php if (isset($_SESSION['id_user']) && $_SESSION['id_user'] < 2) : ?>
                         <div class="row">
                             <div class="col-auto">
 
@@ -108,7 +111,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>No.</th>
                             <th>Periode</th>
                             <th>Status</th>
-                            <th>Pilih</th>
+                            <?php if (isset($_SESSION['id_user']) && $_SESSION['id_user'] < 2) : ?>
+                                <th>Pilih</th>
+                            <?php endif; ?>
                         </tr>
 
                         <?php
@@ -124,9 +129,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <td><?= $counter++ ?></td>
                                     <td><?= date('M, Y', strtotime($payment->periode)) ?></td>
                                     <td>Lunas</td>
-                                    <td>
-                                        <input type="checkbox" id="checkbox<?= $counter ?>" name="periode[]" value="<?= $payment->id ?>">
-                                    </td>
+                                    <?php if (isset($_SESSION['id_user']) && $_SESSION['id_user'] < 2) : ?>
+                                        <td>
+                                            <input type="checkbox" id="checkbox<?= $counter ?>" name="periode[]" value="<?= $payment->id ?>">
+                                        </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>
                             <input type="hidden" name="id_kartu" value="<?= $id ?>">

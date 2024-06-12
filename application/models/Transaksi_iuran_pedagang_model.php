@@ -96,6 +96,7 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     function get_detail_trans($id)
     {
         $q = 'SELECT detail_transaksi_iuran.id as id_detail,detail_transaksi_iuran.periode, 
+        detail_transaksi_iuran.id_transaksi,
         transaksi_iuran.tanggal_transaksi, 
         transaksi_iuran.id_kartu,
         t_pedagang.*,       
@@ -122,9 +123,9 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     function total_rows($start_date = null, $end_date = null)
     {
         $this->db->select('transaksi_iuran.*');
-        $this->db->from('transaksi_iuran');
+        $this->db->from('t_pedagang');
+        $this->db->join('transaksi_iuran', 'transaksi_iuran.id_kartu=t_pedagang.id');
         $this->db->join('jurnal', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi');
-        $this->db->join('t_pedagang', 'transaksi_iuran.id_kartu=t_pedagang.id');
         if ($start_date && $end_date) {
             $this->db->where('date(transaksi_iuran.tanggal_transaksi) >=', $start_date);
             $this->db->where('date(transaksi_iuran.tanggal_transaksi) <=', $end_date);
@@ -136,9 +137,9 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     function get_nominal_transaksi($start_date = null, $end_date = null)
     {
         $this->db->select('sum(jurnal.debet) as debet');
-        $this->db->from('transaksi_iuran');
+        $this->db->from('t_pedagang');
+        $this->db->join('transaksi_iuran', 'transaksi_iuran.id_kartu=t_pedagang.id');
         $this->db->join('jurnal', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi');
-        $this->db->join('t_pedagang', 'transaksi_iuran.id_kartu=t_pedagang.id');
 
         if ($start_date && $end_date) {
             $this->db->where('date(transaksi_iuran.tanggal_transaksi) >=', $start_date);
@@ -347,6 +348,7 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     // update data
     function update($id, $data)
     {
+        $this->db->trans_start();
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
     }

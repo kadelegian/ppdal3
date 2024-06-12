@@ -34,6 +34,7 @@ class Users_model extends CI_Model
                     array(
                         'id_user' => $datauser->id,
                         'full_name' => $datauser->full_name,
+                        'role' => $datauser->role,
                     )
                 );
 

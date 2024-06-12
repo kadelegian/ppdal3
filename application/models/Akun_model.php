@@ -20,10 +20,14 @@ class Akun_model extends CI_Model
         $this->db->where('aktif', 1);
         return $this->db->get($this->table)->result();
     }
-    // get all
+
     function get_active_acc()
     {
-        $this->db->where('aktif', 1);
+        $select = 'akun.id,akun.kode_akun,akun.nama_akun,akun.alias,akun.nomor_rekening,akun.bank,akun.debet,akun.kredit,akun.kode_jenis,jenis_akun.keterangan,jenis_akun.sn,jenis_akun.pos';
+        $this->db->select($select);
+        $this->db->from($this->table);
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('akun.aktif', 1);
         return $this->db->get($this->table)->result();
     }
     function get_all()
@@ -35,8 +39,15 @@ class Akun_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
-        return $this->db->get($this->table)->row();
+        $select = 'akun.id,akun.kode_akun,akun.nama_akun,akun.keterangan,
+        akun.alias,akun.nomor_rekening,akun.bank,akun.debet,akun.kredit,akun.kode_jenis,
+        akun.is_iuran,akun.is_penjamin,
+        jenis_akun.keterangan as jenis_akun,jenis_akun.sn,jenis_akun.pos';
+        $this->db->select($select);
+        $this->db->from($this->table);
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('akun.id', $id);
+        return $this->db->get()->row();
     }
 
     // get total rows
@@ -51,39 +62,55 @@ class Akun_model extends CI_Model
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
-        $this->db->select('akun.*,saldo_akun.saldo as saldo');
+        $this->db->select('akun.*,
+        CASE 
+        WHEN saldo_akun.debet IS NULL THEN 0
+        WHEN saldo_akun.debet = 0 THEN akun.debet
+        ELSE saldo_akun.debet
+    END as debet,
+    CASE 
+        WHEN saldo_akun.kredit IS NULL THEN 0
+        WHEN saldo_akun.kredit = 0 THEN akun.kredit
+        ELSE saldo_akun.kredit
+    END as kredit,
+     jenis_akun.keterangan as tipe', false);
         $this->db->from('akun');
         $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id', 'left');
-
-        $this->db->order_by($this->id, $this->order);
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->order_by('akun.kode_akun', 'asc');
 
         $this->db->or_like('nama_akun', $q);
         $this->db->limit($limit, $start);
+
         return $this->db->get()->result();
     }
-    function set_saldo($data)
+    function get_akun_sistem()
     {
-        $id_akun = $data['id_akun'];
-        $this->db->where('id_akun', $id_akun);
-        $cek = $this->db->get('saldo_akun')->row();
-        if ($cek) {
-            //update
-            $this->db->where('id', $cek->id);
-            $this->db->update('saldo_akun', $data);
-        } else {
-
-            $this->db->insert('saldo_akun', $data);
-        }
+        $q = 'select id from akun where is_iuran=1 union select id from akun where is_penjamin=1';
+        return $this->db->query($q);
     }
     // insert data
     function insert($data)
     {
+        if ($data['is_penjamin'] == 1) {
+            $this->db->query('update akun set is_penjamin=0');
+        }
+        if ($data['is_iuran'] == 1) {
+            $this->db->query('update akun set is_iuran=0');
+        }
+
         $this->db->insert($this->table, $data);
     }
 
     // update data
     function update($id, $data)
     {
+        if ($data['is_penjamin'] == 1) {
+            $this->db->query('update akun set is_penjamin=0');
+        }
+        if ($data['is_iuran'] == 1) {
+            $this->db->query('update akun set is_iuran=0');
+        }
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
     }

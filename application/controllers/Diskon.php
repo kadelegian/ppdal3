@@ -11,6 +11,10 @@ class Diskon extends CI_Controller
         if (isset($_SESSION['id_user'])) {
             $this->load->model('Diskon_model');
             $this->load->library('form_validation');
+            if ($_SESSION['role'] > 0) {
+                $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+                redirect(base_url());
+            }
         } else {
             redirect(base_url('auth'));
         }

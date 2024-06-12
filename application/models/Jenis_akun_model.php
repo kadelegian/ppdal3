@@ -3,10 +3,10 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Jenis_pengeluaran_model extends CI_Model
+class Jenis_akun_model extends CI_Model
 {
 
-    public $table = 'jenis_pengeluaran';
+    public $table = 'jenis_akun';
     public $id = 'id';
     public $order = 'asc';
 
@@ -22,6 +22,18 @@ class Jenis_pengeluaran_model extends CI_Model
     }
     function get_active_data()
     {
+        $this->db->where('aktif', 1);
+        return $this->db->get($this->table)->result();
+    }
+    function get_akun_kredit()
+    {
+        $this->db->where('sn', 'k');
+        $this->db->where('aktif', 1);
+        return $this->db->get($this->table)->result();
+    }
+    function get_akun_debet()
+    {
+        $this->db->where('sn', 'd');
         $this->db->where('aktif', 1);
         return $this->db->get($this->table)->result();
     }

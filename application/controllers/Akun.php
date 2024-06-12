@@ -11,6 +11,10 @@ class Akun extends CI_Controller
         if (isset($_SESSION['id_user'])) {
             $this->load->model('Akun_model');
             $this->load->library('form_validation');
+            if ($_SESSION['role'] > 0) {
+                $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+                redirect(base_url());
+            }
         } else {
             redirect(base_url('auth'));
         }
@@ -33,7 +37,12 @@ class Akun extends CI_Controller
         $config['page_query_string'] = TRUE;
         $config['total_rows'] = $this->Akun_model->total_rows($q);
         $data_akun = $this->Akun_model->get_limit_data($config['per_page'], $start, $q);
-
+        $total_debet = 0;
+        $total_kredit = 0;
+        foreach ($data_akun as $d) {
+            $total_debet += $d->debet;
+            $total_kredit += $d->kredit;
+        }
         $this->load->library('pagination');
         $this->pagination->initialize($config);
 
@@ -43,6 +52,8 @@ class Akun extends CI_Controller
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
+            'total_debet' => $total_debet,
+            'total_kredit' => $total_kredit
         );
         $this->load->view('page_template/header');
         $this->load->view('page_template/side_bar');
@@ -50,28 +61,7 @@ class Akun extends CI_Controller
         $this->load->view('akun/akun_list', $data);
         $this->load->view('page_template/footer');
     }
-    public function setting_saldo($id_akun)
-    {
-        $id = urldecode($id_akun);
-        if (is_numeric($id)) {
-            $data_akun = $this->Akun_model->get_by_id($id);
-            if ($data_akun) {
-                $data = array(
-                    'action' => site_url('akun/save_saldo'),
-                    'button' => 'Save',
-                    'id_akun' => $id,
-                    'akun' => $data_akun,
-                );
-                $js['js_script'] = array('jquery-ui.min.js', 'class_tanggal.js');
-                $css['external_css'] = array('jquery-ui.css');
-                $this->load->view('page_template/header', $css);
-                $this->load->view('page_template/side_bar');
-                $this->load->view('page_template/top_bar');
-                $this->load->view('akun/setting_saldo_form', $data);
-                $this->load->view('page_template/footer', $js);
-            }
-        }
-    }
+
     public function save_saldo()
     {
         $id_akun = $this->input->post('id_akun');
@@ -83,7 +73,7 @@ class Akun extends CI_Controller
 
             $tanggal = $this->input->post('tanggal', true);
             $dateObject = DateTime::createFromFormat('d/m/Y', $tanggal);
-            $tanggal = $dateObject->format('Y-m-d');
+            $tanggal = $dateObject->format('Y-m-d h:i:s');
             $saldo =  preg_replace('/\D/', '', $this->input->post('saldo'));
             $data = array(
                 'id_akun' => $id_akun,
@@ -95,29 +85,26 @@ class Akun extends CI_Controller
         }
     }
 
-    public function read($id)
-    {
-        $row = $this->Akun_model->get_by_id($id);
-        if ($row) {
-
-            $this->load->view('jenis_dagangan/t_jenis_dagangan_read', $row);
-        } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url());
-        }
-    }
-
     public function create()
     {
+        $this->load->model('Jenis_akun_model', 'kode_jenis_model');
+        $data_jenis = $this->kode_jenis_model->get_all();
         $data = array(
             'button' => 'Create',
             'action' => site_url('akun/create_action'),
             'id' => set_value('id'),
+            'kode_akun' => set_value('kode_akun'),
             'nama_akun' => set_value('nama_akun'),
             'alias' => set_value('alias'),
             'keterangan' => set_value('keterangan'),
             'nomor_rekening' => set_value('nomor_rekening'),
             'is_bank' => false,
+            'debet' => set_value('debet', 0),
+            'kredit' => set_value('kredit', 0),
+            'kode_jenis' => set_value('kode_jenis'),
+            'list_kode_jenis' => $data_jenis,
+            'is_penjamin' => set_value('is_penjamin', 0),
+            'is_iuran' => set_value('is_iuran', 0),
         );
         $this->load->view('page_template/header');
         $this->load->view('page_template/side_bar');
@@ -137,13 +124,21 @@ class Akun extends CI_Controller
             if ($is_bank == null) {
                 $is_bank = 0;
             }
+            $debet = preg_replace('/\D/', '', $this->input->post('debet', TRUE));
+            $kredit = preg_replace('/\D/', '', $this->input->post('kredit', TRUE));
             $data = array(
                 'nama_akun' => strtoupper($this->input->post('nama_akun', TRUE)),
+                'kode_akun' => strtoupper($this->input->post('kode_akun', TRUE)),
                 'alias' => strtoupper($this->input->post('alias', TRUE)),
                 'keterangan' => $this->input->post('keterangan', TRUE),
                 'nomor_rekening' => $this->input->post('nomor_rekening', TRUE),
                 'creator' => $this->session->userdata('id_user'),
                 'bank' => $is_bank,
+                'debet' => $debet,
+                'kredit' => $kredit,
+                'kode_jenis' => $this->input->post('kode_jenis', TRUE),
+                'is_iuran' => $this->input->post('is_iuran') ? 1 : 0,
+                'is_penjamin' => $this->input->post('is_penjamin') ? 1 : 0,
             );
 
             $this->Akun_model->insert($data);
@@ -155,17 +150,26 @@ class Akun extends CI_Controller
     public function update($id)
     {
         $row = $this->Akun_model->get_by_id($id);
+        $this->load->model('Jenis_akun_model', 'kode_jenis_model');
+        $data_jenis = $this->kode_jenis_model->get_all();
 
         if ($row) {
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('akun/update_action'),
                 'id' => set_value('id', $id),
+                'kode_akun' => set_value('kode_akun', $row->kode_akun),
                 'nama_akun' => set_value('nama_akun', $row->nama_akun),
                 'alias' => set_value('alias', $row->alias),
                 'keterangan' => set_value('keterangan', $row->keterangan),
                 'nomor_rekening' => set_value('prefix_dagangan', $row->nomor_rekening),
                 'is_bank' => set_value('is_bank', $row->bank),
+                'debet' => set_value('debet', $row->debet),
+                'kredit' => set_value('kredit', $row->kredit),
+                'kode_jenis' => set_value('kode_jenis'),
+                'list_kode_jenis' => $data_jenis,
+                'is_iuran' => set_value('is_iuran', $row->is_iuran),
+                'is_penjamin' => set_value('is_penjamin', $row->is_penjamin),
             );
             $this->load->view('page_template/header');
             $this->load->view('page_template/side_bar');
@@ -189,6 +193,10 @@ class Akun extends CI_Controller
             if ($is_bank == null) {
                 $is_bank = 0;
             }
+
+            $debet = preg_replace('/\D/', '', $this->input->post('debet', TRUE));
+            $kredit = preg_replace('/\D/', '', $this->input->post('kredit', TRUE));
+
             $data = array(
                 'nama_akun' => strtoupper($this->input->post('nama_akun', TRUE)),
                 'alias' => strtoupper($this->input->post('alias', TRUE)),
@@ -196,6 +204,11 @@ class Akun extends CI_Controller
                 'nomor_rekening' => $this->input->post('nomor_rekening', TRUE),
                 'creator' => $this->session->userdata('id_user'),
                 'bank' => $is_bank,
+                'debet' => $debet,
+                'kredit' => $kredit,
+                'kode_jenis' => $this->input->post('kode_jenis', TRUE),
+                'is_iuran' => $this->input->post('is_iuran') ? 1 : 0,
+                'is_penjamin' => $this->input->post('is_penjamin') ? 1 : 0,
             );
 
             $this->Akun_model->update($this->input->post('id', TRUE), $data);
@@ -231,16 +244,25 @@ class Akun extends CI_Controller
             redirect(site_url());
         }
     }
+    public function cek_kode_akun()
+    {
+        $id = $this->input->post('id'); // Get the current record ID
+        $kode = $this->input->post('kode_akun');
+        $this->db->where('kode_akun', $kode);
+        $this->db->where('id !=', $id);
+        $query = $this->db->get('akun');
 
+        if ($query->num_rows() > 0) {
+            $this->form_validation->set_message('cek_kode_akun', 'The {field} cannot be used.');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
     public function _rules()
     {
+        $this->form_validation->set_rules('kode_akun', 'Kode Akun', 'trim|required|callback_cek_kode_akun');
         $this->form_validation->set_rules('nama_akun', 'nama akun', 'trim|required');
-        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+        $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     }
 }
-
-/* End of file Jenis_dagangan.php */
-/* Location: ./application/controllers/Jenis_dagangan.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2023-12-04 23:38:14 */
-/* http://harviacode.com */

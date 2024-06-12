@@ -48,12 +48,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="input-group">
                 </div>
             </div>
-            <table class="table table-striped table-bordered mt-2">
+            <table class="table table-hover table-striped table-bordered mt-2">
                 <tr>
                     <th>No</th>
                     <th>Nomor ID</th>
-                    <th>Wilayah</th>
                     <th>Nama Pedagang</th>
+                    <th>Wilayah</th>
                     <th>Dagangan</th>
                     <th>Join Date</th>
                     <th style="text-align:center">Action</th>
@@ -63,21 +63,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tr>
                         <td width="80px"><?php echo ++$start ?></td>
                         <td><?= $pedagang->nomor ?></td>
-                        <td><?= $pedagang->wilayah ?></td>
-                        <td><?php echo $pedagang->nama_pedagang ?></td>
-                        <td><?php echo $pedagang->nama_dagangan ?></td>
-                        <td><?php echo date_format(date_create_from_format('Y-m-d', $pedagang->join_date), 'd/m/Y')  ?></td>
-                        <td style="text-align:center" width="auto">
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-success" href='<?= base_url('pedagang/read/' . $pedagang->id) ?>'><i class="fas fa-money-check-alt"></i></a>
-                                <a class="btn btn-secondary" href='<?= base_url('pedagang/info_pedagang/' . $pedagang->id) ?>'><i class="fas fa-print"></i></a>
-                                <a class="btn btn-primary" href='<?= base_url('pedagang/update/' . $pedagang->id) ?>'>Lihat</a>
-                                <a class="btn btn-danger" href='<?= base_url('pedagang/delete/' . $pedagang->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                        <td><?php if ($pedagang->alias <> '-') { ?>
+                                <a href="<?= base_url('pedagang/read/' . $pedagang->alias) ?>">
+                                    <?php echo $pedagang->nama_pedagang ?></td>
+                        </a>
+                    <?php } else { ?>
+                        <?php echo $pedagang->nama_pedagang ?></td>
+                    <?php } ?>
+                    <td><?= $pedagang->wilayah ?></td>
 
-                            </div>
+                    <td><?php echo $pedagang->nama_dagangan ?></td>
+                    <td><?php echo date_format(date_create_from_format('Y-m-d', $pedagang->join_date), 'd/m/Y')  ?></td>
+                    <td style="text-align:center" width="auto">
+                        <div class="btn-group" role="group">
+
+                            <a class="btn btn-light" href='<?= base_url('pedagang/qr_code/' . $kartu->id) ?>'><i class="fas fa-qrcode"></i></a>
+                            <a class="btn btn-primary" href='<?= base_url('pedagang/update/' . $pedagang->id) ?>'>Lihat</a>
+                            <a class="btn btn-danger" href='<?= base_url('pedagang/delete/' . $pedagang->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+
+                        </div>
 
 
-                        </td>
+                    </td>
                     </tr>
                 <?php
                 }

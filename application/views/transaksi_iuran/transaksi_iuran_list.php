@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php if (isset($_SESSION['message'])) { ?>
                 <div class="row">
                     <div class="col">
-                        <div class="alert alert-danger">
+                        <div id="message" class="alert alert-danger">
                             <?php echo $_SESSION['message']; ?>
                         </div>
                     </div>
@@ -38,6 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </form>
                 </div>
             </div>
+
             <table class="table table-bordered" style="margin-bottom: 10px">
                 <tr>
                     <th>Nomor Trx.</th>
@@ -63,9 +64,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td><?php echo $dt->nama_user ?></td>
                         <td style="text-align:center">
                             <div class="btn-group" role="group">
-                                <a class="btn btn-success" href='<?= base_url('transaksi_iuran/read/' . $dt->id_transaksi) ?>'><i class="fas fa-money-check-alt"></i></a>
+                                <a class="btn btn-success" href='<?= base_url('transaksi_iuran/read/' . $dt->id_transaksi) ?>'><i class="fas fa-money-check-alt"></i>Kwitansi</a>
+                                <?php if ($_SESSION['role'] == 0) { ?>
+                                    <a class="btn btn-primary" href='<?= base_url('transaksi_iuran/update/' . $dt->id_transaksi) ?>'><i class="fas fa-money-check-alt"></i>Edit</a>
 
-                                <a class="btn btn-danger" href='<?= base_url('transaksi_iuran/delete/' . $dt->id_transaksi) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                                    <a class="btn btn-danger" href='<?= base_url('transaksi_iuran/delete/' . $dt->id_transaksi) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+
+                                <?php } ?>
 
                             </div>
 

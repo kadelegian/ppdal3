@@ -17,7 +17,7 @@ class Pedagang_model extends CI_Model
     }
     function _nomor_kartu($id, $prefix_wilayah, $prefix_dagangan)
     {
-        $card = str_pad($id, 4, '0', STR_PAD_LEFT) . '/'  . $prefix_wilayah . '/' . $prefix_dagangan . '/' . date_format(date_create(), 'Y');
+        $card = str_pad($id, 3, '0', STR_PAD_LEFT) . '/'  . $prefix_wilayah . '/' . $prefix_dagangan . '/' . date_format(date_create(), 'Y');
         $this->nomor_kartu = $card;
         return $card;
     }
@@ -52,12 +52,27 @@ class Pedagang_model extends CI_Model
         $this->db->where('t_pedagang.id', $id_pedagang);
         return $this->db->get()->row();
     }
+    function get_by_alias($alias)
+    {
+        $this->db->select('t_pedagang.*,
+        t_jenis_dagangan.nama_dagangan,t_jenis_dagangan.prefix_dagangan,t_jenis_dagangan.nama_dagangan,
+        t_wilayah.prefix_wilayah,t_wilayah.wilayah,
+        t_extra_charge.keterangan_charge, t_extra_charge.extra_charge');
+        $this->db->from('t_pedagang');
+        $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id', 'left');
+        $this->db->join('t_jenis_dagangan', 't_pedagang.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
+        $this->db->join('t_extra_charge', 't_pedagang.id_extra_charge=t_extra_charge.id', 'left');
+        $this->db->where('t_pedagang.alias', $alias);
+        $r = $this->db->get()->row();
+
+        return $r;
+    }
     function get_by_id($id)
     {
         $this->db->select('t_pedagang.*,
-        t_jenis_dagangan.nama_dagangan,t_jenis_dagangan.prefix_dagangan,
+        t_jenis_dagangan.nama_dagangan,t_jenis_dagangan.prefix_dagangan,t_jenis_dagangan.nama_dagangan,
         t_wilayah.prefix_wilayah,t_wilayah.wilayah,
-        t_extra_charge.*');
+        t_extra_charge.keterangan_charge, t_extra_charge.extra_charge');
         $this->db->from('t_pedagang');
         $this->db->join('t_wilayah', 't_pedagang.id_wilayah=t_wilayah.id', 'left');
         $this->db->join('t_jenis_dagangan', 't_pedagang.id_jenis_dagangan=t_jenis_dagangan.id', 'left');
@@ -116,6 +131,9 @@ class Pedagang_model extends CI_Model
         $this->_nomor_kartu($id_baru, $r->prefix_wilayah, $jenis->prefix_dagangan);
         $this->db->where($this->id, $id_baru);
         $this->db->update($this->table, array('nomor' => $this->nomor_kartu));
+        if ($data['alias'] == '-') {
+            $this->set_alias_url($id_baru);
+        }
     }
 
     // update data
@@ -127,15 +145,60 @@ class Pedagang_model extends CI_Model
 
         $r = $this->Wilayah_model->get_by_id($data['id_wilayah']);
 
-        $this->_nomor_kartu($id, $r->prefix_wilayah, $jenis->prefix_dagangan);
+        $this->_nomor_kartu($id, $this->romawi($r->nomor_wilayah), $jenis->prefix_dagangan);
 
         $data['nomor'] = $this->nomor_kartu;
 
         $this->db->where('id', $id);
         $this->db->update($this->table, $data);
-        log_message('info', $this->db->last_query());
+        if ($data['alias'] == '-') {
+            $this->set_alias_url($id);
+        }
     }
+    function romawi($angka)
+    {
+        $map = array(
+            100 => 'C', 90 => 'XC', 50 => 'L', 40 => 'XL',
+            10 => 'X', 9 => 'IX', 5 => 'V', 4 => 'IV', 1 => 'I'
+        );
 
+        $roman = '';
+        foreach ($map as $num => $romanDigit) {
+            while ($angka >= $num) {
+                $roman .= $romanDigit;
+                $angka -= $num;
+            }
+        }
+        return $roman;
+    }
+    function set_alias_url($id_pedagang)
+    {
+        $data = $this->get_by_id($id_pedagang);
+        if (strlen($data->alias) < 4) {
+            do {
+                $alias = substr(str_shuffle('0123456789'), 0, 5);
+                $this->db->where('alias', $alias);
+                $query = $this->db->get('t_pedagang');
+            } while ($query->num_rows() > 0);
+            $this->db->where('id', $id_pedagang);
+            $this->db->update($this->table, array('alias' => $alias));
+        } else {
+            $alias = $data->alias;
+        }
+        $url = base_url('kartu/pedagang/' . $alias);
+        return $url;
+    }
+    function generate_alias($length = 6)
+    {
+
+        do {
+            $alias = substr(str_shuffle('0123456789'), 0, $length);
+            $this->db->where('alias', $alias);
+            $query = $this->db->count_all_results();
+        } while ($query > 0);
+
+        return $alias;
+    }
     // delete data
     function delete($id)
     {

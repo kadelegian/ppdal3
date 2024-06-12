@@ -52,6 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
                 <input type="hidden" id='id' name="id" value="<?php echo $id; ?>" />
+                <input type="hidden" name="alias" value="<?= $alias ?>">
                 <div class="form-group">
 
                     <button type="submit" class="btn btn-primary"><?php echo $button ?></button>

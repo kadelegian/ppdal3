@@ -73,9 +73,14 @@ class Jenis_dagangan extends CI_Controller
     //-----------------------------------------------------------------------setting iuran-----------------------------------
     public function delete_setting_iuran()
     {
-        $periode = $this->input->get('p', true);
-        $this->Jenis_dagangan_model->delete_setting_iuran($periode);
-        redirect(base_url('jenis_dagangan/setting_iuran'));
+        if ($_SESSION['role'] > 0) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
+        } else {
+            $periode = $this->input->get('p', true);
+            $this->Jenis_dagangan_model->delete_setting_iuran($periode);
+            redirect(base_url('jenis_dagangan/setting_iuran'));
+        }
     }
     public function setting_iuran()
     {
@@ -106,179 +111,223 @@ class Jenis_dagangan extends CI_Controller
     }
     public function setting_create()
     {
-        $periode = $this->input->post('periode', true);
-
-        if ($this->validateDate($periode)) {
-            //valid periode
-            $data_jenis = $this->Jenis_dagangan_model->get_periode_setting($periode);
-            $data = array(
-                'button' => 'Simpan',
-                'action' => base_url('jenis_dagangan/setting_save'),
-                'data_jenis' => $data_jenis,
-                'periode' => $periode,
-            );
-
-            $this->load->view('page_template/header');
-            $this->load->view('page_template/side_bar');
-            $this->load->view('page_template/top_bar');
-            $this->load->view('jenis_dagangan/setting_iuran_form', $data);
-            $this->load->view('page_template/footer');
+        if ($_SESSION['role'] > 0) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
         } else {
-            $this->session->set_flashdata('message', 'Invalid date');
-            redirect(base_url('jenis_dagangan/setting_iuran'));
+
+            $periode = $this->input->post('periode', true);
+
+            if ($this->validateDate($periode)) {
+                //valid periode
+                $data_jenis = $this->Jenis_dagangan_model->get_periode_setting($periode);
+                $data = array(
+                    'button' => 'Simpan',
+                    'action' => base_url('jenis_dagangan/setting_save'),
+                    'data_jenis' => $data_jenis,
+                    'periode' => $periode,
+                );
+
+                $this->load->view('page_template/header');
+                $this->load->view('page_template/side_bar');
+                $this->load->view('page_template/top_bar');
+                $this->load->view('jenis_dagangan/setting_iuran_form', $data);
+                $this->load->view('page_template/footer');
+            } else {
+                $this->session->set_flashdata('message', 'Invalid date');
+                redirect(base_url('jenis_dagangan/setting_iuran'));
+            }
         }
     }
     public function setting_save()
     {
-        $periode = $this->input->post('periode');
-        $data = [];
-        foreach ($_POST as $key => $value) {
-            if (is_numeric($key)) {
-                $temp = array(
-                    'id_jenis_dagangan' => $key,
-                    'periode' => $periode,
-                    'iuran' => preg_replace('/\D/', '', $value)
-                );
-                array_push($data, $temp);
+        if ($_SESSION['role'] > 0) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
+        } else {
+            $periode = $this->input->post('periode');
+            $data = [];
+            foreach ($_POST as $key => $value) {
+                if (is_numeric($key)) {
+                    $temp = array(
+                        'id_jenis_dagangan' => $key,
+                        'periode' => $periode,
+                        'iuran' => preg_replace('/\D/', '', $value)
+                    );
+                    array_push($data, $temp);
+                }
             }
-        }
 
-        $this->Jenis_dagangan_model->save_iuran($data);
-        redirect(base_url('jenis_dagangan/setting_iuran'));
+            $this->Jenis_dagangan_model->save_iuran($data);
+            redirect(base_url('jenis_dagangan/setting_iuran'));
+        }
     }
     public function setting_update()
     {
-
-        $data = [];
-        foreach ($_POST as $key => $value) {
-            if (is_numeric($key)) {
-                $temp = array(
-                    'id' => $key,
-                    'iuran' => preg_replace('/\D/', '', $value)
-                );
-                array_push($data, $temp);
+        if ($_SESSION['role'] > 0) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
+        } else {
+            $data = [];
+            foreach ($_POST as $key => $value) {
+                if (is_numeric($key)) {
+                    $temp = array(
+                        'id' => $key,
+                        'iuran' => preg_replace('/\D/', '', $value)
+                    );
+                    array_push($data, $temp);
+                }
             }
-        }
 
-        $this->Jenis_dagangan_model->update_iuran($data);
-        redirect(base_url('jenis_dagangan/setting_iuran'));
+            $this->Jenis_dagangan_model->update_iuran($data);
+            redirect(base_url('jenis_dagangan/setting_iuran'));
+        }
     }
     public function update_iuran()
     {
-        $periode = $this->uri->segment(3);
-        $pecahan = explode('-', $periode);
-        $tahun = $pecahan[0];
-        $bulan = $pecahan[1];
-        if (is_numeric($tahun) && is_numeric($bulan)) {
-            $setting_iuran = $this->Jenis_dagangan_model->get_periode_setting($periode);
-            $data = array(
-                'button' => 'Update',
-                'action' => base_url('jenis_dagangan/setting_update'),
-                'data_jenis' => $setting_iuran,
-                'periode' => $tahun . '-' . $bulan . '-1',
-            );
+        if ($_SESSION['role'] > 0) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
+        } else {
+            $periode = $this->uri->segment(3);
+            $pecahan = explode('-', $periode);
+            $tahun = $pecahan[0];
+            $bulan = $pecahan[1];
+            if (is_numeric($tahun) && is_numeric($bulan)) {
+                $setting_iuran = $this->Jenis_dagangan_model->get_periode_setting($periode);
+                $data = array(
+                    'button' => 'Update',
+                    'action' => base_url('jenis_dagangan/setting_update'),
+                    'data_jenis' => $setting_iuran,
+                    'periode' => $tahun . '-' . $bulan . '-1',
+                );
 
-            $this->load->view('page_template/header');
-            $this->load->view('page_template/side_bar');
-            $this->load->view('page_template/top_bar');
-            $this->load->view('jenis_dagangan/setting_iuran_form', $data);
-            $this->load->view('page_template/footer');
+                $this->load->view('page_template/header');
+                $this->load->view('page_template/side_bar');
+                $this->load->view('page_template/top_bar');
+                $this->load->view('jenis_dagangan/setting_iuran_form', $data);
+                $this->load->view('page_template/footer');
+            }
         }
     }
     //------------------------------------------------------------------------------------------akhir region setting iuran------------------------------------------------
     public function create()
     {
-
-        $data = array(
-            'button' => 'Create',
-            'action' => site_url('jenis_dagangan/create_action'),
-            'id' => set_value('id'),
-            'nama_dagangan' => set_value('nama_dagangan'),
-            'prefix_dagangan' => set_value('prefix_dagangan'),
-            'tipe' => set_value('tipe'),
-        );
-        $this->load->view('page_template/header');
-        $this->load->view('page_template/side_bar');
-        $this->load->view('page_template/top_bar');
-        $this->load->view('jenis_dagangan/t_jenis_dagangan_form', $data);
-        $this->load->view('page_template/footer');
-    }
-
-    public function create_action()
-    {
-        $this->_rules();
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->create();
+        if ($_SESSION['role'] > 1) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
         } else {
-
             $data = array(
-                'nama_dagangan' => strtoupper($this->input->post('nama_dagangan', TRUE)),
-                'prefix_dagangan' => strtoupper($this->input->post('prefix_dagangan', TRUE)),
-                'tipe' => $this->input->post('tipe')
-            );
-
-            $this->Jenis_dagangan_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');
-            redirect(site_url('jenis_dagangan'));
-        }
-    }
-
-    public function update($id)
-    {
-        $row = $this->Jenis_dagangan_model->get_by_id($id);
-
-        if ($row) {
-            $data = array(
-                'button' => 'Update',
-                'action' => site_url('jenis_dagangan/update_action'),
-                'id' => set_value('id', $row->id),
-                'nama_dagangan' => set_value('nama_dagangan', $row->nama_dagangan),
-                'prefix_dagangan' => set_value('prefix_dagangan', $row->prefix_dagangan),
-                'tipe' => set_value('tipe', $row->tipe),
+                'button' => 'Create',
+                'action' => site_url('jenis_dagangan/create_action'),
+                'id' => set_value('id'),
+                'nama_dagangan' => set_value('nama_dagangan'),
+                'prefix_dagangan' => set_value('prefix_dagangan'),
+                'tipe' => set_value('tipe'),
             );
             $this->load->view('page_template/header');
             $this->load->view('page_template/side_bar');
             $this->load->view('page_template/top_bar');
             $this->load->view('jenis_dagangan/t_jenis_dagangan_form', $data);
             $this->load->view('page_template/footer');
+        }
+    }
+
+    public function create_action()
+    {
+        if ($_SESSION['role'] > 1) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('jenis_dagangan'));
+            $this->_rules();
+
+            if ($this->form_validation->run() == FALSE) {
+                $this->create();
+            } else {
+
+                $data = array(
+                    'nama_dagangan' => strtoupper($this->input->post('nama_dagangan', TRUE)),
+                    'prefix_dagangan' => strtoupper($this->input->post('prefix_dagangan', TRUE)),
+                    'tipe' => $this->input->post('tipe')
+                );
+
+                $this->Jenis_dagangan_model->insert($data);
+                $this->session->set_flashdata('message', 'Create Record Success');
+                redirect(site_url('jenis_dagangan'));
+            }
+        }
+    }
+
+    public function update($id)
+    {
+        if ($_SESSION['role'] > 1) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
+        } else {
+            $row = $this->Jenis_dagangan_model->get_by_id($id);
+
+            if ($row) {
+                $data = array(
+                    'button' => 'Update',
+                    'action' => site_url('jenis_dagangan/update_action'),
+                    'id' => set_value('id', $row->id),
+                    'nama_dagangan' => set_value('nama_dagangan', $row->nama_dagangan),
+                    'prefix_dagangan' => set_value('prefix_dagangan', $row->prefix_dagangan),
+                    'tipe' => set_value('tipe', $row->tipe),
+                );
+                $this->load->view('page_template/header');
+                $this->load->view('page_template/side_bar');
+                $this->load->view('page_template/top_bar');
+                $this->load->view('jenis_dagangan/t_jenis_dagangan_form', $data);
+                $this->load->view('page_template/footer');
+            } else {
+                $this->session->set_flashdata('message', 'Record Not Found');
+                redirect(site_url('jenis_dagangan'));
+            }
         }
     }
 
     public function update_action()
     {
-        $this->_rules();
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id', TRUE));
+        if ($_SESSION['role'] > 1) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
         } else {
+            $this->_rules();
 
-            $data = array(
-                'nama_dagangan' => strtoupper($this->input->post('nama_dagangan', TRUE)),
-                'prefix_dagangan' => strtoupper($this->input->post('prefix_dagangan', TRUE)),
-                'tipe' => $this->input->post('tipe')
-            );
+            if ($this->form_validation->run() == FALSE) {
+                $this->update($this->input->post('id', TRUE));
+            } else {
 
-            $this->Jenis_dagangan_model->update($this->input->post('id', TRUE), $data);
-            $this->session->set_flashdata('message', 'Update Record Success');
-            redirect(site_url('jenis_dagangan'));
+                $data = array(
+                    'nama_dagangan' => strtoupper($this->input->post('nama_dagangan', TRUE)),
+                    'prefix_dagangan' => strtoupper($this->input->post('prefix_dagangan', TRUE)),
+                    'tipe' => $this->input->post('tipe')
+                );
+
+                $this->Jenis_dagangan_model->update($this->input->post('id', TRUE), $data);
+                $this->session->set_flashdata('message', 'Update Record Success');
+                redirect(site_url('jenis_dagangan'));
+            }
         }
     }
 
     public function delete($id)
     {
-        $row = $this->Jenis_dagangan_model->get_by_id($id);
-
-        if ($row) {
-            $this->Jenis_dagangan_model->delete($id);
-            $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('jenis_dagangan'));
+        if ($_SESSION['role'] > 0) {
+            $this->session->set_flashdata('message', 'Anda Tidak Memiliki Akses');
+            redirect(base_url());
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('jenis_dagangan'));
+            $row = $this->Jenis_dagangan_model->get_by_id($id);
+
+            if ($row) {
+                $this->Jenis_dagangan_model->delete($id);
+                $this->session->set_flashdata('message', 'Delete Record Success');
+                redirect(site_url('jenis_dagangan'));
+            } else {
+                $this->session->set_flashdata('message', 'Record Not Found');
+                redirect(site_url('jenis_dagangan'));
+            }
         }
     }
 

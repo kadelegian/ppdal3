@@ -215,7 +215,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <i>
 
                                 <u>
-                                    <?= $terbilang ?>
+                                    <?= 'Terbilang : ' . $terbilang ?>
                                 </u>
                             </i>
 
@@ -235,11 +235,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </tr>
                 <tr>
                     <td>
-                        <div style="border-style: double;text-align:center;width:fit-content;font-size:small;">
-                            <strong>
-                                KARTU/TEMPAT USAHA TIDAK BOLEH <br>DIPERJUAL-BELIKAN/DIKONTRAK-KAN!
-                            </strong>
-                        </div>
+
                     </td>
                     <td style="text-align: center;">Terimakasih Atas Kerjasamanya</td>
                 </tr>

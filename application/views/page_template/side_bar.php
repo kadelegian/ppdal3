@@ -80,22 +80,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <a class="collapse-item" href="<?= base_url('jenis_dagangan/setting_iuran') ?>">Pengaturan Iuran</a>
                             <a class="collapse-item" href="<?= base_url('extra_charge') ?>">Pengaturan Penjamin</a>
                             <hr>
-                            <a class="collapse-item" href="<?= base_url('akun') ?>">Data Rekening</a>
-                            <a class="collapse-item" href="<?= base_url('jenis_pemasukan') ?>">Jenis Pemasukan</a>
-                            <a class="collapse-item" href="<?= base_url('jenis_pengeluaran') ?>">Jenis Pengeluaran</a>
+                            <a class="collapse-item" href="<?= base_url('akun') ?>">Data Akun</a>
+                            <a class="collapse-item" href="<?= base_url('jenis_akun') ?>">Jenis Akun</a>
+
                             <hr>
                             <a class="collapse-item" href="<?= base_url('info_lembaga') ?>">Pengaturan Lembaga</a>
 
                         </div>
                     </div>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?= base_url('laporan') ?>">
-                        <i class="fas fa-fw fa-list"></i>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
+                        <i class="fas fa-fw fa-cogs"></i>
                         <span>Laporan</span>
-
                     </a>
+                    <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="<?= base_url('laporan/jurnal_umum') ?>">Jurnal Umum</a>
+                            <a class="collapse-item" href="<?= base_url('laporan/buku_besar') ?>">Buku Besar</a>
+
+                        </div>
+                    </div>
                 </li>
+
 
 
                 <!-- Nav Item - Utilities Collapse Menu -->

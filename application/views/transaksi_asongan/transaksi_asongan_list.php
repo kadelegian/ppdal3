@@ -10,11 +10,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <h1 class="h3 mb-0 text-gray-800">Transaksi Iuran Asongan</h1>
 
         </div>
+
         <div class="card-body">
             <?php if (isset($_SESSION['message'])) { ?>
                 <div class="row">
                     <div class="col">
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger" id="message">
                             <?php echo $_SESSION['message']; ?>
                         </div>
                     </div>
@@ -38,14 +39,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </form>
                 </div>
             </div>
-            <table class="table table-bordered" style="margin-bottom: 10px">
+            <table class="table table-bordered table-sm" style="margin-bottom: 10px">
                 <tr>
                     <th>Nomor Trx.</th>
                     <th>Tanggal Trx.</th>
                     <th>Nama Pedagang Asongan</th>
                     <th>Nominal</th>
-                    <th>Ket.</th>
+                    <th>Via.</th>
                     <th>Petugas</th>
+                    <?php if ($_SESSION['role'] < 2) { ?>
+                        <th>Edit Msg.</th>
+                    <?php } ?>
+                    <th>Action</th>
 
                 </tr><?php
                         foreach ($data_transaksi as $dt) {
@@ -59,11 +64,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td><?php echo number_format($dt->total_bayar, 0, ',', '.') ?></td>
                         <td><?= $dt->alias ?></td>
                         <td><?php echo $dt->nama_user ?></td>
-                        <td style="text-align:center">
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-success" href='<?= base_url('transaksi_iuran_pedagang/read/' . $dt->id_transaksi) ?>'><i class="fas fa-money-check-alt"></i></a>
+                        <?php if ($_SESSION['role'] < 2) { ?>
+                            <td><?= $dt->edit ?></td>
 
-                                <a class="btn btn-danger" href='<?= base_url('transaksi_iuran_pedagang/delete/' . $dt->id_transaksi) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                        <?php } ?>
+                        <td style="text-align:center; width:1%; white-space:nowrap;">
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-success btn-sm" href='<?= base_url('transaksi_iuran_pedagang/read/' . $dt->id_transaksi) ?>'><i class="fas fa-money-check-alt"></i>Kwitansi</a>
+                                <?php if ($_SESSION['role'] == 0) { ?>
+                                    <a class="btn btn-primary btn-sm" href='<?= base_url('transaksi_iuran_pedagang/update/' . $dt->id_transaksi) ?>'><i class="fas fa-money-check-alt"></i>Edit</a>
+                                    <a class="btn btn-danger btn-sm" href='<?= base_url('transaksi_iuran_pedagang/delete/' . $dt->id_transaksi) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+
+                                <?php } ?>
 
                             </div>
 

@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <table class="table table-bordered" style="margin-bottom: 10px">
                     <tr>
 
-                        <th>Nama Pemilik</th>
+                        <th>Nama Pedagang</th>
                         <th>Nomor Kartu</th>
                         <th>Dagangan</th>
                         <th>Wilayah</th>
@@ -56,24 +56,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             foreach ($kartu_data as $kartu) {
                                 ?>
                         <tr>
+                            <td><?php if ($kartu->alias <> '-') { ?>
+                                    <a href="<?= base_url('kartu/read/' . $kartu->alias) ?>">
+                                        <?php echo $kartu->nama_pemilik ?></td>
+                            </a>
+                        <?php } else { ?>
+                            <?php echo $kartu->nama_pemilik ?></td>
+                        <?php } ?>
+                        <td><?php echo $kartu->nomor_kartu ?></td>
+                        <td><?php echo $kartu->nama_dagangan ?></td>
+                        <td><?php echo $kartu->wilayah ?></td>
+                        <td><?php echo date_format(date_create_from_format('Y-m-d', $kartu->join_date), 'd/m/Y') ?></td>
 
+                        <td style="text-align:center">
+                            <div class="btn-group" role="group">
 
-                            <td><?php echo $kartu->nama_pemilik ?></td>
-                            <td><?php echo $kartu->nomor_kartu ?></td>
-                            <td><?php echo $kartu->nama_dagangan ?></td>
-                            <td><?php echo $kartu->wilayah ?></td>
-                            <td><?php echo date_format(date_create_from_format('Y-m-d', $kartu->join_date), 'd/m/Y') ?></td>
+                                <a class="btn btn-light" href='<?= base_url('kartu/qr_code/' . $kartu->id) ?>'><i class="fas fa-qrcode"></i></a>
+                                <a class="btn btn-primary" href='<?= base_url('kartu/update/' . $kartu->id) ?>'>Lihat</a>
+                                <a class="btn btn-danger" href='<?= base_url('kartu/delete/' . $kartu->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
 
-                            <td style="text-align:center">
-                                <div class="btn-group" role="group">
-                                    <a class="btn btn-success" href='<?= base_url('kartu/read/' . $kartu->id) ?>'><i class="fas fa-money-check-alt"></i></a>
-                                    <a class="btn btn-secondary" href='<?= base_url('kartu/info_pedagang/' . $kartu->id) ?>'><i class="fas fa-print"></i></a>
-                                    <a class="btn btn-primary" href='<?= base_url('kartu/update/' . $kartu->id) ?>'>Lihat</a>
-                                    <a class="btn btn-danger" href='<?= base_url('kartu/delete/' . $kartu->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                            </div>
 
-                                </div>
-
-                            </td>
+                        </td>
                         </tr>
                     <?php
                     }

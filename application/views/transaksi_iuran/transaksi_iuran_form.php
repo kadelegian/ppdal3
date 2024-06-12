@@ -76,7 +76,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="d-print-none">
 
                     <button id="btn_action" class="btn btn-primary"><?= $button ?></button>
-                    <a href="<?php echo site_url('kartu/read/' . $id_kartu) ?>" class="btn btn-default">Cancel</a>
+                    <a href="<?php echo site_url('kartu') ?>" class="btn btn-default">Cancel</a>
                 </div>
             </form>
         </div>

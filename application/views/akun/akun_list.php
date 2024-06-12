@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">Daftar Rekening</h1>
+            <h1 class="h3 mb-0 text-gray-800">Daftar Akun</h1>
 
         </div>
         <div class="card-body">
@@ -23,51 +23,51 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="col-md-1 text-right">
                 </div>
                 <div class="col-md-3 text-right">
-                    <form action="<?php echo site_url('akun/index'); ?>" class="form-inline" method="get">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
-                            <span class="input-group-btn">
-                                <?php
-                                if ($q <> '') {
-                                    ?>
-                                    <a href="<?php echo site_url('akun'); ?>" class="btn btn-default">Reset</a>
-                                <?php
-                                }
-                                ?>
-                                <button class="btn btn-primary" type="submit">Search</button>
-                            </span>
-                        </div>
-                    </form>
+
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered" style="margin-bottom: 10px">
+                <table class="table table-bordered table-sm" style="margin-bottom: 10px">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Balance</th>
+                        <th id="total_debet"><?= $total_debet ?></th>
+                        <th id="total_kredit"><?= $total_kredit ?></th>
+                        <th></th>
+                    </tr>
                     <tr>
                         <th>No</th>
+                        <th>Kode Akun</th>
                         <th>Nama Akun</th>
-                        <th>Akun Alias</th>
-                        <th>Nomor Rekening</th>
-                        <th>Saldo Awal</th>
+                        <th>Akun Sistem</th>
+                        <th>Tipe</th>
+                        <th>S.A. Debet</th>
+                        <th>S.A. Kredit</th>
                         <th>Action</th>
-                    </tr><?php
-                            foreach ($data_akun as $d_akun) {
-                                if (is_null($d_akun->saldo)) {
-                                    $saldo = 'n/a';
-                                } else {
-                                    $saldo = number_format($d_akun->saldo, 0, ',', '.');
-                                }
-                                ?>
+                    </tr>
+                    <?php
+                    foreach ($data_akun as $d_akun) {
+                        ?>
                         <tr>
                             <td width="80px"><?php echo ++$start ?></td>
+
+                            <td><?php echo $d_akun->kode_akun ?></td>
                             <td><?php echo $d_akun->nama_akun ?></td>
-                            <td><?php echo $d_akun->alias ?></td>
-                            <td><?php echo $d_akun->nomor_rekening ?></td>
-                            <td><?php echo $saldo ?></td>
+                            <td><?php if ($d_akun->is_iuran) {
+                                        echo 'Iuran';
+                                    }
+                                    if ($d_akun->is_penjamin) {
+                                        echo ' Penjamin';
+                                    } ?></td>
+                            <td><?php echo $d_akun->tipe ?></td>
+                            <td><?php echo number_format($d_akun->debet, 0, ',', '.') ?></td>
+                            <td><?php echo number_format($d_akun->kredit, 0, ',', '.') ?></td>
                             <td style="text-align:center">
                                 <div class="btn-group" role="group">
                                     <?php if ($d_akun->aktif) { ?>
-
-                                        <a class="btn btn-secondary" href='<?= base_url('akun/setting_saldo/' . $d_akun->id) ?>'><i class="fa fa-cogs"></i>Set-Saldo</a>
                                         <a class="btn btn-primary" href='<?= base_url('akun/update/' . $d_akun->id) ?>'><i class="fas fa-search"></i>Lihat</a>
                                         <?php if (!$d_akun->sistem) { ?>
                                             <a class="btn btn-danger" href='<?= base_url('akun/nonaktifkan/' . $d_akun->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Me-non aktifkan Akun??')">Disable</a>

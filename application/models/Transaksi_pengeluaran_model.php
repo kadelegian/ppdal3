@@ -38,17 +38,20 @@ class Transaksi_pengeluaran_model extends CI_Model
     // get total rows
     function total_rows($start_date = null, $end_date = null)
     {
-        if (!$start_date || !$end_date) {
-            $start_date = date('Y-m-01');
-            $end_date = date('Y-m-t');
-        }
+
         $this->db->select('jurnal.*,users.username,jenis_pengeluaran.keterangan as jenis_pengeluaran');
         $this->db->from('jurnal');
         $this->db->join('users', 'users.id=jurnal.id_user', 'left');
         $this->db->join('jenis_pengeluaran', 'jenis_pengeluaran.id=jurnal.kode_pengeluaran', 'left');
         $this->db->where('jurnal.kredit>', 0);
-        $this->db->where('date(jurnal.tanggal) >=', $start_date);
-        $this->db->where('date(jurnal.tanggal) <=', $end_date);
+        $this->db->where('jurnal.status', 1);
+        $this->db->where('jurnal.kode<', 1000);
+        if ($start_date || $end_date) {
+
+            $this->db->where('date(jurnal.tanggal) >=', $start_date);
+            $this->db->where('date(jurnal.tanggal) <=', $end_date);
+        }
+
 
         $this->db->order_by($this->id, 'desc');
 
@@ -58,32 +61,36 @@ class Transaksi_pengeluaran_model extends CI_Model
     // get data with limit and search
     function get_nominal_transaksi($start_date = null, $end_date = null)
     {
-        if (!$start_date || !$end_date) {
-            $start_date = date('Y-m-01');
-            $end_date = date('Y-m-t');
-        }
+
         $this->db->select('sum(ifnull(jurnal.kredit,0)) as total_pengeluaran');
         $this->db->from('jurnal');
         $this->db->where('jurnal.kredit>', 0);
-        $this->db->where('date(jurnal.tanggal) >=', $start_date);
-        $this->db->where('date(jurnal.tanggal) <=', $end_date);
+        $this->db->where('jurnal.status', 1);
+        $this->db->where('jurnal.kode<', 1000);
+        if ($start_date || $end_date) {
+
+            $this->db->where('date(jurnal.tanggal) >=', $start_date);
+            $this->db->where('date(jurnal.tanggal) <=', $end_date);
+        }
 
         return $this->db->get()->row();
     }
     function get_limit_data($limit, $start_date = null, $end_date = null, $start = 0)
     {
-        if (!$start_date || !$end_date) {
-            $start_date = date('Y-m-01');
-            $end_date = date('Y-m-t');
-        }
+
         $this->db->select('jurnal.*,users.username,jenis_pengeluaran.keterangan as jenis_pengeluaran,akun.nama_akun');
         $this->db->from('jurnal');
         $this->db->join('users', 'users.id=jurnal.id_user', 'left');
         $this->db->join('jenis_pengeluaran', 'jenis_pengeluaran.id=jurnal.kode_pengeluaran', 'left');
         $this->db->join('akun', 'akun.id=jurnal.id_akun', 'left');
         $this->db->where('jurnal.kredit>', 0);
-        $this->db->where('date(jurnal.tanggal) >=', $start_date);
-        $this->db->where('date(jurnal.tanggal) <=', $end_date);
+        $this->db->where('jurnal.status', 1);
+        $this->db->where('jurnal.kode<', 1000);
+        if ($start_date || $end_date) {
+
+            $this->db->where('date(jurnal.tanggal) >=', $start_date);
+            $this->db->where('date(jurnal.tanggal) <=', $end_date);
+        }
 
         $this->db->order_by($this->id, 'desc');
         $this->db->limit($limit, $start);

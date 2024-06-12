@@ -34,10 +34,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Earnings (Monthly) Card Example -->
     </div>
     <div class="row">
-
-
-
-
-
     </div>
+
     <!-- /.container-fluid -->
