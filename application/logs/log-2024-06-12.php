@@ -1232,3 +1232,775 @@ INFO - 2024-06-12 09:41:20 --> File loaded: E:\xampp\htdocs\ppdal\application\vi
 INFO - 2024-06-12 09:41:20 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
 INFO - 2024-06-12 09:41:20 --> Final output sent to browser
 DEBUG - 2024-06-12 09:41:20 --> Total execution time: 0.0375
+INFO - 2024-06-12 18:56:32 --> Config Class Initialized
+INFO - 2024-06-12 18:56:32 --> Hooks Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> UTF-8 Support Enabled
+INFO - 2024-06-12 18:56:33 --> Utf8 Class Initialized
+INFO - 2024-06-12 18:56:33 --> URI Class Initialized
+INFO - 2024-06-12 18:56:33 --> Router Class Initialized
+INFO - 2024-06-12 18:56:33 --> Output Class Initialized
+INFO - 2024-06-12 18:56:33 --> Security Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 18:56:33 --> Input Class Initialized
+INFO - 2024-06-12 18:56:33 --> Language Class Initialized
+INFO - 2024-06-12 18:56:33 --> Loader Class Initialized
+INFO - 2024-06-12 18:56:33 --> Helper loaded: form_helper
+INFO - 2024-06-12 18:56:33 --> Helper loaded: url_helper
+INFO - 2024-06-12 18:56:33 --> Database Driver Class Initialized
+INFO - 2024-06-12 18:56:33 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 18:56:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 18:56:33 --> Controller Class Initialized
+INFO - 2024-06-12 18:56:33 --> Config Class Initialized
+INFO - 2024-06-12 18:56:33 --> Hooks Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> UTF-8 Support Enabled
+INFO - 2024-06-12 18:56:33 --> Utf8 Class Initialized
+INFO - 2024-06-12 18:56:33 --> URI Class Initialized
+INFO - 2024-06-12 18:56:33 --> Router Class Initialized
+INFO - 2024-06-12 18:56:33 --> Output Class Initialized
+INFO - 2024-06-12 18:56:33 --> Security Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 18:56:33 --> Input Class Initialized
+INFO - 2024-06-12 18:56:33 --> Language Class Initialized
+INFO - 2024-06-12 18:56:33 --> Loader Class Initialized
+INFO - 2024-06-12 18:56:33 --> Helper loaded: form_helper
+INFO - 2024-06-12 18:56:33 --> Helper loaded: url_helper
+INFO - 2024-06-12 18:56:33 --> Database Driver Class Initialized
+INFO - 2024-06-12 18:56:33 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 18:56:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 18:56:33 --> Controller Class Initialized
+INFO - 2024-06-12 18:56:33 --> Model "Users_model" initialized
+INFO - 2024-06-12 18:56:33 --> Final output sent to browser
+DEBUG - 2024-06-12 18:56:33 --> Total execution time: 0.0609
+INFO - 2024-06-12 18:56:33 --> Config Class Initialized
+INFO - 2024-06-12 18:56:33 --> Hooks Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> UTF-8 Support Enabled
+INFO - 2024-06-12 18:56:33 --> Utf8 Class Initialized
+INFO - 2024-06-12 18:56:33 --> URI Class Initialized
+INFO - 2024-06-12 18:56:33 --> Router Class Initialized
+INFO - 2024-06-12 18:56:33 --> Output Class Initialized
+INFO - 2024-06-12 18:56:33 --> Security Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 18:56:33 --> Input Class Initialized
+INFO - 2024-06-12 18:56:33 --> Language Class Initialized
+INFO - 2024-06-12 18:56:33 --> Loader Class Initialized
+INFO - 2024-06-12 18:56:33 --> Helper loaded: form_helper
+INFO - 2024-06-12 18:56:33 --> Helper loaded: url_helper
+INFO - 2024-06-12 18:56:33 --> Database Driver Class Initialized
+INFO - 2024-06-12 18:56:33 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 18:56:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 18:56:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 18:56:33 --> Controller Class Initialized
+INFO - 2024-06-12 18:56:33 --> Model "Users_model" initialized
+INFO - 2024-06-12 18:56:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 18:56:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\users/users_login.php
+INFO - 2024-06-12 18:56:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 18:56:33 --> Final output sent to browser
+DEBUG - 2024-06-12 18:56:33 --> Total execution time: 0.0799
+INFO - 2024-06-12 18:56:42 --> Config Class Initialized
+INFO - 2024-06-12 18:56:42 --> Hooks Class Initialized
+DEBUG - 2024-06-12 18:56:42 --> UTF-8 Support Enabled
+INFO - 2024-06-12 18:56:42 --> Utf8 Class Initialized
+INFO - 2024-06-12 18:56:42 --> URI Class Initialized
+INFO - 2024-06-12 18:56:42 --> Router Class Initialized
+INFO - 2024-06-12 18:56:42 --> Output Class Initialized
+INFO - 2024-06-12 18:56:42 --> Security Class Initialized
+DEBUG - 2024-06-12 18:56:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 18:56:42 --> Input Class Initialized
+INFO - 2024-06-12 18:56:42 --> Language Class Initialized
+INFO - 2024-06-12 18:56:42 --> Loader Class Initialized
+INFO - 2024-06-12 18:56:42 --> Helper loaded: form_helper
+INFO - 2024-06-12 18:56:42 --> Helper loaded: url_helper
+INFO - 2024-06-12 18:56:42 --> Database Driver Class Initialized
+INFO - 2024-06-12 18:56:42 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 18:56:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 18:56:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 18:56:42 --> Controller Class Initialized
+INFO - 2024-06-12 18:56:42 --> Model "Users_model" initialized
+INFO - 2024-06-12 18:56:42 --> Config Class Initialized
+INFO - 2024-06-12 18:56:42 --> Hooks Class Initialized
+DEBUG - 2024-06-12 18:56:42 --> UTF-8 Support Enabled
+INFO - 2024-06-12 18:56:42 --> Utf8 Class Initialized
+INFO - 2024-06-12 18:56:42 --> URI Class Initialized
+DEBUG - 2024-06-12 18:56:42 --> No URI present. Default controller set.
+INFO - 2024-06-12 18:56:42 --> Router Class Initialized
+INFO - 2024-06-12 18:56:42 --> Output Class Initialized
+INFO - 2024-06-12 18:56:42 --> Security Class Initialized
+DEBUG - 2024-06-12 18:56:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 18:56:42 --> Input Class Initialized
+INFO - 2024-06-12 18:56:42 --> Language Class Initialized
+INFO - 2024-06-12 18:56:42 --> Loader Class Initialized
+INFO - 2024-06-12 18:56:42 --> Helper loaded: form_helper
+INFO - 2024-06-12 18:56:42 --> Helper loaded: url_helper
+INFO - 2024-06-12 18:56:42 --> Database Driver Class Initialized
+INFO - 2024-06-12 18:56:42 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 18:56:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 18:56:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 18:56:42 --> Controller Class Initialized
+INFO - 2024-06-12 18:56:42 --> Model "Pedagang_model" initialized
+DEBUG - 2024-06-12 18:56:42 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 18:56:42 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 18:56:42 --> Pagination Class Initialized
+INFO - 2024-06-12 18:56:42 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 18:56:42 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 18:56:42 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Undefined variable $kartu E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+ERROR - 2024-06-12 18:56:42 --> Severity: Warning --> Attempt to read property "id" on null E:\xampp\htdocs\ppdal\application\views\pedagang\pedagang_list.php 80
+INFO - 2024-06-12 18:56:42 --> File loaded: E:\xampp\htdocs\ppdal\application\views\pedagang/pedagang_list.php
+INFO - 2024-06-12 18:56:42 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 18:56:42 --> Final output sent to browser
+DEBUG - 2024-06-12 18:56:42 --> Total execution time: 0.1943
+INFO - 2024-06-12 18:57:11 --> Config Class Initialized
+INFO - 2024-06-12 18:57:11 --> Hooks Class Initialized
+DEBUG - 2024-06-12 18:57:11 --> UTF-8 Support Enabled
+INFO - 2024-06-12 18:57:11 --> Utf8 Class Initialized
+INFO - 2024-06-12 18:57:11 --> URI Class Initialized
+INFO - 2024-06-12 18:57:11 --> Router Class Initialized
+INFO - 2024-06-12 18:57:11 --> Output Class Initialized
+INFO - 2024-06-12 18:57:11 --> Security Class Initialized
+DEBUG - 2024-06-12 18:57:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 18:57:11 --> Input Class Initialized
+INFO - 2024-06-12 18:57:11 --> Language Class Initialized
+INFO - 2024-06-12 18:57:11 --> Loader Class Initialized
+INFO - 2024-06-12 18:57:11 --> Helper loaded: form_helper
+INFO - 2024-06-12 18:57:11 --> Helper loaded: url_helper
+INFO - 2024-06-12 18:57:11 --> Database Driver Class Initialized
+INFO - 2024-06-12 18:57:11 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 18:57:11 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 18:57:11 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 18:57:11 --> Controller Class Initialized
+INFO - 2024-06-12 18:57:11 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 18:57:11 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 18:57:11 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 18:57:11 --> Pagination Class Initialized
+INFO - 2024-06-12 18:57:11 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 18:57:11 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 18:57:11 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 18:57:11 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 18:57:11 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 18:57:11 --> Final output sent to browser
+DEBUG - 2024-06-12 18:57:11 --> Total execution time: 0.0639
+INFO - 2024-06-12 19:01:31 --> Config Class Initialized
+INFO - 2024-06-12 19:01:31 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:01:31 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:01:31 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:01:31 --> URI Class Initialized
+INFO - 2024-06-12 19:01:31 --> Router Class Initialized
+INFO - 2024-06-12 19:01:31 --> Output Class Initialized
+INFO - 2024-06-12 19:01:31 --> Security Class Initialized
+DEBUG - 2024-06-12 19:01:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:01:31 --> Input Class Initialized
+INFO - 2024-06-12 19:01:31 --> Language Class Initialized
+INFO - 2024-06-12 19:01:31 --> Loader Class Initialized
+INFO - 2024-06-12 19:01:31 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:01:31 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:01:31 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:01:31 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:01:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:01:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:01:31 --> Controller Class Initialized
+INFO - 2024-06-12 19:01:31 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:01:31 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:01:31 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:01:31 --> Pagination Class Initialized
+INFO - 2024-06-12 19:01:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:01:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:01:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:01:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:01:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:01:31 --> Final output sent to browser
+DEBUG - 2024-06-12 19:01:31 --> Total execution time: 0.0251
+INFO - 2024-06-12 19:14:30 --> Config Class Initialized
+INFO - 2024-06-12 19:14:30 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:14:30 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:14:30 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:14:30 --> URI Class Initialized
+INFO - 2024-06-12 19:14:30 --> Router Class Initialized
+INFO - 2024-06-12 19:14:30 --> Output Class Initialized
+INFO - 2024-06-12 19:14:30 --> Security Class Initialized
+DEBUG - 2024-06-12 19:14:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:14:30 --> Input Class Initialized
+INFO - 2024-06-12 19:14:30 --> Language Class Initialized
+INFO - 2024-06-12 19:14:30 --> Loader Class Initialized
+INFO - 2024-06-12 19:14:30 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:14:30 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:14:30 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:14:30 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:14:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:14:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:14:30 --> Controller Class Initialized
+INFO - 2024-06-12 19:14:30 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:14:30 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:14:30 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:14:30 --> Pagination Class Initialized
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:14:30 --> Final output sent to browser
+DEBUG - 2024-06-12 19:14:30 --> Total execution time: 0.5501
+INFO - 2024-06-12 19:14:30 --> Config Class Initialized
+INFO - 2024-06-12 19:14:30 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:14:30 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:14:30 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:14:30 --> URI Class Initialized
+INFO - 2024-06-12 19:14:30 --> Router Class Initialized
+INFO - 2024-06-12 19:14:30 --> Output Class Initialized
+INFO - 2024-06-12 19:14:30 --> Security Class Initialized
+DEBUG - 2024-06-12 19:14:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:14:30 --> Input Class Initialized
+INFO - 2024-06-12 19:14:30 --> Language Class Initialized
+INFO - 2024-06-12 19:14:30 --> Loader Class Initialized
+INFO - 2024-06-12 19:14:30 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:14:30 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:14:30 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:14:30 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:14:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:14:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:14:30 --> Controller Class Initialized
+INFO - 2024-06-12 19:14:30 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:14:30 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:14:30 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:14:30 --> Pagination Class Initialized
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:14:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:14:30 --> Final output sent to browser
+DEBUG - 2024-06-12 19:14:30 --> Total execution time: 0.0241
+INFO - 2024-06-12 19:14:31 --> Config Class Initialized
+INFO - 2024-06-12 19:14:31 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:14:31 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:14:31 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:14:31 --> URI Class Initialized
+INFO - 2024-06-12 19:14:31 --> Router Class Initialized
+INFO - 2024-06-12 19:14:31 --> Output Class Initialized
+INFO - 2024-06-12 19:14:31 --> Security Class Initialized
+DEBUG - 2024-06-12 19:14:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:14:31 --> Input Class Initialized
+INFO - 2024-06-12 19:14:31 --> Language Class Initialized
+INFO - 2024-06-12 19:14:31 --> Loader Class Initialized
+INFO - 2024-06-12 19:14:31 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:14:31 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:14:31 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:14:31 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:14:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:14:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:14:31 --> Controller Class Initialized
+INFO - 2024-06-12 19:14:31 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:14:31 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:14:31 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:14:31 --> Pagination Class Initialized
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:14:31 --> Final output sent to browser
+DEBUG - 2024-06-12 19:14:31 --> Total execution time: 0.0215
+INFO - 2024-06-12 19:14:31 --> Config Class Initialized
+INFO - 2024-06-12 19:14:31 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:14:31 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:14:31 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:14:31 --> URI Class Initialized
+INFO - 2024-06-12 19:14:31 --> Router Class Initialized
+INFO - 2024-06-12 19:14:31 --> Output Class Initialized
+INFO - 2024-06-12 19:14:31 --> Security Class Initialized
+DEBUG - 2024-06-12 19:14:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:14:31 --> Input Class Initialized
+INFO - 2024-06-12 19:14:31 --> Language Class Initialized
+INFO - 2024-06-12 19:14:31 --> Loader Class Initialized
+INFO - 2024-06-12 19:14:31 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:14:31 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:14:31 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:14:31 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:14:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:14:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:14:31 --> Controller Class Initialized
+INFO - 2024-06-12 19:14:31 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:14:31 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:14:31 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:14:31 --> Pagination Class Initialized
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:14:31 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:14:31 --> Final output sent to browser
+DEBUG - 2024-06-12 19:14:31 --> Total execution time: 0.0227
+INFO - 2024-06-12 19:26:19 --> Config Class Initialized
+INFO - 2024-06-12 19:26:19 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:26:19 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:26:19 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:26:19 --> URI Class Initialized
+INFO - 2024-06-12 19:26:19 --> Router Class Initialized
+INFO - 2024-06-12 19:26:19 --> Output Class Initialized
+INFO - 2024-06-12 19:26:19 --> Security Class Initialized
+DEBUG - 2024-06-12 19:26:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:26:19 --> Input Class Initialized
+INFO - 2024-06-12 19:26:19 --> Language Class Initialized
+INFO - 2024-06-12 19:26:19 --> Loader Class Initialized
+INFO - 2024-06-12 19:26:19 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:26:19 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:26:19 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:26:19 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:26:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:26:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:26:19 --> Controller Class Initialized
+INFO - 2024-06-12 19:26:19 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:26:19 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:26:19 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:26:19 --> Pagination Class Initialized
+INFO - 2024-06-12 19:26:19 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:26:19 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:26:19 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:26:19 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:26:19 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:26:19 --> Final output sent to browser
+DEBUG - 2024-06-12 19:26:19 --> Total execution time: 0.0272
+INFO - 2024-06-12 19:26:23 --> Config Class Initialized
+INFO - 2024-06-12 19:26:23 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:26:23 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:26:23 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:26:23 --> URI Class Initialized
+INFO - 2024-06-12 19:26:23 --> Router Class Initialized
+INFO - 2024-06-12 19:26:23 --> Output Class Initialized
+INFO - 2024-06-12 19:26:23 --> Security Class Initialized
+DEBUG - 2024-06-12 19:26:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:26:23 --> Input Class Initialized
+INFO - 2024-06-12 19:26:23 --> Language Class Initialized
+INFO - 2024-06-12 19:26:23 --> Loader Class Initialized
+INFO - 2024-06-12 19:26:23 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:26:23 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:26:23 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:26:23 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:26:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:26:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:26:23 --> Controller Class Initialized
+INFO - 2024-06-12 19:26:23 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:26:23 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:26:23 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:26:23 --> Pagination Class Initialized
+INFO - 2024-06-12 19:26:23 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:26:23 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:26:23 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:26:23 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:26:23 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:26:23 --> Final output sent to browser
+DEBUG - 2024-06-12 19:26:23 --> Total execution time: 0.0220
+INFO - 2024-06-12 19:28:00 --> Config Class Initialized
+INFO - 2024-06-12 19:28:00 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:28:00 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:28:00 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:28:00 --> URI Class Initialized
+INFO - 2024-06-12 19:28:00 --> Router Class Initialized
+INFO - 2024-06-12 19:28:00 --> Output Class Initialized
+INFO - 2024-06-12 19:28:00 --> Security Class Initialized
+DEBUG - 2024-06-12 19:28:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:28:00 --> Input Class Initialized
+INFO - 2024-06-12 19:28:00 --> Language Class Initialized
+INFO - 2024-06-12 19:28:00 --> Loader Class Initialized
+INFO - 2024-06-12 19:28:00 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:28:00 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:28:00 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:28:00 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:28:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:28:00 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:28:00 --> Controller Class Initialized
+INFO - 2024-06-12 19:28:00 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:28:00 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:28:00 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:28:00 --> Pagination Class Initialized
+INFO - 2024-06-12 19:28:00 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:28:00 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:28:00 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:28:00 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:28:00 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:28:00 --> Final output sent to browser
+DEBUG - 2024-06-12 19:28:00 --> Total execution time: 0.0234
+INFO - 2024-06-12 19:28:24 --> Config Class Initialized
+INFO - 2024-06-12 19:28:24 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:28:24 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:28:24 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:28:24 --> URI Class Initialized
+INFO - 2024-06-12 19:28:24 --> Router Class Initialized
+INFO - 2024-06-12 19:28:24 --> Output Class Initialized
+INFO - 2024-06-12 19:28:24 --> Security Class Initialized
+DEBUG - 2024-06-12 19:28:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:28:24 --> Input Class Initialized
+INFO - 2024-06-12 19:28:24 --> Language Class Initialized
+INFO - 2024-06-12 19:28:24 --> Loader Class Initialized
+INFO - 2024-06-12 19:28:24 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:28:24 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:28:24 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:28:24 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:28:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:28:24 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:28:24 --> Controller Class Initialized
+INFO - 2024-06-12 19:28:24 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:28:24 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:28:24 --> Model "Jenis_akun_model" initialized
+INFO - 2024-06-12 19:28:24 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:28:24 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:28:24 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:28:24 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_form.php
+INFO - 2024-06-12 19:28:24 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:28:24 --> Final output sent to browser
+DEBUG - 2024-06-12 19:28:24 --> Total execution time: 0.0376
+INFO - 2024-06-12 19:28:33 --> Config Class Initialized
+INFO - 2024-06-12 19:28:33 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:28:33 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:28:33 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:28:33 --> URI Class Initialized
+INFO - 2024-06-12 19:28:33 --> Router Class Initialized
+INFO - 2024-06-12 19:28:33 --> Output Class Initialized
+INFO - 2024-06-12 19:28:33 --> Security Class Initialized
+DEBUG - 2024-06-12 19:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:28:33 --> Input Class Initialized
+INFO - 2024-06-12 19:28:33 --> Language Class Initialized
+INFO - 2024-06-12 19:28:33 --> Loader Class Initialized
+INFO - 2024-06-12 19:28:33 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:28:33 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:28:33 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:28:33 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:28:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:28:33 --> Controller Class Initialized
+INFO - 2024-06-12 19:28:33 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:28:33 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:28:33 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2024-06-12 19:28:33 --> Config Class Initialized
+INFO - 2024-06-12 19:28:33 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:28:33 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:28:33 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:28:33 --> URI Class Initialized
+INFO - 2024-06-12 19:28:33 --> Router Class Initialized
+INFO - 2024-06-12 19:28:33 --> Output Class Initialized
+INFO - 2024-06-12 19:28:33 --> Security Class Initialized
+DEBUG - 2024-06-12 19:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:28:33 --> Input Class Initialized
+INFO - 2024-06-12 19:28:33 --> Language Class Initialized
+INFO - 2024-06-12 19:28:33 --> Loader Class Initialized
+INFO - 2024-06-12 19:28:33 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:28:33 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:28:33 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:28:33 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:28:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:28:33 --> Controller Class Initialized
+INFO - 2024-06-12 19:28:33 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:28:33 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:28:33 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:28:33 --> Pagination Class Initialized
+INFO - 2024-06-12 19:28:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:28:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:28:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:28:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:28:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:28:33 --> Final output sent to browser
+DEBUG - 2024-06-12 19:28:33 --> Total execution time: 0.0261
+INFO - 2024-06-12 19:29:46 --> Config Class Initialized
+INFO - 2024-06-12 19:29:46 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:29:46 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:29:46 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:29:46 --> URI Class Initialized
+INFO - 2024-06-12 19:29:46 --> Router Class Initialized
+INFO - 2024-06-12 19:29:46 --> Output Class Initialized
+INFO - 2024-06-12 19:29:46 --> Security Class Initialized
+DEBUG - 2024-06-12 19:29:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:29:46 --> Input Class Initialized
+INFO - 2024-06-12 19:29:46 --> Language Class Initialized
+INFO - 2024-06-12 19:29:46 --> Loader Class Initialized
+INFO - 2024-06-12 19:29:46 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:29:46 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:29:46 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:29:46 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:29:46 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:29:46 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:29:46 --> Controller Class Initialized
+INFO - 2024-06-12 19:29:46 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:29:46 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:29:46 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:29:46 --> Pagination Class Initialized
+INFO - 2024-06-12 19:29:46 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:29:46 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:29:46 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:29:46 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:29:46 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:29:46 --> Final output sent to browser
+DEBUG - 2024-06-12 19:29:46 --> Total execution time: 0.0417
+INFO - 2024-06-12 19:30:20 --> Config Class Initialized
+INFO - 2024-06-12 19:30:20 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:30:20 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:30:20 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:30:20 --> URI Class Initialized
+INFO - 2024-06-12 19:30:20 --> Router Class Initialized
+INFO - 2024-06-12 19:30:20 --> Output Class Initialized
+INFO - 2024-06-12 19:30:20 --> Security Class Initialized
+DEBUG - 2024-06-12 19:30:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:30:20 --> Input Class Initialized
+INFO - 2024-06-12 19:30:20 --> Language Class Initialized
+INFO - 2024-06-12 19:30:20 --> Loader Class Initialized
+INFO - 2024-06-12 19:30:20 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:30:20 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:30:20 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:30:20 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:30:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:30:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:30:20 --> Controller Class Initialized
+INFO - 2024-06-12 19:30:20 --> Model "Jurnal_model" initialized
+DEBUG - 2024-06-12 19:30:20 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:30:20 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:30:20 --> Pagination Class Initialized
+INFO - 2024-06-12 19:30:20 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:30:20 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:30:20 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:30:20 --> File loaded: E:\xampp\htdocs\ppdal\application\views\laporan/jurnal_umum.php
+INFO - 2024-06-12 19:30:20 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:30:20 --> Final output sent to browser
+DEBUG - 2024-06-12 19:30:20 --> Total execution time: 0.0188
+INFO - 2024-06-12 19:30:30 --> Config Class Initialized
+INFO - 2024-06-12 19:30:30 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:30:30 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:30:30 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:30:30 --> URI Class Initialized
+INFO - 2024-06-12 19:30:30 --> Router Class Initialized
+INFO - 2024-06-12 19:30:30 --> Output Class Initialized
+INFO - 2024-06-12 19:30:30 --> Security Class Initialized
+DEBUG - 2024-06-12 19:30:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:30:30 --> Input Class Initialized
+INFO - 2024-06-12 19:30:30 --> Language Class Initialized
+INFO - 2024-06-12 19:30:30 --> Loader Class Initialized
+INFO - 2024-06-12 19:30:30 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:30:30 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:30:30 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:30:30 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:30:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:30:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:30:30 --> Controller Class Initialized
+INFO - 2024-06-12 19:30:30 --> Model "Jurnal_model" initialized
+DEBUG - 2024-06-12 19:30:30 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:30:30 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:30:30 --> Pagination Class Initialized
+INFO - 2024-06-12 19:30:30 --> SELECT `debet`, `kredit`
+FROM `jurnal`
+WHERE `id_akun` = '3'
+AND date(tanggal) > '2024-04-01'
+ LIMIT 0
+INFO - 2024-06-12 19:30:30 --> Model "Akun_model" initialized
+INFO - 2024-06-12 19:30:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:30:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:30:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:30:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\laporan/buku_besar.php
+INFO - 2024-06-12 19:30:30 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:30:30 --> Final output sent to browser
+DEBUG - 2024-06-12 19:30:30 --> Total execution time: 0.0338
+INFO - 2024-06-12 19:30:47 --> Config Class Initialized
+INFO - 2024-06-12 19:30:47 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:30:47 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:30:47 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:30:47 --> URI Class Initialized
+INFO - 2024-06-12 19:30:47 --> Router Class Initialized
+INFO - 2024-06-12 19:30:47 --> Output Class Initialized
+INFO - 2024-06-12 19:30:47 --> Security Class Initialized
+DEBUG - 2024-06-12 19:30:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:30:47 --> Input Class Initialized
+INFO - 2024-06-12 19:30:47 --> Language Class Initialized
+INFO - 2024-06-12 19:30:47 --> Loader Class Initialized
+INFO - 2024-06-12 19:30:47 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:30:47 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:30:47 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:30:47 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:30:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:30:47 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:30:47 --> Controller Class Initialized
+INFO - 2024-06-12 19:30:47 --> Model "Jurnal_model" initialized
+DEBUG - 2024-06-12 19:30:47 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:30:47 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:30:47 --> Pagination Class Initialized
+INFO - 2024-06-12 19:30:47 --> SELECT `debet`, `kredit`
+FROM `jurnal`
+WHERE `id_akun` = '0'
+AND date(tanggal) > '2024-04-01'
+ LIMIT 0
+INFO - 2024-06-12 19:30:47 --> Model "Akun_model" initialized
+INFO - 2024-06-12 19:30:47 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:30:47 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:30:47 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:30:47 --> File loaded: E:\xampp\htdocs\ppdal\application\views\laporan/buku_besar.php
+INFO - 2024-06-12 19:30:47 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:30:47 --> Final output sent to browser
+DEBUG - 2024-06-12 19:30:47 --> Total execution time: 0.0194
+INFO - 2024-06-12 19:30:58 --> Config Class Initialized
+INFO - 2024-06-12 19:30:58 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:30:58 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:30:58 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:30:58 --> URI Class Initialized
+INFO - 2024-06-12 19:30:58 --> Router Class Initialized
+INFO - 2024-06-12 19:30:58 --> Output Class Initialized
+INFO - 2024-06-12 19:30:58 --> Security Class Initialized
+DEBUG - 2024-06-12 19:30:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:30:58 --> Input Class Initialized
+INFO - 2024-06-12 19:30:58 --> Language Class Initialized
+INFO - 2024-06-12 19:30:58 --> Loader Class Initialized
+INFO - 2024-06-12 19:30:58 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:30:58 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:30:58 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:30:58 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:30:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:30:58 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:30:58 --> Controller Class Initialized
+INFO - 2024-06-12 19:30:58 --> Model "Jurnal_model" initialized
+DEBUG - 2024-06-12 19:30:58 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:30:58 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:30:58 --> Pagination Class Initialized
+INFO - 2024-06-12 19:30:58 --> SELECT `debet`, `kredit`
+FROM `jurnal`
+WHERE `id_akun` = '1'
+AND date(tanggal) > '2024-04-01'
+ LIMIT 0
+INFO - 2024-06-12 19:30:58 --> Model "Akun_model" initialized
+INFO - 2024-06-12 19:30:58 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:30:58 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:30:58 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:30:58 --> File loaded: E:\xampp\htdocs\ppdal\application\views\laporan/buku_besar.php
+INFO - 2024-06-12 19:30:58 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:30:58 --> Final output sent to browser
+DEBUG - 2024-06-12 19:30:58 --> Total execution time: 0.0184
+INFO - 2024-06-12 19:31:16 --> Config Class Initialized
+INFO - 2024-06-12 19:31:16 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:31:16 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:31:16 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:31:16 --> URI Class Initialized
+INFO - 2024-06-12 19:31:16 --> Router Class Initialized
+INFO - 2024-06-12 19:31:16 --> Output Class Initialized
+INFO - 2024-06-12 19:31:16 --> Security Class Initialized
+DEBUG - 2024-06-12 19:31:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:31:16 --> Input Class Initialized
+INFO - 2024-06-12 19:31:16 --> Language Class Initialized
+INFO - 2024-06-12 19:31:16 --> Loader Class Initialized
+INFO - 2024-06-12 19:31:16 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:31:16 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:31:16 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:31:16 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:31:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:31:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:31:16 --> Controller Class Initialized
+INFO - 2024-06-12 19:31:16 --> Model "Jurnal_model" initialized
+DEBUG - 2024-06-12 19:31:16 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:31:16 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:31:16 --> Pagination Class Initialized
+INFO - 2024-06-12 19:31:16 --> SELECT `debet`, `kredit`
+FROM `jurnal`
+WHERE `id_akun` = '3'
+AND date(tanggal) > '2024-04-01'
+ LIMIT 0
+INFO - 2024-06-12 19:31:16 --> Model "Akun_model" initialized
+INFO - 2024-06-12 19:31:16 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:31:16 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:31:16 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:31:16 --> File loaded: E:\xampp\htdocs\ppdal\application\views\laporan/buku_besar.php
+INFO - 2024-06-12 19:31:16 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:31:16 --> Final output sent to browser
+DEBUG - 2024-06-12 19:31:16 --> Total execution time: 0.0202
+INFO - 2024-06-12 19:31:33 --> Config Class Initialized
+INFO - 2024-06-12 19:31:33 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:31:33 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:31:33 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:31:33 --> URI Class Initialized
+INFO - 2024-06-12 19:31:33 --> Router Class Initialized
+INFO - 2024-06-12 19:31:33 --> Output Class Initialized
+INFO - 2024-06-12 19:31:33 --> Security Class Initialized
+DEBUG - 2024-06-12 19:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:31:33 --> Input Class Initialized
+INFO - 2024-06-12 19:31:33 --> Language Class Initialized
+INFO - 2024-06-12 19:31:33 --> Loader Class Initialized
+INFO - 2024-06-12 19:31:33 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:31:33 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:31:33 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:31:33 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:31:33 --> Controller Class Initialized
+INFO - 2024-06-12 19:31:33 --> Model "Akun_model" initialized
+DEBUG - 2024-06-12 19:31:33 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:31:33 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:31:33 --> Pagination Class Initialized
+INFO - 2024-06-12 19:31:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:31:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:31:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:31:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\akun/akun_list.php
+INFO - 2024-06-12 19:31:33 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:31:33 --> Final output sent to browser
+DEBUG - 2024-06-12 19:31:33 --> Total execution time: 0.0270
+INFO - 2024-06-12 19:31:37 --> Config Class Initialized
+INFO - 2024-06-12 19:31:37 --> Hooks Class Initialized
+DEBUG - 2024-06-12 19:31:37 --> UTF-8 Support Enabled
+INFO - 2024-06-12 19:31:37 --> Utf8 Class Initialized
+INFO - 2024-06-12 19:31:37 --> URI Class Initialized
+INFO - 2024-06-12 19:31:37 --> Router Class Initialized
+INFO - 2024-06-12 19:31:37 --> Output Class Initialized
+INFO - 2024-06-12 19:31:37 --> Security Class Initialized
+DEBUG - 2024-06-12 19:31:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-06-12 19:31:37 --> Input Class Initialized
+INFO - 2024-06-12 19:31:37 --> Language Class Initialized
+INFO - 2024-06-12 19:31:37 --> Loader Class Initialized
+INFO - 2024-06-12 19:31:37 --> Helper loaded: form_helper
+INFO - 2024-06-12 19:31:37 --> Helper loaded: url_helper
+INFO - 2024-06-12 19:31:37 --> Database Driver Class Initialized
+INFO - 2024-06-12 19:31:37 --> Form Validation Class Initialized
+DEBUG - 2024-06-12 19:31:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-06-12 19:31:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-06-12 19:31:37 --> Controller Class Initialized
+INFO - 2024-06-12 19:31:37 --> Model "Jenis_akun_model" initialized
+DEBUG - 2024-06-12 19:31:37 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2024-06-12 19:31:37 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2024-06-12 19:31:37 --> Pagination Class Initialized
+INFO - 2024-06-12 19:31:37 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/header.php
+INFO - 2024-06-12 19:31:37 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/side_bar.php
+INFO - 2024-06-12 19:31:37 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/top_bar.php
+INFO - 2024-06-12 19:31:37 --> File loaded: E:\xampp\htdocs\ppdal\application\views\jenis_akun/jenis_akun_list.php
+INFO - 2024-06-12 19:31:37 --> File loaded: E:\xampp\htdocs\ppdal\application\views\page_template/footer.php
+INFO - 2024-06-12 19:31:37 --> Final output sent to browser
+DEBUG - 2024-06-12 19:31:37 --> Total execution time: 0.0451

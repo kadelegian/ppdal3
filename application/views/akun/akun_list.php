@@ -34,8 +34,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <th></th>
                         <th></th>
                         <th>Balance</th>
-                        <th id="total_debet"><?= $total_debet ?></th>
-                        <th id="total_kredit"><?= $total_kredit ?></th>
+                        <th id="total_debet"><?= number_format($total_debet, 0, ',', '.') ?></th>
+                        <th id="total_kredit"><?= number_format($total_kredit, 0, ',', '.') ?></th>
                         <th></th>
                     </tr>
                     <tr>

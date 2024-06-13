@@ -198,6 +198,7 @@ class Akun extends CI_Controller
             $kredit = preg_replace('/\D/', '', $this->input->post('kredit', TRUE));
 
             $data = array(
+                'kode_akun' => $this->input->post('kode_akun', true),
                 'nama_akun' => strtoupper($this->input->post('nama_akun', TRUE)),
                 'alias' => strtoupper($this->input->post('alias', TRUE)),
                 'keterangan' => $this->input->post('keterangan', TRUE),

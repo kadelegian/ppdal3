@@ -62,15 +62,15 @@ class Akun_model extends CI_Model
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
-        $this->db->select('akun.*,
+        $this->db->select('akun.id,akun.kode_akun,akun.nama_akun,akun.alias,akun.keterangan,akun.nomor_rekening,akun.creator,akun.bank,akun.aktif,akun.sistem,akun.tgl_saldo,akun.kode_jenis,akun.is_iuran,akun.is_penjamin,
         CASE 
-        WHEN saldo_akun.debet IS NULL THEN 0
-        WHEN saldo_akun.debet = 0 THEN akun.debet
+        WHEN saldo_akun.debet IS NULL THEN akun.debet
+       
         ELSE saldo_akun.debet
     END as debet,
     CASE 
-        WHEN saldo_akun.kredit IS NULL THEN 0
-        WHEN saldo_akun.kredit = 0 THEN akun.kredit
+        WHEN saldo_akun.kredit IS NULL THEN akun.kredit
+        
         ELSE saldo_akun.kredit
     END as kredit,
      jenis_akun.keterangan as tipe', false);
