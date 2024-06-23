@@ -13,15 +13,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <form action="<?php echo $action; ?>" method="post">
                 <div class="form-group">
                     <label for="tanggal">Tanggal</label>
-                    <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?php echo $tanggal; ?>" readonly />
+                    <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?= $tanggal ?>" readonly />
                 </div>
                 <div class="form-group">
-                    <label for="id_akun">Ke Rekening </label>
-                    <select class="form-control" name="id_akun" id="id_akun">
-                        <?php foreach ($data_akun as $dt_ak) {
+                    <label for="id_akun_kas">Akun/Rekening Penerima </label>
+                    <select class="form-control" name="id_akun_kas" id="id_akun_kas">
+                        <?php foreach ($data_akun_kas as $dt_ak) {
 
                             ?>
-                            <option value="<?= $dt_ak->id ?>" <?= $dt_ak->id == $id_akun ? 'selected' : '' ?>><?= $dt_ak->nama_akun ?></option>
+                            <option value="<?= $dt_ak->id ?>" <?= $dt_ak->id == $id_akun_kas ? 'selected' : '' ?>><?= $dt_ak->kode_akun . ' | ' . $dt_ak->nama_akun ?></option>
                         <?php
 
                         } ?>
@@ -32,12 +32,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <input type="text" class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan" value="<?php echo $keterangan; ?>" />
                 </div>
                 <div class="form-group">
-                    <label for="id_jenis_pemasukan">Jenis Pendapatan</label>
-                    <select class="form-control" name="id_jenis_pemasukan" id="id_jenis_pemasukan">
-                        <?php foreach ($data_jenis_pemasukan as $dt_jp) {
-                            if ($dt_jp->tipe > 0) { ?>
-                                <option value="<?= $dt_jp->id ?>" <?= $dt_jp->id == $id_jenis_pemasukan ? 'selected' : '' ?>><?= $dt_jp->keterangan ?></option>
-                        <?php }
+                    <label for="id_akun_tujuan">Jenis Pendapatan</label>
+                    <select class="form-control" name="id_akun_tujuan" id="id_akun_tujuan">
+                        <?php foreach ($akun_tujuan as $dt_jp) { ?>
+                            <option value="<?= $dt_jp->id ?>" <?= $dt_jp->id == $id_akun_tujuan ? 'selected' : '' ?>><?= $dt_jp->kode_akun . ' | ' . $dt_jp->nama_akun ?></option>
+                        <?php
                         } ?>
                     </select>
                 </div>

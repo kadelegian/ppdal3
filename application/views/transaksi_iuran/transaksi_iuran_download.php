@@ -193,7 +193,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td colspan="3" style="text-align: right;"><strong>
+                                <i>
+
+                                    <u>
+                                        Terbilang : <?= $terbilang ?>
+                                    </u>
+                                </i>
+
+                            </strong></td>
                     </tr>
 
                 </tbody>
@@ -201,16 +209,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <table class="small-font" style="width:100%;margin-top:30px;">
                 <tr>
-                    <td>
-                        <strong>
-                            <i>
-
-                                <u>
-                                    Terbilang : <?= $terbilang ?>
-                                </u>
-                            </i>
-
-                        </strong>
+                    <td rowspan="3" style="text-align: center;">
+                        Pedagang, <br><br><br><u><?= '(' . $nama_pemilik . ')' ?></u>
                     </td>
 
                     <td rowspan="3" style="text-align: center;">Petugas,<br><br><br><u><?= '(' . $nama_user . ')' ?></u></td>
@@ -225,9 +225,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <td></td>
                 </tr>
                 <tr>
-                    <td>
-
-                    </td>
+                    <td></td>
                     <td style="text-align: center;">Terimakasih Atas Kerjasamanya</td>
                 </tr>
                 <tr>

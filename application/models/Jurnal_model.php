@@ -19,10 +19,62 @@ class Jurnal_model extends CI_Model
                 on akun.id=saldo_akun.id_akun';
 
         $data = $this->db->query($q)->row();
+
         $this->periode_laporan = $data->periode;
     }
 
+    function saldo_akhir_aktiva()
+    {
 
+        $this->db->select('akun.kode_akun,akun.nama_akun,jenis_akun.sn,jenis_akun.pos');
+        $this->db->select('COALESCE(saldo_akun.debet,akun.debet)+sum(jurnal.debet)- COALESCE(saldo_akun.kredit,akun.kredit)-SUM(jurnal.kredit) as saldo_akhir');
+        $this->db->from('akun');
+        $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id', 'left');
+        $this->db->join('jurnal', 'jurnal.id_akun=akun.id and date(jurnal.tanggal) > "' . $this->periode_laporan . '"');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('jenis_akun.sn', 'd');
+        $this->db->where('jenis_akun.pos', 'nr');
+
+        $this->db->group_by('akun.id');
+        return $this->db->get()->result();
+    }
+    function saldo_akhir_hutang()
+    {
+        $this->db->select('akun.kode_akun,akun.nama_akun,jenis_akun.sn,jenis_akun.pos');
+        $this->db->select('COALESCE(saldo_akun.kredit,akun.kredit)+sum(jurnal.kredit)- COALESCE(saldo_akun.debet,akun.debet)-SUM(jurnal.debet) as saldo_akhir');
+        $this->db->from('akun');
+        $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id', 'left');
+        $this->db->join('jurnal', 'jurnal.id_akun=akun.id and date(jurnal.tanggal) > "' . $this->periode_laporan . '"');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('jenis_akun.sn', 'k');
+        $this->db->where('jenis_akun.pos', 'nr');
+
+        $this->db->group_by('akun.id');
+        return $this->db->get()->result();
+    }
+    function saldo_akhir_modal()
+    {
+        $this->db->select('akun.kode_akun,akun.nama_akun,jenis_akun.sn,jenis_akun.pos');
+        $this->db->select('COALESCE(saldo_akun.debet,akun.debet)+sum(jurnal.debet)- COALESCE(saldo_akun.kredit,akun.kredit)-SUM(jurnal.kredit) as saldo_akhir');
+        $this->db->from('akun');
+        $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id', 'left');
+        $this->db->join('jurnal', 'jurnal.id_akun=akun.id and date(jurnal.tanggal) > "' . $this->periode_laporan . '"');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->like('akun.kode_akun', '3', 'left');
+
+        $this->db->group_by('akun.id');
+        return $this->db->get()->result();
+    }
+    function laba_rugi_berjalan()
+    {
+        $this->db->select('sum(jurnal.kredit)-sum(jurnal.debet) as laba_rugi');
+        $this->db->from('akun');
+        $this->db->join('jurnal', 'jurnal.id_akun=akun.id');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis');
+        $this->db->where('jenis_akun.pos', 'lr');
+        $this->db->where('date(jurnal.tanggal)>', $this->periode_laporan);
+        return $this->db->get()->row();
+    }
 
     function total_rows_jurnal_umum($tanggal1 = null, $tanggal2 = null)
     {
@@ -45,14 +97,27 @@ class Jurnal_model extends CI_Model
             $this->db->where('date(jurnal.tanggal)<=', $tanggal2);
         } else {
             $this->db->where('date(jurnal.tanggal)>', $this->periode_laporan);
-            $this->db->order_by('jurnal.tanggal', 'asc');
+            $this->db->order_by('jurnal.id', 'asc');
         }
-        $this->db->select('jurnal.*,akun.kode_akun,akun.nama_akun,users.username');
+        $this->db->select('jurnal.tanggal,jurnal.debet,jurnal.kredit,jurnal.keterangan,
+        CASE 
+        WHEN jurnal.id_transaksi > 0 THEN jurnal.id_transaksi       
+        WHEN jurnal.id_transaksi_pemasukan > 0 THEN jurnal.id_transaksi_pemasukan      
+        WHEN jurnal.id_transaksi_pengeluaran > 0 THEN jurnal.id_transaksi_pengeluaran
+        ELSE jurnal.id_transfer 
+    END as id_transaksi,
+    akun.kode_akun,akun.nama_akun,users.username', false);
 
         $this->db->from('jurnal');
-        $this->db->join('transaksi_iuran', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi');
+        $this->db->join('transaksi_iuran', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi', 'left');
+        $this->db->join('transaksi_pemasukan', 'transaksi_pemasukan.id=jurnal.id_transaksi_pemasukan', 'left');
+        $this->db->join('transaksi_pengeluaran', 'transaksi_pengeluaran.id=jurnal.id_transaksi_pengeluaran', 'left');
+        $this->db->join('transfer_kas', 'transfer_kas.id=jurnal.id_transfer', 'left');
         $this->db->join('akun', 'akun.id=jurnal.id_akun');
-        $this->db->join('users', 'users.id=transaksi_iuran.id_user');
+        $this->db->join('users', '(users.id=transaksi_iuran.id_user 
+        or users.id=transaksi_pemasukan.id_user 
+        or users.id=transaksi_pengeluaran.id_user
+        or users.id=transfer_kas.id_user)');
         $this->db->limit($limit, $start);
         return $this->db->get()->result();
     }
@@ -83,6 +148,20 @@ class Jurnal_model extends CI_Model
         $data_saldo = $this->db->query($q)->row();
         return $data_saldo;
     }
+    function get_saldo_awal_akun_aktiva()
+    {
+
+        $this->db->select('akun.id, COALESCE(saldo_akun.debet,akun.debet) as debet, COALESCE(saldo_akun.kredit,akun.kredit) as kredit');
+        $this->db->from('akun');
+        $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id and saldo_akun.periode="' . $this->periode_laporan . '"', 'left');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+
+        $this->db->where('jenis_akun.sn', 'd');
+        $this->db->where('jenis_akun.pos', 'nr');
+
+        return $this->db->get()->result();
+    }
+
     function get_akun_buku_besar()
     {
         $this->db->select('distinct(jurnal.id_akun) as id, akun.nama_akun, akun.kode_akun,jenis_akun.sn');
@@ -95,13 +174,26 @@ class Jurnal_model extends CI_Model
     }
     function get_buku_besar($id_akun, $start, $limit)
     {
-
-
-        $this->db->select('jurnal.*,akun.kode_akun,akun.nama_akun,jenis_akun.sn');
+        $this->db->select('jurnal.tanggal,jurnal.debet,jurnal.kredit,jurnal.keterangan,
+        CASE 
+        WHEN jurnal.id_transaksi > 0 THEN jurnal.id_transaksi       
+        WHEN jurnal.id_transaksi_pemasukan > 0 THEN jurnal.id_transaksi_pemasukan      
+        WHEN jurnal.id_transaksi_pengeluaran > 0 THEN jurnal.id_transaksi_pengeluaran
+        ELSE jurnal.id_transfer
+    END as id_transaksi,
+    akun.kode_akun,akun.nama_akun,jenis_akun.sn', false);
 
         $this->db->from('jurnal');
-        $this->db->join('transaksi_iuran', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi');
+        $this->db->join('transaksi_iuran', 'transaksi_iuran.id_transaksi=jurnal.id_transaksi', 'left');
+        $this->db->join('transaksi_pemasukan', 'transaksi_pemasukan.id=jurnal.id_transaksi_pemasukan', 'left');
+        $this->db->join('transaksi_pengeluaran', 'transaksi_pengeluaran.id=jurnal.id_transaksi_pengeluaran', 'left');
+        $this->db->join('transfer_kas', 'transfer_kas.id=jurnal.id_transfer', 'left');
         $this->db->join('akun', 'akun.id=jurnal.id_akun');
+        $this->db->join('users', '(users.id=transaksi_iuran.id_user 
+        or users.id=transaksi_pemasukan.id_user 
+        or users.id=transaksi_pengeluaran.id_user
+        or users.id=transfer_kas.id_user)');
+
         $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis');
         $this->db->where('jurnal.id_akun', $id_akun);
         $this->db->where('date(jurnal.tanggal)>', $this->periode_laporan);
@@ -150,6 +242,39 @@ class Jurnal_model extends CI_Model
         $this->db->from('jurnal');
         return $this->db->get()->row();
     }
+    function get_laba_rugi($pemasukan = false)
+    {
+
+        $this->db->select('jurnal.id_akun, SUM(jurnal.debet) as debet,SUM(jurnal.kredit) as kredit, akun.nama_akun,akun.kode_akun');
+        $this->db->from('jurnal');
+        $this->db->join('akun', 'jurnal.id_akun=akun.id');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis');
+        $this->db->where('date(jurnal.tanggal)>', $this->periode_laporan);
+        if ($pemasukan) {
+            $this->db->where('jenis_akun.sn', 'k');
+        } else {
+            $this->db->where('jenis_akun.sn', 'd');
+        }
+        $this->db->where('jenis_akun.pos', 'lr');
+        $this->db->group_by('jurnal.id_akun');
+        return $this->db->get()->result();
+    }
+    function get_saldo_awal_akun_laba_rugi($pemasukan = false)
+    {
+        if ($pemasukan) {
+            $this->db->where('jenis_akun.sn', 'k');
+        } else {
+            $this->db->where('jenis_akun.sn', 'd');
+        }
+        $this->db->select('akun.id,akun.kode_akun,akun.nama_akun,COALESCE(saldo_akun.debet,akun.debet) as debet, COALESCE(saldo_akun.kredit,akun.kredit) as kredit');
+        $this->db->from('akun');
+        $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id', 'left');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis');
+        $this->db->where('jenis_akun.pos', 'lr');
+        $this->db->group_by('akun.id');
+        return $this->db->get()->result();
+    }
+
     function set_saldo($id_akun, $tanggal = null, $nominal = 0) //
     {
         if ($tanggal == null) {
@@ -168,6 +293,8 @@ class Jurnal_model extends CI_Model
             $this->db->insert('saldo_akun', $data);
         }
     }
+
+
     function get_all()
     {
         $this->db->order_by($this->id, $this->order);

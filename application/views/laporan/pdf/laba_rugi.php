@@ -85,3 +85,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
+
+    <!-- Content Row -->
+
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- End of Main Content -->

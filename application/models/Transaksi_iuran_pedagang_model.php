@@ -52,7 +52,7 @@ class Transaksi_iuran_pedagang_model extends CI_Model
     function get_last_payment($id_kartu)
     {
 
-        $query = 'select detail_transaksi_iuran.periode,        
+        $query = 'select detail_transaksi_iuran.id,detail_transaksi_iuran.periode,        
         transaksi_iuran.id_kartu,transaksi_iuran.tanggal_transaksi,
         transaksi_iuran.id_user
         from detail_transaksi_iuran left join transaksi_iuran

@@ -26,6 +26,7 @@ class Transaksi_iuran_model extends CI_Model
             $this->db->order_by('id', 'desc');
             $this->db->limit(1);
             $res = $this->db->get('setting_iuran')->row();
+
             $list_iuran[$i] = array(
                 'periode' => date_format($periode_awal, 'Y-m-d'),
                 'iuran' => $res->iuran

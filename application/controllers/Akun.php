@@ -166,7 +166,7 @@ class Akun extends CI_Controller
                 'is_bank' => set_value('is_bank', $row->bank),
                 'debet' => set_value('debet', $row->debet),
                 'kredit' => set_value('kredit', $row->kredit),
-                'kode_jenis' => set_value('kode_jenis'),
+                'kode_jenis' => set_value('kode_jenis', $row->kode_jenis),
                 'list_kode_jenis' => $data_jenis,
                 'is_iuran' => set_value('is_iuran', $row->is_iuran),
                 'is_penjamin' => set_value('is_penjamin', $row->is_penjamin),

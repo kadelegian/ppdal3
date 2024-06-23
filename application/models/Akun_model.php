@@ -1,5 +1,7 @@
 <?php
 
+use function PHPUnit\Framework\returnSelf;
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -58,11 +60,9 @@ class Akun_model extends CI_Model
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
-
-    // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL)
+    function get_saldo_all_akun()
     {
-        $this->db->select('akun.id,akun.kode_akun,akun.nama_akun,akun.alias,akun.keterangan,akun.nomor_rekening,akun.creator,akun.bank,akun.aktif,akun.sistem,akun.tgl_saldo,akun.kode_jenis,akun.is_iuran,akun.is_penjamin,
+        $this->db->select('akun.id,akun.kode_akun,akun.nama_akun,
         CASE 
         WHEN saldo_akun.debet IS NULL THEN akun.debet
        
@@ -73,7 +73,18 @@ class Akun_model extends CI_Model
         
         ELSE saldo_akun.kredit
     END as kredit,
-     jenis_akun.keterangan as tipe', false);
+     jenis_akun.keterangan as tipe,jenis_akun.sn,jenis_akun.pos', false);
+        $this->db->from('akun');
+        $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id', 'left');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->order_by('akun.kode_akun', 'asc');
+        return $this->db->get()->result();
+    }
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
+        $this->db->select('akun.*,jenis_akun.keterangan as tipe', false);
         $this->db->from('akun');
         $this->db->join('saldo_akun', 'saldo_akun.id_akun=akun.id', 'left');
         $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
@@ -88,6 +99,53 @@ class Akun_model extends CI_Model
     {
         $q = 'select id from akun where is_iuran=1 union select id from akun where is_penjamin=1';
         return $this->db->query($q);
+    }
+    function get_akun_pettycash()
+    {
+        $this->db->select('akun.id,akun.kode_akun,akun.nama_akun');
+        $this->db->from('akun');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('akun.aktif', 1);
+        $this->db->where('akun.nama_akun', 'pettycash');
+        //$this->db->where('akun.is_iuran', 0);
+        //$this->db->where('akun.is_penjamin', 0);
+        $this->db->order_by('akun.kode_akun', 'asc');
+        return $this->db->get()->result();
+    }
+    function get_akun_kas()
+    {
+        $this->db->select('akun.id,akun.kode_akun,akun.nama_akun');
+        $this->db->from('akun');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('akun.aktif', 1);
+        $this->db->like('akun.kode_akun', '1', 'after');
+        //$this->db->where('akun.is_iuran', 0);
+        //$this->db->where('akun.is_penjamin', 0);
+        $this->db->order_by('akun.kode_akun', 'asc');
+        return $this->db->get()->result();
+    }
+    function get_akun_tujuan_pemasukan()
+    {
+        $this->db->select('akun.id,akun.nama_akun,akun.kode_akun');
+        $this->db->from('akun');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('akun.aktif', 1);
+        $this->db->where('akun.is_iuran', 0);
+        $this->db->where('akun.is_penjamin', 0);
+        $this->db->where('jenis_akun.sn', 'k');
+        return $this->db->get()->result();
+    }
+    function get_akun_tujuan_pengeluaran()
+    {
+        $this->db->select('akun.id,akun.nama_akun,akun.kode_akun');
+        $this->db->from('akun');
+        $this->db->join('jenis_akun', 'jenis_akun.id=akun.kode_jenis', 'left');
+        $this->db->where('akun.aktif', 1);
+        $this->db->where('akun.is_iuran', 0);
+        $this->db->where('akun.is_penjamin', 0);
+        $this->db->where('jenis_akun.sn', 'd');
+        $this->db->where('jenis_akun.pos', 'lr');
+        return $this->db->get()->result();
     }
     // insert data
     function insert($data)

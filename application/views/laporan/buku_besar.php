@@ -9,10 +9,10 @@ if ($info_akun_terpilih->sn == 'd') {
 
 if ($info_akun_terpilih->sn == 'd') {
     $sa = $saldo_awal->debet - $saldo_awal->kredit;
-    $sak = $summary->debet + $sa;
+    $sak = $summary->debet - $summary->kredit + $sa;
 } else {
     $sa = $saldo_awal->kredit - $saldo_awal->debet;
-    $sak = $summary->kredit + $sa;
+    $sak = $summary->kredit - $summary->debet + $sa;
 }
 $saldo += $sa;
 ?>

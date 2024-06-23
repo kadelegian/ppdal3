@@ -7,14 +7,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0 text-gray-800">Pedagang Asongan</h1>
+            <h1 class="h3 mb-0 text-gray-800">Transaksi Pedagang Asongan</h1>
 
         </div>
         <div class="card-body">
             <div class="row">
 
-                <div class="col-2">
-                    <?php echo anchor(site_url('pedagang/create'), 'Create', 'class="btn btn-success"'); ?>
+                <div class="col-4">
+                    <div>
+                        <form action="<?php echo site_url('iuran_asongan/index'); ?>" class="form-inline" method="get">
+                            <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
+                            <span class="input-group-btn">
+                                <?php
+                                if ($q <> '') {
+                                    ?>
+                                    <a href="<?php echo site_url('iuran_asongan'); ?>" class="btn btn-default">Reset</a>
+                                <?php
+                                }
+                                ?>
+
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </span>
+                        </form>
+                    </div>
                 </div>
                 <div class="col-6 text-center">
                     <?php if ($this->session->userdata('message') <> '') { ?>
@@ -25,22 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
                 <div class="col-4">
-                    <div class="float-right">
-                        <form action="<?php echo site_url('pedagang/index'); ?>" class="form-inline" method="get">
-                            <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
-                            <span class="input-group-btn">
-                                <?php
-                                if ($q <> '') {
-                                    ?>
-                                    <a href="<?php echo site_url('pedagang'); ?>" class="btn btn-default">Reset</a>
-                                <?php
-                                }
-                                ?>
 
-                                <button class="btn btn-primary" type="submit">Search</button>
-                            </span>
-                        </form>
-                    </div>
 
                 </div>
             </div>
@@ -56,17 +56,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <th>Wilayah</th>
                     <th>Dagangan</th>
                     <th>Join Date</th>
-                    <th style="text-align:center">Action</th>
+
                 </tr><?php
                         foreach ($pedagang_data as $pedagang) {
                             ?>
                     <tr>
                         <?php ++$start; ?>
-                        <td><?= $pedagang->nomor ?></td>
+                        <td>
+                            <?php if ($pedagang->alias <> '-') { ?>
+                                <a href="<?= base_url('pedagang/read/' . $pedagang->alias) ?>">
+                                    <?= $pedagang->nomor ?>
+                                </a>
+                            <?php } else { ?>
+                                <?= $pedagang->nomor ?>
+                            <?php } ?>
+                        </td>
                         <td><?php if ($pedagang->alias <> '-') { ?>
                                 <a href="<?= base_url('pedagang/read/' . $pedagang->alias) ?>">
-                                    <?php echo $pedagang->nama_pedagang ?></td>
-                        </a>
+                                    <?php echo $pedagang->nama_pedagang ?>
+                                </a>
+                        </td>
                     <?php } else { ?>
                         <?php echo $pedagang->nama_pedagang ?></td>
                     <?php } ?>
@@ -74,28 +83,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <td><?php echo $pedagang->nama_dagangan ?></td>
                     <td><?php echo date_format(date_create_from_format('Y-m-d', $pedagang->join_date), 'd/m/Y')  ?></td>
-                    <td style="text-align:center" width="auto">
-                        <div class="btn-group" role="group">
 
-                            <a class="btn btn-light" href='<?= base_url('pedagang/qr_code/' . $kartu->id) ?>'><i class="fas fa-qrcode"></i></a>
-                            <a class="btn btn-primary" href='<?= base_url('pedagang/update/' . $pedagang->id) ?>'>Lihat</a>
-                            <a class="btn btn-danger" href='<?= base_url('pedagang/delete/' . $pedagang->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
-
-                        </div>
-
-
-                    </td>
                     </tr>
                 <?php
                 }
                 ?>
             </table>
             <div class="row">
-                <div class="col-auto">
-                    <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
-                    <?php echo anchor(site_url('pedagang/excel'), 'Excel', 'class="btn btn-primary"'); ?>
-                </div>
-                <div class="col-md-6 text-right">
+
+                <div class="col text-center">
                     <?php echo $pagination ?>
                 </div>
             </div>

@@ -45,10 +45,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="<?= base_url('kartu') ?>"><i class="fa fa-umbrella" aria-hidden="true"></i> Pedagang Pantai</a>
-                            <a class="collapse-item" href="<?= base_url('transaksi_iuran') ?>">Daftar Transaksi Pedagang</a>
+
                             <hr>
                             <a class="collapse-item" href="<?= base_url('pedagang') ?>"><i class="fa fa-street-view" aria-hidden="true"></i> Pedagang Asongan</a>
-                            <a class="collapse-item" href="<?= base_url('transaksi_iuran_pedagang') ?>">Daftar Transaksi Asongan</a>
+
                         </div>
                     </div>
                 </li>
@@ -60,10 +60,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
 
+                            <a class="collapse-item" href="<?= base_url('iuran_pedagang') ?>"> <i class="fa fa-fw fa-beer"></i> Iuran Pedagang Pantai</a>
+                            <a class="collapse-item" href="<?= base_url('iuran_asongan') ?>"> <i class="fa fa-fw fa-user"></i> Iuran Asongan</a>
+                            <hr>
                             <a class="collapse-item" href="<?= base_url('transaksi_pemasukan') ?>"> <i class="fa fa-fw fa-arrow-down"></i> Transaksi Pemasukan</a>
                             <a class="collapse-item" href="<?= base_url('transaksi_pengeluaran') ?>"><i class="fa fa-fw fa-arrow-up"></i> Transaksi Pengeluaran</a>
                             <a class="collapse-item" href="<?= base_url('transaksi_transfer') ?>"><i class="fa fa-fw fa-reply"></i>Transfer Kas</a>
 
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportTrx" aria-expanded="true" aria-controls="collapseReportTrx">
+                        <i class="fa fa-tasks" aria-hidden="true"></i></i>
+                        <span>Laporan Transaksi</span>
+                    </a>
+                    <div id="collapseReportTrx" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="<?= base_url('transaksi_iuran') ?>">Pedagang Pantai</a>
+                            <a class="collapse-item" href="<?= base_url('transaksi_iuran_pedagang') ?>">Asongan</a>
+                            <a class="collapse-item" href="<?= base_url('laporan_transaksi') ?>">Laporan Harian</a>
                         </div>
                     </div>
                 </li>
@@ -91,13 +107,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
-                        <i class="fas fa-fw fa-cogs"></i>
-                        <span>Laporan</span>
+                        <i class="fa fa-folder-open" aria-hidden="true"></i>
+                        <span>Laporan Keuangan</span>
                     </a>
                     <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="<?= base_url('laporan/jurnal_umum') ?>">Jurnal Umum</a>
                             <a class="collapse-item" href="<?= base_url('laporan/buku_besar') ?>">Buku Besar</a>
+                            <a class="collapse-item" href="<?= base_url('laporan/laba_rugi') ?>">Laba Rugi</a>
 
                         </div>
                     </div>

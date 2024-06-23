@@ -25,11 +25,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="col-md-3 text-right">
                     <form action="<?php echo site_url('transaksi_pengeluaran/index'); ?>" class="form-inline" method="get">
                         <div class="input-group">
-                            <input type="text" class="form-control datepicker" id="date-picker1" value="<?= $awal_periode <> '' ? date_format(date_create_from_format('Y-m-d', $awal_periode), 'd/m/Y') : '' ?>">
-                            <input type="hidden" id="date-picker1-alt" name="awal_periode">
+                            <input type="text" name="awal_periode" class="form-control datepicker" id="date-picker1" value="<?= $awal_periode <> '' ? date_format(date_create_from_format('Y-m-d', $awal_periode), 'd/m/Y') : '' ?>">
+                            <input type="hidden" id="date-picker1-alt">
                             <p>-</p>
-                            <input type="text" class="form-control datepicker" id="date-picker2" value="<?= $sampai_dengan <> '' ? date_format(date_create_from_format('Y-m-d', $sampai_dengan), 'd/m/Y') : '' ?>">
-                            <input type="hidden" id="date-picker2-alt" name="akhir_periode">
+                            <input type="text" name="akhir_periode" class="form-control datepicker" id="date-picker2" value="<?= $sampai_dengan <> '' ? date_format(date_create_from_format('Y-m-d', $sampai_dengan), 'd/m/Y') : '' ?>">
+                            <input type="hidden" id="date-picker2-alt">
                             <span class="input-group-btn">
                                 <a href="<?php echo site_url('transaksi_pengeluaran'); ?>" class="btn btn-default">Reset</a>
 
@@ -43,40 +43,54 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="table-responsive">
                 <table class="table table-bordered" style="margin-bottom: 10px">
                     <tr>
-                        <th>No</th>
+                        <th style="text-align:center">Action </th>
+                        <th>REF.</th>
                         <th>Tanggal</th>
                         <th>Keterangan </th>
-                        <th>Nominal</th>
-                        <th>Rekening Sumber</th>
-                        <th>Rekening Tujuan</th>
+                        <th>Nama Akun</th>
                         <th>Petugas</th>
-
-                        <th style="text-align:center">Action</th>
+                        <th>Debet</th>
+                        <th>Kredit</th>
                     </tr><?php
+                            if ($total_rows > 0) {
+                                for ($r = 0; $r <= $total_rows; $r += 2) {
 
-                            foreach ($data_transaksi as $dt) {
+                                    ?>
+                            <tr>
+                                <?php ++$start; ?>
+                                <td style="text-align:center">
+                                    <div class="btn-group" role="group">
 
-                                ?>
-                        <tr>
-                            <td width="80px"><?php echo ++$start ?></td>
-                            <td><?php echo date('d/m/Y', strtotime($dt->tanggal)) ?></td>
-                            <td><?php echo $dt->keterangan ?></td>
-                            <td><?php echo number_format($dt->nominal, 0, ",", ".") ?></td>
-                            <td><?php echo $dt->rekening_sumber ?></td>
-                            <td><?php echo $dt->rekening_tujuan ?></td>
-                            <td><?php echo $dt->username ?></td>
+                                        <a class="btn btn-primary" href='<?= base_url('transaksi_transfer/update/' . $data_transaksi[$r]->id) ?>'>Lihat</a>
+                                        <a class="btn btn-danger" href='<?= base_url('transaksi_transfer/delete/' . $data_transaksi[$r]->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
 
-                            <td style="text-align:center">
-                                <div class="btn-group" role="group">
+                                    </div>
 
-                                    <a class="btn btn-primary" href='<?= base_url('transaksi_transfer/update/' . $dt->id) ?>'>Lihat</a>
-                                    <a class="btn btn-danger" href='<?= base_url('transaksi_transfer/delete/' . $dt->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                                </td>
+                                <td><?= $data_transaksi[$r]->id ?></td>
+                                <td><?php echo date_format(date_create_from_format('Y-m-d h:i:s', $data_transaksi[$r]->tanggal), 'd/m/Y') ?></td>
+                                <td><?php echo $data_transaksi[$r]->keterangan ?>
+                                    <br> <?= $data_transaksi[$r + 1]->keterangan ?>
+                                </td>
+                                <td>
+                                    <?php echo $data_transaksi[$r]->nama_akun ?>
+                                    <br> <?= $data_transaksi[$r + 1]->nama_akun ?>
+                                </td>
+                                <td><?php echo $data_transaksi[$r]->username ?></td>
 
-                                </div>
-
-                            </td>
-                        </tr>
+                                <td>
+                                    <?php echo number_format($data_transaksi[$r]->debet, 0, ",", ".") ?>
+                                    <br>
+                                    <?php echo number_format($data_transaksi[$r + 1]->debet, 0, ",", ".") ?>
+                                </td>
+                                <td>
+                                    <?php echo number_format($data_transaksi[$r]->kredit, 0, ",", ".") ?>
+                                    <br>
+                                    <?php echo number_format($data_transaksi[$r + 1]->kredit, 0, ",", ".") ?>
+                                </td>
+                            </tr>
                     <?php
+                        }
                     }
                     ?>
                 </table>

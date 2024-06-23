@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="card-body">
             <div class="row" style="margin-bottom: 10px">
                 <div class="col-md-4 mr-auto">
-                    <?php echo anchor(site_url('kartu/create'), 'Create', 'class="btn btn-primary"'); ?>
+                    <?php echo anchor(site_url('kartu/create'), 'Create', 'class="btn btn-success"'); ?>
 
                 </div>
                 <div class="col-md-4 text-center">
@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="table-responsive">
 
-                <table class="table table-bordered" style="margin-bottom: 10px">
+                <table class="table table-hover table-striped table-bordered mt-2">
                     <tr>
 
                         <th>Nama Pedagang</th>
@@ -56,28 +56,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             foreach ($kartu_data as $kartu) {
                                 ?>
                         <tr>
-                            <td><?php if ($kartu->alias <> '-') { ?>
-                                    <a href="<?= base_url('kartu/read/' . $kartu->alias) ?>">
-                                        <?php echo $kartu->nama_pemilik ?></td>
-                            </a>
-                        <?php } else { ?>
-                            <?php echo $kartu->nama_pemilik ?></td>
-                        <?php } ?>
-                        <td><?php echo $kartu->nomor_kartu ?></td>
-                        <td><?php echo $kartu->nama_dagangan ?></td>
-                        <td><?php echo $kartu->wilayah ?></td>
-                        <td><?php echo date_format(date_create_from_format('Y-m-d', $kartu->join_date), 'd/m/Y') ?></td>
+                            <td>
+                                <?php echo $kartu->nama_pemilik ?></td>
+                            <td><?php echo $kartu->nomor_kartu ?></td>
+                            <td><?php echo $kartu->nama_dagangan ?></td>
+                            <td><?php echo $kartu->wilayah ?></td>
+                            <td><?php echo date_format(date_create_from_format('Y-m-d', $kartu->join_date), 'd/m/Y') ?></td>
 
-                        <td style="text-align:center">
-                            <div class="btn-group" role="group">
+                            <td style="text-align:center">
+                                <div class="btn-group" role="group">
+                                    <?php if ($kartu->alias <> '-') { ?>
+                                        <a class="btn btn-light" href='<?= base_url('kartu/qr_code/' . $kartu->id) ?>'><i class="fas fa-qrcode"></i></a>
+                                    <?php } ?>
+                                    <a class="btn btn-primary" href='<?= base_url('kartu/update/' . $kartu->id) ?>'>Lihat</a>
+                                    <a class="btn btn-danger" href='<?= base_url('kartu/delete/' . $kartu->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
 
-                                <a class="btn btn-light" href='<?= base_url('kartu/qr_code/' . $kartu->id) ?>'><i class="fas fa-qrcode"></i></a>
-                                <a class="btn btn-primary" href='<?= base_url('kartu/update/' . $kartu->id) ?>'>Lihat</a>
-                                <a class="btn btn-danger" href='<?= base_url('kartu/delete/' . $kartu->id) ?>' onclick="javascript:return confirm('Apakah Anda Yakin Akan Menghapus data?')">Delete</a>
+                                </div>
 
-                            </div>
-
-                        </td>
+                            </td>
                         </tr>
                     <?php
                     }
@@ -85,11 +81,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </table>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-auto">
                     <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
-                    <?php echo anchor(site_url('kartu/excel'), 'Excel', 'class="btn btn-primary"'); ?>
+
                 </div>
-                <div class="col-md-6 text-center">
+                <div class="col text-center">
                     <?php echo $pagination ?>
                 </div>
             </div>

@@ -16,6 +16,7 @@ class Laporan extends CI_Controller
             redirect(base_url('auth'));
         }
     }
+
     public function jurnal_umum()
     {
         $awal_periode = $this->input->get('awal_periode');
@@ -112,22 +113,95 @@ class Laporan extends CI_Controller
         $this->load->view('laporan/buku_besar', $data);
         $this->load->view('page_template/footer');
     }
-    public function neraca_lajur()
+    public function laba_rugi()
     {
+        $i = 0;
+        $total_pemasukan = 0;
+        $total_pengeluaran = 0;
 
-        $saldo = $this->input->get('saldo');
+        $data_akun_pemasukan = array();
+        $data_akun_pengeluaran = array();
 
+        $saldo_awal_pemasukan = $this->jurnal_model->get_saldo_awal_akun_laba_rugi(true);
+
+        $saldo_awal_pengeluaran = $this->jurnal_model->get_saldo_awal_akun_laba_rugi(false);
+
+        $data_summary_pemasukan = $this->jurnal_model->get_laba_rugi(true);
+        $data_summary_pengeluaran = $this->jurnal_model->get_laba_rugi(false);
+
+        foreach ($data_summary_pemasukan as $pemasukan) {
+            $id_akun = $pemasukan->id_akun;
+            $saldo = $pemasukan->kredit - $pemasukan->debet;
+            $saldo_awal = 0;
+            foreach ($saldo_awal_pemasukan as $sap) {
+                if ($sap->id == $id_akun) {
+                    $saldo_awal = $sap->kredit - $sap->debet;
+                }
+            }
+
+            $temp_pemasukan = array(
+                'id' => $id_akun,
+                'kode_akun' => $pemasukan->kode_akun,
+                'nama_akun' => $pemasukan->nama_akun,
+                'saldo' => $saldo_awal + $saldo
+            );
+            array_push($data_akun_pemasukan, $temp_pemasukan);
+        }
+
+        foreach ($data_summary_pengeluaran as $pengeluaran) {
+            $id_akun_pengeluaran = $pengeluaran->id_akun;
+            $saldo = $pengeluaran->debet - $pengeluaran->kredit;
+            $saldo_awal = 0;
+            foreach ($saldo_awal_pengeluaran as $sapeng) {
+                if ($sapeng->id == $id_akun_pengeluaran) {
+                    $saldo_awal = $sapeng->debet - $sapeng->kredit;
+                }
+            }
+
+            $temp_pengeluaran = array(
+                'id' => $id_akun_pengeluaran,
+                'kode_akun' => $pengeluaran->kode_akun,
+                'nama_akun' => $pengeluaran->nama_akun,
+                'saldo' => $saldo_awal + $saldo,
+            );
+            array_push($data_akun_pengeluaran, $temp_pengeluaran);
+            $total_pengeluaran += $saldo_awal + $saldo;
+        }
 
         $data = array(
+            'data_pendapatan' => $data_akun_pemasukan,
+            'data_biaya' => $data_akun_pengeluaran,
+            'total_pendapatan' => $total_pemasukan,
+            'total_biaya' => $total_pengeluaran,
             'periode' => $this->jurnal_model->periode_laporan,
-            'saldo' => $saldo,
-
         );
         $this->load->view('page_template/header');
         $this->load->view('page_template/side_bar');
         $this->load->view('page_template/top_bar');
-        $this->load->view('laporan/neraca_lajur', $data);
+        $this->load->view('laporan/laba_rugi', $data);
+        $this->load->view('laporan/neraca', $this->neraca());
         $this->load->view('page_template/footer');
+    }
+    public function neraca()
+    {
+        $data_saldo_per_aktiva = $this->jurnal_model->saldo_akhir_aktiva();
+        $data_saldo_per_hutang = $this->jurnal_model->saldo_akhir_hutang();
+
+        $data_saldo_per_modal = $this->jurnal_model->saldo_akhir_hutang();
+        $labarugi_berjalan = $this->jurnal_model->laba_rugi_berjalan()->laba_rugi;
+        $data = array(
+            'data_aset' => $data_saldo_per_aktiva,
+            'data_kewajiban' => $data_saldo_per_hutang,
+            'data_modal' => $data_saldo_per_modal,
+            'labarugi_periode' => $labarugi_berjalan,
+            'periode' => $this->jurnal_model->periode_laporan,
+        );
+        return $data;
+        // $this->load->view('page_template/header');
+        // $this->load->view('page_template/side_bar');
+        // $this->load->view('page_template/top_bar');
+        // $this->load->view('laporan/neraca', $data);
+        // $this->load->view('page_template/footer');
     }
     public function kas()
     {

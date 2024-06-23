@@ -16,24 +16,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?php echo $tanggal; ?>" readonly />
                 </div>
                 <div class="form-group">
-                    <label for="dari_akun">Rekening Sumber <?= form_error('dari_akun') ?></label>
-                    <select class="form-control" name="dari_akun" id="dari_akun">
-                        <?php foreach ($data_akun as $dt_ak) {
+                    <label for="id_akun_sumber">Akun/Rekening Sumber <?= form_error('id_akun_sumber') ?></label>
+                    <select class="form-control" name="id_akun_sumber" id="id_akun_sumber">
+                        <?php foreach ($data_akun_sumber as $dt_ak) {
 
                             ?>
-                            <option value="<?= $dt_ak->id ?>" <?= $dt_ak->id == $dari_akun ? 'selected' : '' ?>><?= $dt_ak->nama_akun ?></option>
+                            <option value="<?= $dt_ak->id ?>" <?= $dt_ak->id == $id_akun_sumber ? 'selected' : '' ?>><?= $dt_ak->nama_akun ?></option>
                         <?php
 
                         } ?>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="ke_akun">Rekening Tujuan</label>
-                    <select class="form-control" name="ke_akun" id="ke_akun">
-                        <?php foreach ($data_akun as $dt_ak) {
+                    <label for="id_akun_tujuan">Akun/Rekening Tujuan</label>
+                    <select class="form-control" name="id_akun_tujuan" id="id_akun_tujuan">
+                        <?php foreach ($data_akun_tujuan as $dt_ak) {
 
                             ?>
-                            <option value="<?= $dt_ak->id ?>" <?= $dt_ak->id == $ke_akun ? 'selected' : '' ?>><?= $dt_ak->nama_akun ?></option>
+                            <option value="<?= $dt_ak->id ?>" <?= $dt_ak->id == $id_akun_tujuan ? 'selected' : '' ?>><?= $dt_ak->nama_akun ?></option>
                         <?php
 
                         } ?>

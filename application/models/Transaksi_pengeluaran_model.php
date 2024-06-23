@@ -6,14 +6,16 @@ if (!defined('BASEPATH'))
 class Transaksi_pengeluaran_model extends CI_Model
 {
 
-    public $table = 'jurnal';
+    public $table = 'transaksi_pengeluaran';
     public $id = 'id';
     public $order = 'DESC';
-
+    public $periode;
 
     function __construct()
     {
         parent::__construct();
+        $this->load->model('Jurnal_model', 'jurnal_model');
+        $this->periode = $this->jurnal_model->periode_laporan;
     }
 
 
@@ -22,77 +24,55 @@ class Transaksi_pengeluaran_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
-    function get_active_data()
-    {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->where('aktif', 1);
-        return $this->db->get($this->table)->result();
-    }
-
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
-        return $this->db->get($this->table)->row();
+        $this->db->select('jurnal.*');
+        $this->db->from('transaksi_pengeluaran');
+        $this->db->join('jurnal', 'jurnal.id_transaksi_pengeluaran=transaksi_pengeluaran.id');
+        $this->db->where('transaksi_pengeluaran.id', $id);
+        $this->db->order_by('jurnal.id');
+        return $this->db->get()->result();
     }
 
     // get total rows
     function total_rows($start_date = null, $end_date = null)
     {
+        $this->db->select('id');
+        $this->db->from('transaksi_pengeluaran');
 
-        $this->db->select('jurnal.*,users.username,jenis_pengeluaran.keterangan as jenis_pengeluaran');
-        $this->db->from('jurnal');
-        $this->db->join('users', 'users.id=jurnal.id_user', 'left');
-        $this->db->join('jenis_pengeluaran', 'jenis_pengeluaran.id=jurnal.kode_pengeluaran', 'left');
-        $this->db->where('jurnal.kredit>', 0);
-        $this->db->where('jurnal.status', 1);
-        $this->db->where('jurnal.kode<', 1000);
+
         if ($start_date || $end_date) {
 
-            $this->db->where('date(jurnal.tanggal) >=', $start_date);
-            $this->db->where('date(jurnal.tanggal) <=', $end_date);
+            $this->db->where('date(tanggal) >=', $start_date);
+            $this->db->where('date(tanggal) <=', $end_date);
+        } else {
+            $this->db->where('date(transaksi_pengeluaran.tanggal)>', $this->jurnal_model->periode_laporan);
         }
-
-
-        $this->db->order_by($this->id, 'desc');
 
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_nominal_transaksi($start_date = null, $end_date = null)
-    {
-
-        $this->db->select('sum(ifnull(jurnal.kredit,0)) as total_pengeluaran');
-        $this->db->from('jurnal');
-        $this->db->where('jurnal.kredit>', 0);
-        $this->db->where('jurnal.status', 1);
-        $this->db->where('jurnal.kode<', 1000);
-        if ($start_date || $end_date) {
-
-            $this->db->where('date(jurnal.tanggal) >=', $start_date);
-            $this->db->where('date(jurnal.tanggal) <=', $end_date);
-        }
-
-        return $this->db->get()->row();
-    }
     function get_limit_data($limit, $start_date = null, $end_date = null, $start = 0)
     {
 
-        $this->db->select('jurnal.*,users.username,jenis_pengeluaran.keterangan as jenis_pengeluaran,akun.nama_akun');
-        $this->db->from('jurnal');
-        $this->db->join('users', 'users.id=jurnal.id_user', 'left');
-        $this->db->join('jenis_pengeluaran', 'jenis_pengeluaran.id=jurnal.kode_pengeluaran', 'left');
+        $this->db->select('transaksi_pengeluaran.id,jurnal.tanggal,jurnal.debet,jurnal.kredit,jurnal.keterangan,
+        akun.nama_akun,akun.kode_akun,users.username');
+        $this->db->from('transaksi_pengeluaran');
+        $this->db->join('jurnal', 'jurnal.id_transaksi_pengeluaran=transaksi_pengeluaran.id', 'left');
         $this->db->join('akun', 'akun.id=jurnal.id_akun', 'left');
-        $this->db->where('jurnal.kredit>', 0);
-        $this->db->where('jurnal.status', 1);
-        $this->db->where('jurnal.kode<', 1000);
+        $this->db->join('users', 'users.id=transaksi_pengeluaran.id_user', 'left');
+
         if ($start_date || $end_date) {
 
-            $this->db->where('date(jurnal.tanggal) >=', $start_date);
-            $this->db->where('date(jurnal.tanggal) <=', $end_date);
+            $this->db->where('date(transaksi_pengeluaran.tanggal) >=', $start_date);
+            $this->db->where('date(transaksi_pengeluaran.tanggal) <=', $end_date);
+        } else {
+            $this->db->where('date(transaksi_pengeluaran.tanggal)>', $this->jurnal_model->periode_laporan);
         }
 
-        $this->db->order_by($this->id, 'desc');
+        //$this->db->order_by('transaksi_pemasukan.id', 'asc');
+        //$this->db->order_by('transaksi_pemasukan.tanggal', 'desc');
         $this->db->limit($limit, $start);
         return $this->db->get()->result();
     }
@@ -116,14 +96,9 @@ class Transaksi_pengeluaran_model extends CI_Model
     // delete data
     function delete($id)
     {
-
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        $this->db->where('id', $id);
+        $this->db->delete('transaksi_pengeluaran');
+        $this->db->where('id_transaksi_pengeluaran', $id);
+        $this->db->delete('jurnal');
     }
 }
-
-/* End of file Transaksi_iuran_model.php */
-/* Location: ./application/models/Transaksi_iuran_model.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2023-12-05 07:15:59 */
-/* http://harviacode.com */

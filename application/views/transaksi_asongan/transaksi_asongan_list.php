@@ -39,7 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </form>
                 </div>
             </div>
-            <table class="table table-bordered table-sm" style="margin-bottom: 10px">
+            <table class="table table-bordered" style="margin-bottom: 10px">
                 <tr>
                     <th>Nomor Trx.</th>
                     <th>Tanggal Trx.</th>
